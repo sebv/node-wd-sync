@@ -105,6 +105,7 @@ object initialization can be delayed.
 
 {wd,WdWrap} = require 'wd-sync'
 should = require 'should'
+
 describe "WdWrap", ->
   
   describe "passing browser", ->  
@@ -179,6 +180,7 @@ WdWrap sample below, using the mocha test framework:
 
 {wd,WdWrap} = require 'wd-sync'
 should = require 'should'
+
 describe "WdWrap", ->
   
   describe "passing browser", ->  
@@ -227,13 +229,10 @@ This is useful when writting test helpers.
 
 browser = wd.remote(mode:'sync')
 
-# do this only once
-Wd = Wd with:browser 
-
 myOwnGetTitle = ->
   wd.current().title()
 
-Wd ->        
+Wd with:browser, ->        
   @init browserName:'firefox'
 
   @get "http://google.com"
