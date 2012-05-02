@@ -13,6 +13,7 @@ buildOptions = (mode) ->
   }
   
 wdSync = 
+  # similar to wd
   remote: (args...) ->
     # lookink for sync mode
     mode = 'sync'
