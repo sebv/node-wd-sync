@@ -7,6 +7,7 @@ describe "WdWrap", ->
   
   describe "passing browser", ->  
     browser = wd.remote(mode:'sync')
+    
     it "should work", WdWrap 
       with: -> 
         browser
@@ -33,9 +34,11 @@ describe "WdWrap", ->
         someText = 'Test2'
       with:-> 
         browser
+        
     before (done) ->
       browser = wd.remote(mode:'sync')
       done()
+      
     it "should work", WdWrap ->
       someText.should.equal 'Test2'
       @init()

@@ -10,9 +10,11 @@ describe "wd-sauce", ->
       'you need to configure your sauce username and access-key '\
       + 'in the file config.coffee.'
     done()
+    
   describe "using WdWrap", ->
     describe "passing browser", ->
       browser = null;
+      
       it "initializing browser", (done) ->
         @timeout TIMEOUT
         browser = wd.remote \
@@ -22,6 +24,7 @@ describe "wd-sauce", ->
           config.saucelabs['access-key'],
           mode:'sync'
         done()
+        
       it "browsing", WdWrap 
         with: -> 
           browser
@@ -42,13 +45,16 @@ describe "wd-sauce", ->
         @elementByCss '#ires' # waiting for new page to load
         @title().toLowerCase().should.include 'hello world'
         @quit()
+        
     describe "without passing browser", ->
       browser = null
+      
       WdWrap = WdWrap
         with: -> 
           browser 
         pre: -> 
           @timeout TIMEOUT
+          
       it "initializing browser", (done) ->
         @timeout TIMEOUT
         browser = wd.remote \
@@ -58,6 +64,7 @@ describe "wd-sauce", ->
           config.saucelabs['access-key'],
           mode:'sync'
         done()
+        
       it "browsing", WdWrap ->        
         desired =
           platform: "LINUX"

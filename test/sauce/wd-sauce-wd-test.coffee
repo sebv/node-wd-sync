@@ -41,6 +41,7 @@ describe "wd-sauce", ->
       'you need to configure your sauce username and access-key '\
       + 'in the file config.coffee.'
     done()
+  
   describe "using Wd", ->
     describe "passing browser", ->
       for browserName in [undefined,'firefox','chrome','IE']
@@ -57,6 +58,7 @@ describe "wd-sauce", ->
           mode:'sync'
         Wd = Wd with:browser
         done()
+        
       it "browsing", (done) ->        
         @timeout TIMEOUT 
         desired =
