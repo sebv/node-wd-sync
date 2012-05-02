@@ -37,7 +37,7 @@
     });
   };
 
-  describe("wd-async", function() {
+  describe("wd-sync", function() {
     describe("passing browser", function() {
       var browserName, _i, _len, _ref1, _results;
       _ref1 = [void 0, 'firefox', 'chrome'];
@@ -48,7 +48,7 @@
       }
       return _results;
     });
-    return describe("without passing browser", function() {
+    describe("without passing browser", function() {
       before(function(done) {
         var browser;
         browser = wd.remote({
@@ -71,6 +71,32 @@
           this.setWaitTimeout(3000);
           this.elementByCss('#ires');
           this.title().toLowerCase().should.include('hello world');
+          this.quit();
+          return done();
+        });
+      });
+    });
+    return describe('wd.current()', function() {
+      return it("browsing", function(done) {
+        var browser, myOwnTitle;
+        browser = wd.remote({
+          mode: 'sync'
+        });
+        myOwnTitle = function() {
+          return wd.current().title();
+        };
+        return Wd({
+          "with": browser
+        }, function() {
+          if (typeof browserName !== "undefined" && browserName !== null) {
+            this.init({
+              browserName: "" + browserName
+            });
+          } else {
+            this.init();
+          }
+          this.get("http://google.com");
+          myOwnTitle().toLowerCase().should.include('google');
           this.quit();
           return done();
         });
