@@ -101,7 +101,7 @@ Also note that the browser parameter is a function returning the browser so that
 object initialization can be delayed.
 
 A 'pre' method may also be specified. It is called before the Wd block starts, in the original 
-context. (In Mocha for example, it can be used to configure timeouts.) 
+context (In Mocha for example, it can be used to configure timeouts). 
 
 ```coffeescript
 # Assumes that the selenium server is running
