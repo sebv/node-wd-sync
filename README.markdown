@@ -1,9 +1,7 @@
-Work in progress...
-
 # wd-sync
 
 A synchronous Version with a nice api of [wd](http://github.com/admc/wd), 
-the lightweight  [WebDriver / Selenium2](http://http://code.google.com/p/selenium/) 
+the lightweight  [WebDriver / Selenium2](http://seleniumhq.org/projects/webdriver/) 
 client for node.js, built using  [node-fibers](http://github.com/laverdet/node-fibers).
 
 Remote testing with [Sauce Labs](http://saucelabs.com) also works.
@@ -17,12 +15,13 @@ npm install wd-sync
 
 ## usage (coffeescript)
 
-Notice the extra 'mode' field in the createClient options.
+When creating a new browser with remote, an extra mode option need to be 
+passed.
 
-All the methods from [wd](http://github.com/LearnBoost/soda.git) are available. 
+All the methods from [wd](http://github.com/admc/wd) are available. 
 
-In sync mode, the browser function must to be run within a Soda block. This 
-block holds the fiber environment. The Soda block context is set to the browser, 
+In sync mode, the browser function must to be run within a Wd block. This 
+block holds the fiber environment. The Wd block context is set to the browser, 
 so that the browser methods may be accessed using '@'.
 
 ```coffeescript
@@ -37,8 +36,8 @@ Wd with:browser, ->
 
   @get "http://google.com"
   console.log @title()          
+  
   queryField = @elementByName 'q'
-
   @type queryField, "Hello World"  
   @type queryField, "\n"
 
@@ -51,15 +50,13 @@ Wd with:browser, ->
 
 ## Sauce Labs example
 
-Remote testing with [Sauce Labs](http://saucelabs.com), works the same as with wd,
-just add the mode field to the options.
+Remote testing with [Sauce Labs](http://saucelabs.com) works. The extra mode
+option is also needed here.
 
 ```coffeescript
 # configure saucelabs username/access key here
 username = '<USERNAME>'
 accessKey = '<ACCESS KEY>'
-username = "sebv"
-accessKey = "d2c630c7-49c8-4400-8f9a-6794107c1630"
 
 {wd,Wd} = require 'wd-sync'
 
@@ -98,7 +95,7 @@ WdWrap is a wrapper around Wd. It returns a function with an optional 'done' cal
 called as the last command just before the fiber is closed. 
 
 The example below is using the mocha test framework. Notice that the usual 'done' callback 
-is already managed by SodaCan, so can be omited.
+is already managed by WdWrap, so can be omited.
 
 Also note that the browser parameter is a function returning the browser so that the browser 
 object initialization can be delayed.
