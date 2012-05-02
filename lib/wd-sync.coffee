@@ -8,7 +8,7 @@ buildOptions = (mode) ->
     include: '*'
     exclude: [
       'getOpts'
-      , 'element' #TODO check if not directly used 
+      , 'element' #special case for this one below  
     ]  
   }
   
@@ -29,6 +29,9 @@ wdSync =
     # patching browser
     options = buildOptions( mode )
     MakeSync browser, options 
+    # element may be called internally or externally
+    # , so better stick to this mode
+    browser.element = MakeSync browser.element, mode:['mixed', 'args']
     
     return browser
     
