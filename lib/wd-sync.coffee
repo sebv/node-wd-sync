@@ -8,24 +8,29 @@ buildOptions = (mode) ->
     include: '*'
     exclude: [
       'getOpts'
-      , 'element' #TODO check if not used directly
+      , 'element' #TODO check if not directly used 
     ]  
   }
   
 wdSync = 
   # similar to wd
   remote: (args...) ->
-    # lookink for sync mode
+    
+    # extracting mode from args
     mode = 'sync'
     args = args.filter (arg) ->
       if arg.mode?
         mode = arg.mode
         false
       else true
+    
     browser = wd.remote(args...)
+    
+    # patching browser
     options = buildOptions( mode )
     MakeSync browser, options 
-    browser
+    
+    return browser
     
   # retrieve the browser currently in use
   # useful when writting helpers  
