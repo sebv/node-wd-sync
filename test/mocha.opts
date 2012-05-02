@@ -1,0 +1,6 @@
+--compilers coffee:coffee-script
+--ui bdd
+--reporter spec
+-t 30000
+--bail
+--ignore-leaks

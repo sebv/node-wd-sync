@@ -1,1 +1,1 @@
-module.exports = require './lib/soda-sync'
+module.exports = require './lib/wd-sync'

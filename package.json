@@ -4,14 +4,14 @@
   , "description": "sync version of wd using fibers."
   , "keywords": ["selenium","webdriver","test","fibers", "sync"]
   , "author": "Seb Vincent <seb.vincent@gmail.com>"
-  , "repository": { "type": "git", "url": "git@github.com:sebv/node-wd-sync.git" }
+  , "repository": { "type": "git", "url": "git://github.com/sebv/node-wd-sync.git" }
   , "main": "./index"
   , "engine": "node >= 0.6.1"
   , "scripts": {
     "test": "cake test"
   }
   , "dependencies": {
-    "wd": "latest",
+    "wd": "git://github.com/admc/wd.git#0921875d7320a1b2e74609e8d2fb9d4844b982bd",
     "make-sync": "0.1.x"
   }
   , "devDependencies" : {
