@@ -18,7 +18,8 @@ testWithBrowser = (browserName) ->
       @quit()
       done()
 
-describe "wd-async", ->
+describe "wd-sync", ->
+
   describe "passing browser", ->
     for browserName in [undefined,'firefox','chrome']
       testWithBrowser browserName
@@ -42,3 +43,22 @@ describe "wd-async", ->
         @title().toLowerCase().should.include 'hello world'
         @quit()
         done()
+
+  describe 'wd.current()', ->
+    it "browsing", (done) ->
+      browser = wd.remote(mode:'sync')
+      
+      myOwnTitle = ->
+        wd.current().title()
+        
+      Wd with:browser, ->        
+        if browserName? then @init browserName: "#{browserName}"
+        else @init()
+
+        @get "http://google.com"
+        myOwnTitle().toLowerCase().should.include 'google'          
+
+        @quit()
+        done()
+    
+  
