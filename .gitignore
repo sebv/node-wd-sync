@@ -2,3 +2,4 @@ node_modules
 .DS_Store
 test/sauce/config.coffee
 test/sauce/config.js
+npm-debug.log
