@@ -1,3 +1,5 @@
+Work in progress...
+
 # wd-sync
 
 A synchronous Version with a nice api of [wd](http://github.com/admc/wd), 
