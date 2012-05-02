@@ -100,6 +100,9 @@ is already managed by WdWrap, so can be omited.
 Also note that the browser parameter is a function returning the browser so that the browser 
 object initialization can be delayed.
 
+A 'pre' method may also be specified. It is called before the Wd block starts, in the original 
+context. (In Mocha for example, it can be used to configure timeouts.) 
+
 ```coffeescript
 # Assumes that the selenium server is running
 
@@ -270,3 +273,14 @@ java -jar selenium-server.jar
 
 ## tested
 
+* wd:
+  * remote
+
+* browser
+  * init
+  * get
+  * title
+  * setWaitTimeout
+  * elementByCss
+  * type
+  * quit
