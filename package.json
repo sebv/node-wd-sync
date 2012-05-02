@@ -4,7 +4,7 @@
   , "description": "sync version of wd using fibers."
   , "keywords": ["selenium","webdriver","test","fibers", "sync"]
   , "author": "Seb Vincent <seb.vincent@gmail.com>"
-  , "--repository": { "type": "git", "url": "git@github.com:sebv/node-soda-sync.git" }
+  , "repository": { "type": "git", "url": "git@github.com:sebv/node-wd-sync.git" }
   , "main": "./index"
   , "engine": "node >= 0.6.1"
   , "scripts": {
