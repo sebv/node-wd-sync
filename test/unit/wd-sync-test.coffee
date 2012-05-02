@@ -19,5 +19,26 @@ testWithBrowser = (browserName) ->
       done()
 
 describe "wd-async", ->
-  for browserName in [undefined,'firefox','chrome']
-    testWithBrowser browserName
+  describe "passing browser", ->
+    for browserName in [undefined,'firefox','chrome']
+      testWithBrowser browserName
+
+  describe "without passing browser", ->  
+    before (done) ->
+      browser = wd.remote(mode:'sync')
+      Wd = Wd with:browser
+      done()
+
+    it "without passing browser", (done) ->
+      Wd ->        
+        @init()
+        @get "http://google.com"
+        @title().toLowerCase().should.include 'google'          
+        queryField = @elementByName 'q'
+        @type queryField, "Hello World"  
+        @type queryField, "\n"
+        @setWaitTimeout 3000      
+        @elementByCss '#ires' # waiting for new page to load
+        @title().toLowerCase().should.include 'hello world'
+        @quit()
+        done()
