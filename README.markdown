@@ -141,9 +141,7 @@ describe "WdWrap", ->
       @quit()  
 ```
 
-## to avoid repeating 'with: browser' or 'with: (-> browser)'
-
-Leanest syntax in this section.
+## a slightly leaner syntax
 
 When there is a browser parameter and no callback, Wd or WdWrap
 returns a version of itself with a browser default added.
