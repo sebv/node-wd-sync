@@ -11,7 +11,7 @@
     "test": "cake test"
   }
   , "dependencies": {
-    "wd": "git://github.com/admc/wd.git#0921875d7320a1b2e74609e8d2fb9d4844b982bd",
+    "wd": "0.0.x",
     "make-sync": "0.1.x"
   }
   , "devDependencies" : {
