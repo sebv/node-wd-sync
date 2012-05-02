@@ -14,8 +14,11 @@
 
   describe("WdWrap", function() {
     describe("passing browser", function() {
-      browser = wd.remote({
-        mode: 'sync'
+      before(function(done) {
+        browser = wd.remote({
+          mode: 'sync'
+        });
+        return done();
       });
       return it("should work", WdWrap({
         "with": function() {
