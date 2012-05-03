@@ -91,17 +91,16 @@ Wd with:browser, ->
 
 ## WdWrap
 
-WdWrap is a wrapper around Wd. It returns a function with an optional 'done' callback, 
-called as the last command just before the fiber is closed. 
+WdWrap is a wrapper around Wd. It returns a function with a callback arguments, 
+called last, after other commands have been executed. 
 
-The example below is using the mocha test framework. Notice that the usual 'done' callback 
-is already managed by WdWrap, so can be omited.
+The example below is using the mocha test framework. The usual 'done' callback 
+is managed within WdWrap.
 
-Also note that the browser parameter is a function returning the browser so that the browser 
-object initialization can be delayed.
+The 'use' parameter is a function returning the browser evaluated each time the block is opened. 
 
 A 'pre' method may also be specified. It is called before the Wd block starts, in the original 
-context (In Mocha for example, it can be used to configure timeouts). 
+context (In Mocha, it can be used to configure timeouts). 
 
 ```coffeescript
 # Assumes that the selenium server is running
