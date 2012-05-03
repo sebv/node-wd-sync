@@ -1,17 +1,50 @@
 wd = require("wd")
 {MakeSync,Sync} = require 'make-sync'
 
-buildOptions = (mode) ->
+
+# We force mixed mode on those, because either they are executed internally
+# in async mode or it makes sense to call them asynchronously 
+mixedArgsMethods = [
+  'executeAsync'  
+  , 'element' 
+  , 'getAttribute'  
+]
+
+buildOptions = (mode) ->  
   mode = 'sync' if not mode?
   {
     mode: mode
     include: '*'
-    exclude: [
+    exclude: mixedArgsMethods.concat [
       'getOpts'
-      , 'element' #special case for this one below  
-    ]  
+      , 'defaultElement'      
+    ]   
   }
   
+patch = (browser, mode) ->
+  # modifying element so that it just returns undefined
+  # when the element searched is not found  
+  _element = browser.element
+  browser.element = (args...,done) ->
+    cb = (err,res...) ->
+      if err?.status is 7
+        # not found
+        done null, undefined        
+      else
+        done err,res...
+    args.push cb
+    _element.apply @, args
+  
+  # making methods synchronous
+  options = buildOptions( mode )
+  MakeSync browser, options
+   
+  # element and getAttribute may be called internally or externally
+  # , so better stick to this mode
+  for k in mixedArgsMethods 
+    do ->
+      browser[k] = MakeSync browser[k], mode:['mixed', 'args']
+        
 wdSync = 
   # similar to wd
   remote: (args...) ->
@@ -25,14 +58,7 @@ wdSync =
       else true
     
     browser = wd.remote(args...)
-    
-    # patching browser
-    options = buildOptions( mode )
-    MakeSync browser, options 
-    # element may be called internally or externally
-    # , so better stick to this mode
-    browser.element = MakeSync browser.element, mode:['mixed', 'args']
-    
+    patch browser, mode 
     return browser
     
   # retrieve the browser currently in use
