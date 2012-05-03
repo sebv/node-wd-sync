@@ -11,7 +11,7 @@
     "test": "cake test"
   }
   , "dependencies": {
-    "wd": "0.0.x",
+    "wd": "git://github.com/sebv/wd.git",
     "make-sync": "0.1.x"    
   }
   , "devDependencies" : {
