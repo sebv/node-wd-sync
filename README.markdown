@@ -18,7 +18,9 @@ npm install wd-sync
 When creating a new browser with remote, an extra mode option need to be 
 passed.
 
-All the methods from [wd](http://github.com/admc/wd) are available. 
+All the methods from [wd](http://github.com/admc/wd) are available. The element retrieval 
+methods have been modified to return 'undefined' when the element is not found rather than
+a 'Not Found' error.
 
 In sync mode, the browser function must to be run within a Wd block. This 
 block holds the fiber environment. The Wd block context is set to the browser, 
@@ -243,8 +245,10 @@ Wd with:browser, ->
 
 ## modes
 
-check [make-sync](http://github.com/sebv/node-make-sync/blob/master/README.markdown#modes) for more details. 
-Probably best to use the 'sync' mode.
+Check [make-sync](http://github.com/sebv/node-make-sync/blob/master/README.markdown#modes) for more details. 
+Probably best to use the 'sync' mode. 
+
+A few methods have the mixed-args mode forced on them no matter what.
 
 ```coffeescript
 mode: 'sync'
@@ -254,6 +258,9 @@ mode: ['mixed']
 mode: ['mixed','args']
 
 mode: ['mixed','fibers']
+
+# methods forced to ['mixed','args']
+['executeAsync', 'element', 'getAttribute']
 ```
 
 
@@ -268,16 +275,6 @@ java -jar selenium-server.jar
 ```
 
 
-## tested
+## method tested
 
-* wd:
-  * remote
-
-* browser
-  * init
-  * get
-  * title
-  * setWaitTimeout
-  * elementByCss
-  * type
-  * quit
+check in [wd-by-method-test.coffee](https://github.com/sebv/node-wd-sync/blob/master/test/unit/wd-by-method-test.coffee)
