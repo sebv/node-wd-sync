@@ -20,7 +20,7 @@ passed.
 
 All the methods from [wd](http://github.com/admc/wd) are available. The element retrieval 
 methods have been modified to return 'undefined' when the element is not found rather than
-a 'Not Found' error.
+throw a 'Not Found' error.
 
 In sync mode, the browser function must to be run within a Wd block. This 
 block holds the fiber environment. The Wd block context is set to the browser, 
@@ -38,7 +38,7 @@ Wd with:browser, ->
 
   @get "http://google.com"
   console.log @title()          
-  
+    
   queryField = @elementByName 'q'
   @type queryField, "Hello World"  
   @type queryField, "\n"
@@ -46,6 +46,8 @@ Wd with:browser, ->
   @setWaitTimeout 3000      
   @elementByCss '#ires' # waiting for new page to load
   console.log @title()
+
+  console.log @elementByName 'not_exists' # undefined
 
   @quit()
 ```
@@ -248,7 +250,7 @@ Wd with:browser, ->
 Check [make-sync](http://github.com/sebv/node-make-sync/blob/master/README.markdown#modes) for more details. 
 Probably best to use the 'sync' mode. 
 
-A few methods have the mixed-args mode forced on them no matter what.
+A few methods have the mixed-args mode forced on them.
 
 ```coffeescript
 mode: 'sync'
@@ -275,6 +277,6 @@ java -jar selenium-server.jar
 ```
 
 
-## method tested
+## methods tested
 
 check in [wd-by-method-test.coffee](https://github.com/sebv/node-wd-sync/blob/master/test/unit/wd-by-method-test.coffee)
