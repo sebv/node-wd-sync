@@ -220,7 +220,7 @@ describe "WdWrap", ->
 The current browser is automatically stored in the Fiber context.
 It can be retrieved with the wd.current() function. 
 
-This is useful when writting test helpers.
+This is useful when writing test helpers.
 
 ```coffeescript
 # assumes that selenium server is running
