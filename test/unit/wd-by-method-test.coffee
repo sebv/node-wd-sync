@@ -2,14 +2,9 @@
 should = require 'should'
 CoffeeScript = require 'coffee-script'      
 
-testWithBrowser = (browserName) ->
-  it "using #{browserName}", (done) ->
-    @setWaitTimeout 3000      
-    done()
-
 describe "wd-sync", ->
 
-  describe "method tests", ->
+  describe "method by method tests", ->
 
     browser = null;
     WdWrap = WdWrap with: (-> browser)
