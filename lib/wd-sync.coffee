@@ -11,7 +11,8 @@ mixedArgsMethods = [
   , 'text'  
 ]
 
-prototypeMethods = \
+# EventEmitter methods are excluded
+eventEmitterMethods = \
   (k for k,v of EventEmitter.prototype when typeof v is 'function')
 
 buildOptions = (mode) ->  
@@ -20,7 +21,7 @@ buildOptions = (mode) ->
   {
     mode: mode
     include: '*'
-    exclude: mixedArgsMethods.concat prototypeMethods.concat [
+    exclude: mixedArgsMethods.concat eventEmitterMethods.concat [
       'getOpts'
       , 'defaultElement'      
     ]   
