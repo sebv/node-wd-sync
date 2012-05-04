@@ -1,6 +1,7 @@
 {wd,Wd, WdWrap} = require '../../index'
 should = require 'should'
 CoffeeScript = require 'coffee-script'      
+express = require 'express'
 
 test = (browserName) ->
 
@@ -30,7 +31,7 @@ test = (browserName) ->
     should.exist capabilities.platform
   
   it "get", WdWrap ->
-    @get "file://#{__dirname}/assets/test-page.html"
+    @get "http://127.0.0.1:8181/test-page.html"
           
   it "refresh", WdWrap ->
     @refresh()
@@ -300,20 +301,67 @@ test = (browserName) ->
     @active().should.equal i2
       
   it "url", WdWrap ->
-    @url().should.include "/test/unit/assets/test-page.html"
-        
+    url = @url() 
+    url.should.include "test-page.html"
+    url.should.include "http://"
+  
+  it "allCookies / setCookies / deleteAllCookies ", WdWrap ->
+    @deleteAllCookies()
+    @allCookies().should.eql []
+    @setCookie \
+      name: 'fruit1'
+      , value: 'apple'
+    cookies = @allCookies()
+    (cookies.filter (c) -> c.name is 'fruit1' and c.value is 'apple')\
+       .should.have.length 1
+    @setCookie \
+      name: 'fruit2'
+      , value: 'pear'
+    cookies = @allCookies()
+    cookies.should.have.length 2    
+    (cookies.filter (c) -> c.name is 'fruit2' and c.value is 'pear')\
+       .should.have.length 1
+    @setCookie \
+      name: 'fruit3'
+      , value: 'orange'
+    @allCookies().should.have.length 3    
+    @deleteCookie 'fruit2'
+    cookies = @allCookies()
+    cookies.should.have.length 2
+    (cookies.filter (c) -> c.name is 'fruit2' and c.value is 'pear')\
+       .should.have.length 0
+    @deleteAllCookies()
+    @allCookies().should.eql []
+    # not to sure how to test this case this one, so just making sure 
+    # that it does not throw
+    @setCookie \
+      name: 'fruit3'
+      , value: 'orange'
+      , secure: true
+    @deleteAllCookies()
+               
   it "close", WdWrap ->        
     @close()
-
+  
   it "quit", WdWrap ->        
     @quit()
   
 describe "wd-sync", ->
-
+  
   describe "method by method tests", ->
-
+    app = null;
+    before (done) ->
+      app = express.createServer()
+      app.use(express.static(__dirname + '/assets'));
+      app.listen 8181
+      done()
+    
+    after (done) ->
+      app.close()
+      done()
+    
     describe "using chrome", ->
       test 'chrome'
 
     describe "using firefox", ->
-      test 'chrome'
+      test 'firefox'
