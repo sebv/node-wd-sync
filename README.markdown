@@ -36,7 +36,7 @@ browser = wd.remote(mode:'sync')
 Wd with:browser, ->        
   console.log "server status:", @status()
   @init browserName:'firefox'
-  console.log "session capabilities:", @altSessionCapabilities()
+  console.log "session capabilities:", @sessionCapabilities()
 
   @get "http://google.com"
   console.log @title()          
