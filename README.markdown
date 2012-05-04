@@ -275,10 +275,12 @@ mode: ['mixed','fibers']
 
 Download the Selenium server [here](http://seleniumhq.org/download/).
 
+Download the Chromedriver [here](http://code.google.com/p/chromedriver/downloads/list).
+
 To start the server:
 
 ```
-java -jar selenium-server.jar
+java -jar selenium-server-standalone-2.21.0.jar -Dwebdriver.chrome.driver=./chromedriver
 ```
 
 
