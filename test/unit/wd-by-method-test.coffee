@@ -20,19 +20,18 @@ test = (browserName) ->
   it "init", WdWrap ->
     @init browserName: browserName
 
-  # it "sessionCapabilities", WdWrap ->
-  # @todo selenium server throws, so use altSessionCapabilities
-  # instead
+  it "sessionCapabilities", WdWrap ->
+    capabilities = @sessionCapabilities()
+    should.exist capabilities
+    should.exist capabilities.browserName
+    should.exist capabilities.platform
   
   it "altSessionCapabilities", WdWrap ->
     capabilities = @altSessionCapabilities()
     should.exist capabilities
     should.exist capabilities.browserName
     should.exist capabilities.platform
-
-  it "altSessionCapabilities", WdWrap ->
-    capabilities = @altSessionCapabilities()
-
+  
   # would do with better test, but can't be bothered
   it "setPageLoadTimeout", WdWrap ->
     @setPageLoadTimeout 500
@@ -42,7 +41,7 @@ test = (browserName) ->
 
   it "refresh", WdWrap ->
     @refresh()
-
+  
   it "eval", WdWrap ->
     (@eval "1+2").should.equal 3
     (@eval "document.title").should.equal "TEST PAGE"

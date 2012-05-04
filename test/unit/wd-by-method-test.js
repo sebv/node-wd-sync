@@ -36,14 +36,17 @@
         browserName: browserName
       });
     }));
-    it("altSessionCapabilities", WdWrap(function() {
-      capabilities = this.altSessionCapabilities();
+    it("sessionCapabilities", WdWrap(function() {
+      capabilities = this.sessionCapabilities();
       should.exist(capabilities);
       should.exist(capabilities.browserName);
       return should.exist(capabilities.platform);
     }));
     it("altSessionCapabilities", WdWrap(function() {
-      return capabilities = this.altSessionCapabilities();
+      capabilities = this.altSessionCapabilities();
+      should.exist(capabilities);
+      should.exist(capabilities.browserName);
+      return should.exist(capabilities.platform);
     }));
     it("setPageLoadTimeout", WdWrap(function() {
       return this.setPageLoadTimeout(500);
