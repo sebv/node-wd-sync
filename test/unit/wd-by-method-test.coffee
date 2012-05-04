@@ -18,13 +18,17 @@ test = (browserName) ->
 
   it "init", WdWrap ->
     @init browserName: browserName
-    
-  it "sessionCapabilities", WdWrap ->
-    capabilities = @sessionCapabilities()
+
+  # it "sessionCapabilities", WdWrap ->
+  # @todo selenium server throws, so use altSessionCapabilities
+  # instead
+  
+  it "altSessionCapabilities", WdWrap ->
+    capabilities = @altSessionCapabilities()
     should.exist capabilities
     should.exist capabilities.browserName
     should.exist capabilities.platform
-
+  
   it "get", WdWrap ->
     @get "file://#{__dirname}/assets/test-page.html"
           
@@ -300,6 +304,7 @@ test = (browserName) ->
         
   it "close", WdWrap ->        
     @close()
+
   it "quit", WdWrap ->        
     @quit()
   

@@ -22,7 +22,11 @@ testWithBrowser = (browserName) ->
       config.saucelabs['access-key'],
       mode:'sync'
     Wd with:browser, ->        
+      should.exist @status()
       @init(desired)
+      caps = @sessionCapabilities()
+      should.exist caps
+      should.exist caps.browserName 
       @get "http://google.com"
       @title().toLowerCase().should.include 'google'          
       queryField = @elementByName 'q'

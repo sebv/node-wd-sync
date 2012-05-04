@@ -15,7 +15,8 @@
       return Wd({
         "with": browser
       }, function() {
-        var queryField;
+        var caps, queryField;
+        should.exist(this.status());
         if (browserName != null) {
           this.init({
             browserName: "" + browserName
@@ -23,6 +24,9 @@
         } else {
           this.init();
         }
+        caps = this.altSessionCapabilities();
+        should.exist(caps);
+        should.exist(caps.browserName);
         this.get("http://google.com");
         this.title().toLowerCase().should.include('google');
         queryField = this.elementByName('q');

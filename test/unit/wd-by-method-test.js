@@ -34,8 +34,8 @@
         browserName: browserName
       });
     }));
-    it("sessionCapabilities", WdWrap(function() {
-      capabilities = this.sessionCapabilities();
+    it("altSessionCapabilities", WdWrap(function() {
+      capabilities = this.altSessionCapabilities();
       should.exist(capabilities);
       should.exist(capabilities.browserName);
       return should.exist(capabilities.platform);

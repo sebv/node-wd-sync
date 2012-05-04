@@ -4,9 +4,13 @@ should = require 'should'
 testWithBrowser = (browserName) ->
   it "using #{browserName}", (done) ->
     browser = wd.remote(mode:'sync')
-    Wd with:browser, ->        
+    Wd with:browser, ->
+      should.exist @status()        
       if browserName? then @init browserName: "#{browserName}"
       else @init()
+      caps = @altSessionCapabilities()
+      should.exist caps
+      should.exist caps.browserName       
       @get "http://google.com"
       @title().toLowerCase().should.include 'google'          
       queryField = @elementByName 'q'
