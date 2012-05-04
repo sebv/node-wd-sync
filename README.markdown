@@ -34,11 +34,13 @@ so that the browser methods may be accessed using '@'.
 browser = wd.remote(mode:'sync')
 
 Wd with:browser, ->        
+  console.log "server status:", @status()
   @init browserName:'firefox'
+  console.log "session capabilities:", @altSessionCapabilities()
 
   @get "http://google.com"
   console.log @title()          
-    
+
   queryField = @elementByName 'q'
   @type queryField, "Hello World"  
   @type queryField, "\n"
@@ -49,7 +51,7 @@ Wd with:browser, ->
 
   console.log @elementByName 'not_exists' # undefined
 
-  @quit()
+  @quit()  
 ```
 
 ## Sauce Labs example
@@ -68,7 +70,7 @@ desired =
   platform: "LINUX"
   name: "wd-sync demo"
   browserName: "firefox"
-                 
+
 browser = wd.remote \
   "ondemand.saucelabs.com",
   80,
@@ -76,8 +78,11 @@ browser = wd.remote \
   accessKey,
   mode:'sync'
 
-Wd with:browser, ->        
+Wd with:browser, ->
+  console.log "server status:", @status()          
   @init(desired)
+  console.log "session capabilities:", @sessionCapabilities()
+  
   @get "http://google.com"
   console.log @title()          
 
