@@ -2,8 +2,8 @@ wd = require("wd")
 {MakeSync,Sync} = require 'make-sync'
 
 
-# We force mixed mode on those, because either they are executed internally
-# in async mode or it makes sense to call them asynchronously 
+# we force mixed mode on those, because either they are executed internally
+# in async mode or it makes sense to call them asynchronously.
 mixedArgsMethods = [
   'executeAsync'  
   , 'element' 
@@ -43,7 +43,7 @@ patch = (browser, mode) ->
     args.push done
     _moveTo.apply @, args
     
-  # fixing click and doubleclick so it can be called without 
+  # fixing click and doubleclick so it can be called without arguments 
   for m in ['click','doubleclick']
     do ->
       _m = browser[m]
@@ -55,10 +55,7 @@ patch = (browser, mode) ->
   # making methods synchronous
   options = buildOptions( mode )
   MakeSync browser, options
-   
-  # element and getAttribute may be called internally or externally
-  # , so better stick to this mode
-  for k in mixedArgsMethods 
+  for k in mixedArgsMethods # methods forced to mixed-args mode 
     do ->
       browser[k] = MakeSync browser[k], mode:['mixed', 'args']
         
@@ -81,7 +78,9 @@ wdSync =
   # retrieve the browser currently in use
   # useful when writting helpers  
   current: -> Fiber.current.wd_sync_browser
-  
+
+# starts sync block.
+# the browser is passed in the 'with' option.
 Wd = (options, cb) ->
   [options,cb] = [null,options] if typeof options is 'function' 
   if cb?
@@ -95,8 +94,8 @@ Wd = (options, cb) ->
       options2 = options if not options2?
       Wd options2, cb2      
 
-# careful, below browser is a function so it get evaluated with the rest
-# of the code  
+# wrapper around Wd. 
+# a function returning the browser is passed in the 'with' option.
 WdWrap = (options, cb) ->
   [options,cb] = [null,options] if typeof options is 'function' 
   if cb?
@@ -104,7 +103,7 @@ WdWrap = (options, cb) ->
       options.pre.apply @, [] if options?.pre?
       Sync ->
         Fiber.current.wd_sync_browser = options?.with?()
-        cb.apply options?.with?(), []
+        cb.apply options?.with?(), [] 
         done() if done?
   if options
     # returning an identical function with context(browser) preconfigured 
