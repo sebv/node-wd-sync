@@ -42,6 +42,12 @@
       should.exist(capabilities.browserName);
       return should.exist(capabilities.platform);
     }));
+    it("altSessionCapabilities", WdWrap(function() {
+      return capabilities = this.altSessionCapabilities();
+    }));
+    it("setPageLoadTimeout", WdWrap(function() {
+      return this.setPageLoadTimeout(500);
+    }));
     it("get", WdWrap(function() {
       return this.get("http://127.0.0.1:8181/test-page.html");
     }));
@@ -78,18 +84,28 @@
       res = this.executeAsync(scriptAsJs);
       return res.should.equal("OK");
     }));
-    it("setWaitTimeout", WdWrap(function() {
+    it("setWaitTimeout / setImplicitWaitTimeout", WdWrap(function() {
       var scriptAsCoffee, scriptAsJs;
       this.setWaitTimeout(0);
-      scriptAsCoffee = 'jQuery ->\n  setTimeout ->\n    $(\'#setWaitTimeout\').html \'<div class="child">a child</div>\'\n  , 1000           ';
+      scriptAsCoffee = 'setTimeout ->\n  $(\'#setWaitTimeout\').html \'<div class="child">a child</div>\'\n, 1000           ';
       scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
         bare: 'on'
       });
       this.execute(scriptAsJs);
       should.not.exist(this.elementByCss("#setWaitTimeout .child"));
-      this.setWaitTimeout(2000);
+      this.setImplicitWaitTimeout(2000);
       should.exist(this.elementByCss("#setWaitTimeout .child"));
       return this.setWaitTimeout(0);
+    }));
+    it("setAsyncScriptTimeout", WdWrap(function() {
+      var res, scriptAsCoffee, scriptAsJs;
+      this.setAsyncScriptTimeout(2000);
+      scriptAsCoffee = "[args...,done] = arguments\nsetTimeout ->\n  done \"OK\"\n, 1000";
+      scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
+        bare: 'on'
+      });
+      res = this.executeAsync(scriptAsJs);
+      return res.should.equal("OK");
     }));
     it("element", WdWrap(function() {
       should.exist(this.element("name", "elementByName"));

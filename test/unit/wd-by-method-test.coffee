@@ -29,10 +29,17 @@ test = (browserName) ->
     should.exist capabilities
     should.exist capabilities.browserName
     should.exist capabilities.platform
+
+  it "altSessionCapabilities", WdWrap ->
+    capabilities = @altSessionCapabilities()
+
+  # would do with better test, but can't be bothered
+  it "setPageLoadTimeout", WdWrap ->
+    @setPageLoadTimeout 500
   
   it "get", WdWrap ->
     @get "http://127.0.0.1:8181/test-page.html"
-          
+
   it "refresh", WdWrap ->
     @refresh()
 
@@ -67,23 +74,37 @@ test = (browserName) ->
     scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
     res = @executeAsync scriptAsJs          
     res.should.equal "OK"
-    
-  it "setWaitTimeout", WdWrap ->
+
+  it "setWaitTimeout / setImplicitWaitTimeout", WdWrap ->
     @setWaitTimeout 0
     scriptAsCoffee = 
       '''
-        jQuery ->
-          setTimeout ->
-            $('#setWaitTimeout').html '<div class="child">a child</div>'
-          , 1000           
+        setTimeout ->
+          $('#setWaitTimeout').html '<div class="child">a child</div>'
+        , 1000           
       '''
     scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'      
     @execute scriptAsJs
+    # selenium server throws not found exception, this is normal
     should.not.exist (@elementByCss "#setWaitTimeout .child")
-    @setWaitTimeout 2000
+    @setImplicitWaitTimeout 2000
     should.exist (@elementByCss "#setWaitTimeout .child")
     @setWaitTimeout 0
-      
+
+  it "setAsyncScriptTimeout", WdWrap ->
+    @setAsyncScriptTimeout 2000
+    scriptAsCoffee =
+      """
+        [args...,done] = arguments
+        setTimeout ->
+          done "OK"
+        , 1000
+      """
+    scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
+    res = @executeAsync scriptAsJs          
+    res.should.equal "OK"
+    
+        
   it "element", WdWrap ->      
     should.exist (@element "name", "elementByName")
     should.not.exist (@element "name", "elementByName2") 
@@ -362,6 +383,6 @@ describe "wd-sync", ->
     
     describe "using chrome", ->
       test 'chrome'
-
+    
     describe "using firefox", ->
       test 'firefox'
