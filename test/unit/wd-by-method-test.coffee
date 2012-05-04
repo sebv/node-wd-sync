@@ -332,7 +332,7 @@ test = (browserName) ->
        .should.have.length 0
     @deleteAllCookies()
     @allCookies().should.eql []
-    # not to sure how to test this case this one, so just making sure 
+    # not too sure how to test this case this one, so just making sure 
     # that it does not throw
     @setCookie \
       name: 'fruit3'
