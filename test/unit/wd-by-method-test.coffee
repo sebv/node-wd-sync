@@ -22,7 +22,7 @@ describe "wd-sync", ->
       done()
 
     it "init", WdWrap ->
-      @init browserName: "firefox"
+      @init browserName: "chrome"
 
     it "capabilities", WdWrap ->
       capabilities = @capabilities()
@@ -46,7 +46,7 @@ describe "wd-sync", ->
       @execute "window.wd_sync_execute_test = 'It worked!'"
       (@eval "window.wd_sync_execute_test").should.equal 'It worked!'
 
-    # TODO implement async script timeout in wd
+    # @todo implement async script timeout in wd
     it "executeAsync (async mode)", (done) ->
       scriptAsCoffee =
         """
@@ -162,16 +162,36 @@ describe "wd-sync", ->
       (@text current).should.equal "a1"      
       @moveTo a2 
       (@text current).should.equal "a2"
-
+    
+    ###
+    @todo waiting for implementation
     it "scroll", WdWrap ->
-      #TODO
-
-    it "buttonDown", WdWrap ->
-      #TODO
-         
-    it "buttonUp", WdWrap ->
-      #TODO
-                
+    ###
+    
+    it "buttonDown / buttonUp", WdWrap ->
+      a = @elementByCss "#mouseButton a"
+      resDiv = @elementByCss "#mouseButton div"
+      should.exist a
+      should.exist resDiv
+      scriptAsCoffee = 
+        '''
+          jQuery ->
+            a = $('#mouseButton a')
+            resDiv = $('#mouseButton div')
+            a.mousedown ->
+              resDiv.html 'button down'
+            a.mouseup ->
+              resDiv.html 'button up'
+        '''
+      scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'      
+      @execute scriptAsJs
+      (@text resDiv).should.equal ''
+      @moveTo a
+      @buttonDown()
+      (@text resDiv).should.equal 'button down'
+      @buttonUp()
+      (@text resDiv).should.equal 'button up'
+                            
     it "click", WdWrap ->      
       anchor = @elementByCss "#click a" 
       (@text anchor).should.equal "not clicked"
@@ -238,7 +258,6 @@ describe "wd-sync", ->
       (@textPresent 'sunny', textDiv).should.be.true
       (@textPresent 'raining', textDiv).should.be.false          
 
-    #TODO implement the other alert function
     it "acceptAlert", WdWrap ->
       a = @elementByCss "#acceptAlert a"
       should.exist (a)
@@ -274,16 +293,18 @@ describe "wd-sync", ->
         
       
     it "active", WdWrap ->
-      #TODO
-
-    it "keyToggle", WdWrap ->
-      #TODO
-    
+      i1 = @elementByCss "#active .i1" 
+      i2 = @elementByCss "#active .i2" 
+      @clickElement i1
+      @active().should.equal i1
+      @clickElement i2
+      @active().should.equal i2
+      
     it "url", WdWrap ->
       @url().should.include "/test/unit/assets/test-page.html"
         
     it "close", WdWrap ->        
       @close()
-
+    ###
     it "quit", WdWrap ->        
       @quit()

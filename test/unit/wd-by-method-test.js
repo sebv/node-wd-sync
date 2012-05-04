@@ -38,7 +38,7 @@
       });
       it("init", WdWrap(function() {
         return this.init({
-          browserName: "firefox"
+          browserName: "chrome"
         });
       }));
       it("capabilities", WdWrap(function() {
@@ -168,9 +168,29 @@
         this.moveTo(a2);
         return (this.text(current)).should.equal("a2");
       }));
-      it("scroll", WdWrap(function() {}));
-      it("buttonDown", WdWrap(function() {}));
-      it("buttonUp", WdWrap(function() {}));
+      /*
+          @todo waiting for implementation
+          it "scroll", WdWrap ->
+      */
+
+      it("buttonDown / buttonUp", WdWrap(function() {
+        var a, resDiv, scriptAsCoffee, scriptAsJs;
+        a = this.elementByCss("#mouseButton a");
+        resDiv = this.elementByCss("#mouseButton div");
+        should.exist(a);
+        should.exist(resDiv);
+        scriptAsCoffee = 'jQuery ->\n  a = $(\'#mouseButton a\')\n  resDiv = $(\'#mouseButton div\')\n  a.mousedown ->\n    resDiv.html \'button down\'\n  a.mouseup ->\n    resDiv.html \'button up\'';
+        scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
+          bare: 'on'
+        });
+        this.execute(scriptAsJs);
+        (this.text(resDiv)).should.equal('');
+        this.moveTo(a);
+        this.buttonDown();
+        (this.text(resDiv)).should.equal('button down');
+        this.buttonUp();
+        return (this.text(resDiv)).should.equal('button up');
+      }));
       it("click", WdWrap(function() {
         var anchor, scriptAsCoffee, scriptAsJs;
         anchor = this.elementByCss("#click a");
@@ -263,17 +283,26 @@
           return this.acceptAlert();
         }
       }));
-      it("active", WdWrap(function() {}));
-      it("keyToggle", WdWrap(function() {}));
+      it("active", WdWrap(function() {
+        var i1, i2;
+        i1 = this.elementByCss("#active .i1");
+        i2 = this.elementByCss("#active .i2");
+        this.clickElement(i1);
+        this.active().should.equal(i1);
+        this.clickElement(i2);
+        return this.active().should.equal(i2);
+      }));
       it("url", WdWrap(function() {
         return this.url().should.include("/test/unit/assets/test-page.html");
       }));
-      it("close", WdWrap(function() {
+      return it("close", WdWrap(function() {
         return this.close();
       }));
-      return it("quit", WdWrap(function() {
-        return this.quit();
-      }));
+      /*
+          it "quit", WdWrap ->        
+            @quit()
+      */
+
     });
   });
 
