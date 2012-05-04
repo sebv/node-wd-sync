@@ -13,15 +13,18 @@ test = (browserName) ->
     Wd = Wd with:browser
     done()
 
+  it "status", WdWrap ->
+    should.exist @status()
+
   it "init", WdWrap ->
     @init browserName: browserName
-
-  it "capabilities", WdWrap ->
-    capabilities = @capabilities()
+    
+  it "sessionCapabilities", WdWrap ->
+    capabilities = @sessionCapabilities()
     should.exist capabilities
     should.exist capabilities.browserName
     should.exist capabilities.platform
-       
+
   it "get", WdWrap ->
     @get "file://#{__dirname}/assets/test-page.html"
           
@@ -155,10 +158,10 @@ test = (browserName) ->
     @moveTo a2 
     (@text current).should.equal "a2"
     
-  ###
-  @todo waiting for implementation
-  it "scroll", WdWrap ->
-  ###
+  
+  # @todo waiting for implementation
+  # it "scroll", WdWrap ->
+  
     
   it "buttonDown / buttonUp", WdWrap ->
     a = @elementByCss "#mouseButton a"
@@ -297,10 +300,9 @@ test = (browserName) ->
         
   it "close", WdWrap ->        
     @close()
-
   it "quit", WdWrap ->        
     @quit()
-
+  
 describe "wd-sync", ->
 
   describe "method by method tests", ->
@@ -309,4 +311,4 @@ describe "wd-sync", ->
       test 'chrome'
 
     describe "using firefox", ->
-      test 'firefox'
+      test 'chrome'

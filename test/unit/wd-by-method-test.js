@@ -26,13 +26,16 @@
       });
       return done();
     });
+    it("status", WdWrap(function() {
+      return should.exist(this.status());
+    }));
     it("init", WdWrap(function() {
       return this.init({
         browserName: browserName
       });
     }));
-    it("capabilities", WdWrap(function() {
-      capabilities = this.capabilities();
+    it("sessionCapabilities", WdWrap(function() {
+      capabilities = this.sessionCapabilities();
       should.exist(capabilities);
       should.exist(capabilities.browserName);
       return should.exist(capabilities.platform);
@@ -158,11 +161,6 @@
       this.moveTo(a2);
       return (this.text(current)).should.equal("a2");
     }));
-    /*
-      @todo waiting for implementation
-      it "scroll", WdWrap ->
-    */
-
     it("buttonDown / buttonUp", WdWrap(function() {
       var a, resDiv, scriptAsCoffee, scriptAsJs;
       a = this.elementByCss("#mouseButton a");
@@ -299,7 +297,7 @@
         return test('chrome');
       });
       return describe("using firefox", function() {
-        return test('firefox');
+        return test('chrome');
       });
     });
   });
