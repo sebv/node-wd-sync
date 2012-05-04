@@ -53,7 +53,6 @@ test = (browserName) ->
     @execute "window.wd_sync_execute_test = 'It worked!'"
     (@eval "window.wd_sync_execute_test").should.equal 'It worked!'
 
-  # @todo implement async script timeout in wd
   it "executeAsync (async mode)", (done) ->
     scriptAsCoffee =
       """
