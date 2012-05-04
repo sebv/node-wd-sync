@@ -267,7 +267,7 @@ mode: ['mixed','args']
 mode: ['mixed','fibers']
 
 # methods forced to ['mixed','args']
-['executeAsync', 'element', 'getAttribute']
+['executeAsync', 'element', 'getAttribute', 'text']
 ```
 
 
