@@ -1,6 +1,6 @@
 wd = require("wd")
 {MakeSync,Sync} = require 'make-sync'
-
+{EventEmitter} = require 'events'
 
 # we force mixed mode on those, because either they are executed internally
 # in async mode or it makes sense to call them asynchronously.
@@ -11,12 +11,16 @@ mixedArgsMethods = [
   , 'text'  
 ]
 
+prototypeMethods = \
+  (k for k,v of EventEmitter.prototype when typeof v is 'function')
+
 buildOptions = (mode) ->  
+  
   mode = 'sync' if not mode?
   {
     mode: mode
     include: '*'
-    exclude: mixedArgsMethods.concat [
+    exclude: mixedArgsMethods.concat prototypeMethods.concat [
       'getOpts'
       , 'defaultElement'      
     ]   
