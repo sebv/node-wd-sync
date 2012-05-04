@@ -8,7 +8,7 @@ testWithBrowser = (browserName) ->
       should.exist @status()        
       if browserName? then @init browserName: "#{browserName}"
       else @init()
-      caps = @altSessionCapabilities()
+      caps = @sessionCapabilities()
       should.exist caps
       should.exist caps.browserName       
       @get "http://google.com"

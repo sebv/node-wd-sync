@@ -24,7 +24,7 @@
         } else {
           this.init();
         }
-        caps = this.altSessionCapabilities();
+        caps = this.sessionCapabilities();
         should.exist(caps);
         should.exist(caps.browserName);
         this.get("http://google.com");
