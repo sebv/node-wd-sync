@@ -288,7 +288,7 @@
       url.should.include("test-page.html");
       return url.should.include("http://");
     }));
-    it("allCookies / setCookies / deleteAllCookies ", WdWrap(function() {
+    it("allCookies / setCookies / deleteAllCookies / deleteCookie ", WdWrap(function() {
       var cookies;
       this.deleteAllCookies();
       this.allCookies().should.eql([]);

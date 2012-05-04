@@ -305,7 +305,7 @@ test = (browserName) ->
     url.should.include "test-page.html"
     url.should.include "http://"
   
-  it "allCookies / setCookies / deleteAllCookies ", WdWrap ->
+  it "allCookies / setCookies / deleteAllCookies / deleteCookie ", WdWrap ->
     @deleteAllCookies()
     @allCookies().should.eql []
     @setCookie \
