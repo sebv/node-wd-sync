@@ -284,6 +284,6 @@ java -jar selenium-server-standalone-2.21.0.jar -Dwebdriver.chrome.driver=./chro
 ```
 
 
-## methods tested
+## per methods tests / code example
 
 check in [wd-by-method-test.coffee](https://github.com/sebv/node-wd-sync/blob/master/test/unit/wd-by-method-test.coffee)
