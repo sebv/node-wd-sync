@@ -52,3 +52,9 @@ task 'doc:build', ->
     "./README.md" 
     , (whiskers.render template, ctx) 
     , (err) -> console.log err if err
+
+  template = fs.readFileSync('./doc/template/COFFEE-DOC-template.md', 'utf8')
+  fs.writeFile \
+    "./doc/COFFEE-DOC.md" 
+    , (whiskers.render template, ctx) 
+    , (err) -> console.log err if err

@@ -27,7 +27,7 @@ block holds the fiber environment. The Wd block context is set to the browser,
 so that the browser methods may be accessed using '@'.
 
 ```coffeescript
-{1wdsimple}
+{1wdsimplecoffee}
 ```
 
 ## Sauce Labs example
@@ -36,7 +36,7 @@ Remote testing with [Sauce Labs](http://saucelabs.com) works. The extra mode
 option is also needed here.
 
 ```coffeescript
-{2wdsaucelabs}
+{2wdsaucelabscoffee}
 ```
 
 
@@ -54,7 +54,7 @@ A 'pre' method may also be specified. It is called before the Wd block starts, i
 context (In Mocha, it can be used to configure timeouts). 
 
 ```coffeescript
-{3wdwrapmochasimple}
+{3wdwrapmochasimplecoffee}
 ```
 
 ## a slightly leaner syntax
@@ -65,12 +65,12 @@ returns a version of itself with a browser default added.
 Wd sample below:
 
 ```coffeescript
-{4wdleaner}
+{4wdleanercoffee}
 ```
 
 WdWrap sample below, using the mocha test framework:
 ```coffeescript
-{5wdwrapmochaleaner}
+{5wdwrapmochaleanercoffee}
 ```
 
 
@@ -82,7 +82,7 @@ It can be retrieved with the wd.current() function.
 This is useful when writing test helpers.
 
 ```coffeescript
-{6wdcurrentbrowser}
+{6wdcurrentbrowsercoffee}
 ```
 
 ## modes
