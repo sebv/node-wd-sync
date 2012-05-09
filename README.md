@@ -84,10 +84,15 @@ Wd( function() {
 
 ``` 
 
-## doc and example
+## doc 
+
+## examples
+
+* [CoffeeScript](http://github.com/sebv/node-wd-sync/tree/master/examples/coffee)
+* [JavaScript](http://github.com/sebv/node-wd-sync/tree/master/examples/js)
 
 
-## Tests
+## tests
 
 ### local / selenium server: 
 
