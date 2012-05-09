@@ -317,7 +317,7 @@
         Retrieve all cookies visible to the current page.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        allCookies() -> cookies)
+        allCookies() -> cookies
       </td>      
     </tr>
     <tr>
@@ -362,7 +362,7 @@
         Get the current page title.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        title() -> title)
+        title() -> title
       </td>      
     </tr>
     <tr>
@@ -372,11 +372,11 @@
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
         <ul>
-          <li>element(using, value) -> element)</li>
-          <li>elementByLinkText(value) -> element)</li>
-          <li>elementById(value) -> element)</li>
-          <li>elementByName(value) -> element)</li>
-          <li>elementByCss(value) -> element)</li>
+          <li>element(using, value) -> element</li>
+          <li>elementByLinkText(value) -> element</li>
+          <li>elementById(value) -> element</li>
+          <li>elementByName(value) -> element</li>
+          <li>elementByCss(value) -> element</li>
         <ul>
       </td>      
     </tr>
@@ -387,11 +387,11 @@
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
         <ul>
-          <li>elements(using, value) -> elements)</li>
-          <li>elementsByLinkText(value) -> elements)</li>
-          <li>elementsById(value) -> elements)</li>
-          <li>elementsByName(value) -> elements)</li>
-          <li>elementsByCss(value) -> elements)</li>
+          <li>elements(using, value) -> elements</li>
+          <li>elementsByLinkText(value) -> elements</li>
+          <li>elementsById(value) -> elements</li>
+          <li>elementsByName(value) -> elements</li>
+          <li>elementsByCss(value) -> elements</li>
         <ul>
       </td>      
     </tr>
@@ -401,7 +401,7 @@
         Get the element on the page that currently has focus.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        active() -> element)
+        active() -> element
       </td>      
     </tr>
     <tr>
@@ -457,10 +457,10 @@
       <td style="border: 1px solid #ccc; padding: 5px;">
         <ul>
           <li>
-            text(element) -> (err, text)
+            text(element) -> text
           </li>
           <li>
-            textPresent(searchText, element) -> (err, boolean)
+            textPresent(searchText, element) -> boolean
           </li>  
         </ul>
       </td>      
