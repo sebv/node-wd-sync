@@ -1,3 +1,6 @@
+fs = require 'fs'
+whiskers = require 'whiskers'
+
 DEV_DIRS = ['lib','test']
 COFFEE_PATHS = DEV_DIRS.concat ['index.coffee']
 JS_PATHS = DEV_DIRS.concat ['index.js']
@@ -23,4 +26,20 @@ task 'test:sauce', 'Run Sauce Labs integration test', ->
 task 'grep:dirty', 'Lookup for debugger and console.log in code', ->
   u.grep.debug()
   u.grep.log()
-         
+
+# remove local import in examples
+fixRequire = (s) ->
+  s.replace /\{wd.*\ntry.*\n.*\ncatch.*\n.*\n/m, "{wd,Wd} = require 'wd-sync'\n"
+
+# buid the dynamic doc files
+task 'doc:build', ->
+  template = fs.readFileSync('./doc/template/README-template.markdown', 'utf8')
+  ctx = {}
+  for filename in fs.readdirSync('./examples/coffee') \
+    when filename.match /\.coffee/
+      key = filename.replace(/\-/g,'').replace('.coffee','')
+      ctx[key] = fixRequire ( fs.readFileSync("./examples/coffee/#{filename}", 'utf8') )      
+  fs.writeFile \
+    "./README.markdown" 
+    , (whiskers.render template, ctx) 
+    , (err) -> console.log err if err

@@ -63,13 +63,13 @@ Remote testing with [Sauce Labs](http://saucelabs.com) works. The extra mode
 option is also needed here.
 
 ```coffeescript
-{wd,Wd} = require 'wd-sync'
-
-# 2/ wd saucelabs example 
-
 # configure saucelabs username/access key here
 username = '<USERNAME>'
 accessKey = '<ACCESS KEY>'
+
+{wd,Wd} = require 'wd-sync'
+
+# 2/ wd saucelabs example 
 
 desired =
   platform: "LINUX"
