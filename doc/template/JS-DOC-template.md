@@ -87,6 +87,11 @@ Don't forget to set the 'use' option in the block, or globably like in the sampl
 {5wdcurrentbrowserjs}
 ```
 
+## supported methods
+
+* [full JsonWireProtocol mapping](http://github.com/sebv/node-wd-sync/blob/master/doc/jsonwiremap-all.md)
+* [supported JsonWireProtocol mapping](http://github.com/sebv/node-wd-sync/blob/master/doc/jsonwiremap-supported.md)
+
 
 ## doc 
 
