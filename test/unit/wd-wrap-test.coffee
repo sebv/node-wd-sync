@@ -3,6 +3,7 @@ should = require 'should'
 browser = null
 someText = null
 TIMEOUT = 30000
+describe "wd-sync", -> \
 describe "WdWrap", ->
   
   describe "passing browser", ->  

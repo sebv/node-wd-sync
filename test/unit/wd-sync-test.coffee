@@ -22,8 +22,8 @@ testWithBrowser = (browserName) ->
       @quit()
       done()
 
-describe "wd-sync", ->
-
+describe "wd-sync", -> \
+describe "sync tests", ->
   describe "passing browser", ->
     for browserName in [undefined,'firefox','chrome']
       testWithBrowser browserName

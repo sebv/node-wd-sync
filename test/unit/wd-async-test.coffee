@@ -18,6 +18,7 @@ testWithBrowser = (browserName) ->
                       browser.quit ->
                         done()
 
-describe "wd-async", ->
+describe "wd-sync", -> \
+describe "async tests", ->  
   for browserName in ['firefox','chrome']
     testWithBrowser browserName

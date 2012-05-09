@@ -57,6 +57,16 @@
     it("refresh", WdWrap(function() {
       return this.refresh();
     }));
+    it("back / forward", WdWrap(function() {
+      this.refresh();
+      this.get("http://127.0.0.1:8181/test-page.html?p=2");
+      this.url().should.include("?p=2");
+      this.back();
+      this.url().should.not.include("?p=2");
+      this.forward();
+      this.url().should.include("?p=2");
+      return this.get("http://127.0.0.1:8181/test-page.html");
+    }));
     it("eval", WdWrap(function() {
       (this["eval"]("1+2")).should.equal(3);
       (this["eval"]("document.title")).should.equal("TEST PAGE");
@@ -129,6 +139,26 @@
     it("elementByCss", WdWrap(function() {
       should.exist(this.elementByCss("#elementByCss"));
       return should.not.exist(this.elementByCss("#elementByCss2"));
+    }));
+    it("elements", WdWrap(function() {
+      (this.elements("name", "elementsByName")).should.have.length(3);
+      return (this.elements("name", "elementsByName2")).should.eql([]);
+    }));
+    it("elementsById", WdWrap(function() {
+      (this.elementsById("elementsById")).should.have.length(3);
+      return (this.elementsById("elementsById2")).should.eql([]);
+    }));
+    it("elementsByName", WdWrap(function() {
+      (this.elementsByName("elementsByName")).should.have.length(3);
+      return (this.elementsByName("elementsByName2")).should.eql([]);
+    }));
+    it("elementsByCss", WdWrap(function() {
+      (this.elementsByCss("#elementsByCss")).should.have.length(2);
+      return (this.elementsByCss("#elementsByCss2")).should.eql([]);
+    }));
+    it("elementsByLinkText", WdWrap(function() {
+      (this.elementsByLinkText("click elementsByLinkText")).should.have.length(2);
+      return (this.elementsByLinkText("click elementsByLinkText2")).should.eql([]);
     }));
     it("getAttribute", WdWrap(function() {
       var testDiv;
@@ -250,12 +280,36 @@
     it("title", WdWrap(function() {
       return this.title().should.equal("TEST PAGE");
     }));
-    it("text", WdWrap(function() {
+    it("text (passing element)", WdWrap(function() {
       var textDiv;
       textDiv = this.elementByCss("#text");
       should.exist(textDiv);
       (this.text(textDiv)).should.include("text content");
       return (this.text(textDiv)).should.not.include("div");
+    }));
+    it("text (passing undefined)", WdWrap(function() {
+      var res;
+      res = this.text(void 0);
+      res.should.include("text content");
+      res.should.include("sunny");
+      res.should.include("click elementsByLinkText");
+      return res.should.not.include("div");
+    }));
+    it("text (passing body)", WdWrap(function() {
+      var res;
+      res = this.text('body');
+      res.should.include("text content");
+      res.should.include("sunny");
+      res.should.include("click elementsByLinkText");
+      return res.should.not.include("div");
+    }));
+    it("text (passing null)", WdWrap(function() {
+      var res;
+      res = this.text(null);
+      res.should.include("text content");
+      res.should.include("sunny");
+      res.should.include("click elementsByLinkText");
+      return res.should.not.include("div");
     }));
     it("textPresent", WdWrap(function() {
       var textDiv;

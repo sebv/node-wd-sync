@@ -41,6 +41,16 @@ test = (browserName) ->
     
   it "refresh", WdWrap ->
     @refresh()
+
+  it "back / forward", WdWrap ->
+    @refresh()
+    @get "http://127.0.0.1:8181/test-page.html?p=2"
+    @url().should.include "?p=2"
+    @back()
+    @url().should.not.include "?p=2"
+    @forward()
+    @url().should.include "?p=2"
+    @get "http://127.0.0.1:8181/test-page.html"
   
   it "eval", WdWrap ->
     (@eval "1+2").should.equal 3
@@ -121,6 +131,26 @@ test = (browserName) ->
   it "elementByCss", WdWrap ->      
     should.exist (@elementByCss "#elementByCss")
     should.not.exist (@elementByCss "#elementByCss2")
+
+  it "elements", WdWrap ->      
+    (@elements "name", "elementsByName").should.have.length 3
+    (@elements "name", "elementsByName2").should.eql []
+
+  it "elementsById", WdWrap ->      
+    (@elementsById "elementsById").should.have.length 3
+    (@elementsById "elementsById2").should.eql []
+
+  it "elementsByName", WdWrap ->      
+    (@elementsByName "elementsByName").should.have.length 3
+    (@elementsByName "elementsByName2").should.eql []
+
+  it "elementsByCss", WdWrap ->      
+    (@elementsByCss "#elementsByCss").should.have.length 2
+    (@elementsByCss "#elementsByCss2").should.eql []
+
+  it "elementsByLinkText", WdWrap ->      
+    (@elementsByLinkText "click elementsByLinkText").should.have.length 2
+    (@elementsByLinkText "click elementsByLinkText2").should.eql []
 
   it "getAttribute", WdWrap ->
     testDiv = @elementById "getAttribute"      
@@ -266,11 +296,34 @@ test = (browserName) ->
   it "title", WdWrap ->
     @title().should.equal "TEST PAGE"
                   
-  it "text", WdWrap ->
+  it "text (passing element)", WdWrap ->
     textDiv = @elementByCss "#text"             
     should.exist (textDiv)
     (@text textDiv).should.include "text content" 
     (@text textDiv).should.not.include "div" 
+
+  it "text (passing undefined)", WdWrap ->
+    res = @text undefined
+    # the whole page text is returned
+    res.should.include "text content" 
+    res.should.include "sunny" 
+    res.should.include "click elementsByLinkText"
+    res.should.not.include "div" 
+
+  it "text (passing body)", WdWrap ->
+    res = @text 'body'        # the whole page text is returned
+    res.should.include "text content" 
+    res.should.include "sunny" 
+    res.should.include "click elementsByLinkText"
+    res.should.not.include "div" 
+
+  it "text (passing null)", WdWrap ->
+    res = @text null
+    # the whole page text is returned
+    res.should.include "text content" 
+    res.should.include "sunny" 
+    res.should.include "click elementsByLinkText"
+    res.should.not.include "div" 
     
   it "textPresent", WdWrap ->
     textDiv = @elementByCss "#textPresent"
@@ -366,22 +419,21 @@ test = (browserName) ->
   it "quit", WdWrap ->        
     @quit()
   
-describe "wd-sync", ->
-  
-  describe "method by method tests", ->
-    app = null;
-    before (done) ->
-      app = express.createServer()
-      app.use(express.static(__dirname + '/assets'));
-      app.listen 8181
-      done()
+describe "wd-sync", -> \
+describe "method by method tests", ->
+  app = null;
+  before (done) ->
+    app = express.createServer()
+    app.use(express.static(__dirname + '/assets'));
+    app.listen 8181
+    done()
     
-    after (done) ->
-      app.close()
-      done()
+  after (done) ->
+    app.close()
+    done()
     
-    describe "using chrome", ->
-      test 'chrome'
+  describe "using chrome", ->
+    test 'chrome'
     
-    describe "using firefox", ->
-      test 'firefox'
+  describe "using firefox", ->
+    test 'firefox'

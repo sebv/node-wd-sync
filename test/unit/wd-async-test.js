@@ -40,15 +40,17 @@
     });
   };
 
-  describe("wd-async", function() {
-    var browserName, _i, _len, _ref1, _results;
-    _ref1 = ['firefox', 'chrome'];
-    _results = [];
-    for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-      browserName = _ref1[_i];
-      _results.push(testWithBrowser(browserName));
-    }
-    return _results;
+  describe("wd-sync", function() {
+    return describe("async tests", function() {
+      var browserName, _i, _len, _ref1, _results;
+      _ref1 = ['firefox', 'chrome'];
+      _results = [];
+      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+        browserName = _ref1[_i];
+        _results.push(testWithBrowser(browserName));
+      }
+      return _results;
+    });
   });
 
 }).call(this);

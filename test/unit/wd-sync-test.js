@@ -42,67 +42,69 @@
   };
 
   describe("wd-sync", function() {
-    describe("passing browser", function() {
-      var browserName, _i, _len, _ref1, _results;
-      _ref1 = [void 0, 'firefox', 'chrome'];
-      _results = [];
-      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-        browserName = _ref1[_i];
-        _results.push(testWithBrowser(browserName));
-      }
-      return _results;
-    });
-    describe("without passing browser", function() {
-      before(function(done) {
-        var browser;
-        browser = wd.remote({
-          mode: 'sync'
-        });
-        Wd = Wd({
-          "with": browser
-        });
-        return done();
+    return describe("sync tests", function() {
+      describe("passing browser", function() {
+        var browserName, _i, _len, _ref1, _results;
+        _ref1 = [void 0, 'firefox', 'chrome'];
+        _results = [];
+        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+          browserName = _ref1[_i];
+          _results.push(testWithBrowser(browserName));
+        }
+        return _results;
       });
-      return it("without passing browser", function(done) {
-        return Wd(function() {
-          var queryField;
-          this.init();
-          this.get("http://google.com");
-          this.title().toLowerCase().should.include('google');
-          queryField = this.elementByName('q');
-          this.type(queryField, "Hello World");
-          this.type(queryField, "\n");
-          this.setWaitTimeout(3000);
-          this.elementByCss('#ires');
-          this.title().toLowerCase().should.include('hello world');
-          this.quit();
+      describe("without passing browser", function() {
+        before(function(done) {
+          var browser;
+          browser = wd.remote({
+            mode: 'sync'
+          });
+          Wd = Wd({
+            "with": browser
+          });
           return done();
         });
-      });
-    });
-    return describe('wd.current()', function() {
-      return it("browsing", function(done) {
-        var browser, myOwnTitle;
-        browser = wd.remote({
-          mode: 'sync'
-        });
-        myOwnTitle = function() {
-          return wd.current().title();
-        };
-        return Wd({
-          "with": browser
-        }, function() {
-          if (typeof browserName !== "undefined" && browserName !== null) {
-            this.init({
-              browserName: "" + browserName
-            });
-          } else {
+        return it("without passing browser", function(done) {
+          return Wd(function() {
+            var queryField;
             this.init();
-          }
-          this.get("http://google.com");
-          myOwnTitle().toLowerCase().should.include('google');
-          this.quit();
-          return done();
+            this.get("http://google.com");
+            this.title().toLowerCase().should.include('google');
+            queryField = this.elementByName('q');
+            this.type(queryField, "Hello World");
+            this.type(queryField, "\n");
+            this.setWaitTimeout(3000);
+            this.elementByCss('#ires');
+            this.title().toLowerCase().should.include('hello world');
+            this.quit();
+            return done();
+          });
+        });
+      });
+      return describe('wd.current()', function() {
+        return it("browsing", function(done) {
+          var browser, myOwnTitle;
+          browser = wd.remote({
+            mode: 'sync'
+          });
+          myOwnTitle = function() {
+            return wd.current().title();
+          };
+          return Wd({
+            "with": browser
+          }, function() {
+            if (typeof browserName !== "undefined" && browserName !== null) {
+              this.init({
+                browserName: "" + browserName
+              });
+            } else {
+              this.init();
+            }
+            this.get("http://google.com");
+            myOwnTitle().toLowerCase().should.include('google');
+            this.quit();
+            return done();
+          });
         });
       });
     });

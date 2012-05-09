@@ -17,83 +17,85 @@
   TIMEOUT = 180000;
 
   describe("wd-sauce", function() {
-    it("checking config", function(done) {
-      should.exist(config, 'you need to configure your sauce username and access-key ' + 'in the file config.coffee.');
-      return done();
-    });
-    return describe("using WdWrap", function() {
-      describe("passing browser", function() {
-        var browser;
-        browser = null;
-        it("initializing browser", function(done) {
-          this.timeout(TIMEOUT);
-          browser = wd.remote("ondemand.saucelabs.com", 80, config.saucelabs.username, config.saucelabs['access-key'], {
-            mode: 'sync'
-          });
+    return describe("sauce tests", function() {
+      return describe("WdWrap", function() {
+        it("checking config", function(done) {
+          should.exist(config, 'you need to configure your sauce username and access-key ' + 'in the file config.coffee.');
           return done();
         });
-        return it("browsing", WdWrap({
-          "with": function() {
-            return browser;
-          },
-          pre: function() {
-            return this.timeout(TIMEOUT);
-          }
-        }, function() {
-          var desired, queryField;
-          desired = {
-            platform: "LINUX",
-            name: "wd-sync sauce test",
-            browserName: 'firefox'
-          };
-          this.init(desired);
-          this.get("http://google.com");
-          this.title().toLowerCase().should.include('google');
-          queryField = this.elementByName('q');
-          this.type(queryField, "Hello World");
-          this.type(queryField, "\n");
-          this.setWaitTimeout(3000);
-          this.elementByCss('#ires');
-          this.title().toLowerCase().should.include('hello world');
-          return this.quit();
-        }));
-      });
-      return describe("without passing browser", function() {
-        var browser;
-        browser = null;
-        WdWrap = WdWrap({
-          "with": function() {
-            return browser;
-          },
-          pre: function() {
-            return this.timeout(TIMEOUT);
-          }
-        });
-        it("initializing browser", function(done) {
-          this.timeout(TIMEOUT);
-          browser = wd.remote("ondemand.saucelabs.com", 80, config.saucelabs.username, config.saucelabs['access-key'], {
-            mode: 'sync'
+        describe("passing browser", function() {
+          var browser;
+          browser = null;
+          it("initializing browser", function(done) {
+            this.timeout(TIMEOUT);
+            browser = wd.remote("ondemand.saucelabs.com", 80, config.saucelabs.username, config.saucelabs['access-key'], {
+              mode: 'sync'
+            });
+            return done();
           });
-          return done();
+          return it("browsing", WdWrap({
+            "with": function() {
+              return browser;
+            },
+            pre: function() {
+              return this.timeout(TIMEOUT);
+            }
+          }, function() {
+            var desired, queryField;
+            desired = {
+              platform: "LINUX",
+              name: "wd-sync sauce test",
+              browserName: 'firefox'
+            };
+            this.init(desired);
+            this.get("http://google.com");
+            this.title().toLowerCase().should.include('google');
+            queryField = this.elementByName('q');
+            this.type(queryField, "Hello World");
+            this.type(queryField, "\n");
+            this.setWaitTimeout(3000);
+            this.elementByCss('#ires');
+            this.title().toLowerCase().should.include('hello world');
+            return this.quit();
+          }));
         });
-        return it("browsing", WdWrap(function() {
-          var desired, queryField;
-          desired = {
-            platform: "LINUX",
-            name: "wd-sync sauce test",
-            browserName: 'firefox'
-          };
-          this.init(desired);
-          this.get("http://google.com");
-          this.title().toLowerCase().should.include('google');
-          queryField = this.elementByName('q');
-          this.type(queryField, "Hello World");
-          this.type(queryField, "\n");
-          this.setWaitTimeout(3000);
-          this.elementByCss('#ires');
-          this.title().toLowerCase().should.include('hello world');
-          return this.quit();
-        }));
+        return describe("without passing browser", function() {
+          var browser;
+          browser = null;
+          WdWrap = WdWrap({
+            "with": function() {
+              return browser;
+            },
+            pre: function() {
+              return this.timeout(TIMEOUT);
+            }
+          });
+          it("initializing browser", function(done) {
+            this.timeout(TIMEOUT);
+            browser = wd.remote("ondemand.saucelabs.com", 80, config.saucelabs.username, config.saucelabs['access-key'], {
+              mode: 'sync'
+            });
+            return done();
+          });
+          return it("browsing", WdWrap(function() {
+            var desired, queryField;
+            desired = {
+              platform: "LINUX",
+              name: "wd-sync sauce test",
+              browserName: 'firefox'
+            };
+            this.init(desired);
+            this.get("http://google.com");
+            this.title().toLowerCase().should.include('google');
+            queryField = this.elementByName('q');
+            this.type(queryField, "Hello World");
+            this.type(queryField, "\n");
+            this.setWaitTimeout(3000);
+            this.elementByCss('#ires');
+            this.title().toLowerCase().should.include('hello world');
+            return this.quit();
+          }));
+        });
       });
     });
   });
