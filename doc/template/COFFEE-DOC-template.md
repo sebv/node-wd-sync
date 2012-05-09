@@ -13,7 +13,7 @@ npm install wd-sync
 ```
 
 
-## usage (coffeescript)
+## usage
 
 When creating a new browser with remote, an extra mode option need to be 
 passed.
