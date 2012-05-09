@@ -30,6 +30,8 @@ so that the browser methods may be accessed using '@'.
 # assumes that selenium server is running
 
 {wd,Wd} = require 'wd-sync'
+  
+# 1/ simple Wd example 
 
 browser = wd.remote(mode:'sync')
 
@@ -52,6 +54,7 @@ Wd with:browser, ->
   console.log @elementByName 'not_exists' # undefined
 
   @quit()  
+
 ```
 
 ## Sauce Labs example
@@ -60,11 +63,13 @@ Remote testing with [Sauce Labs](http://saucelabs.com) works. The extra mode
 option is also needed here.
 
 ```coffeescript
+{wd,Wd} = require 'wd-sync'
+
+# 2/ wd saucelabs example 
+
 # configure saucelabs username/access key here
 username = '<USERNAME>'
 accessKey = '<ACCESS KEY>'
-
-{wd,Wd} = require 'wd-sync'
 
 desired =
   platform: "LINUX"
@@ -82,7 +87,7 @@ Wd with:browser, ->
   console.log "server status:", @status()          
   @init(desired)
   console.log "session capabilities:", @sessionCapabilities()
-  
+
   @get "http://google.com"
   console.log @title()          
 
@@ -114,19 +119,22 @@ context (In Mocha, it can be used to configure timeouts).
 ```coffeescript
 # Assumes that the selenium server is running
 
-{wd,WdWrap} = require 'wd-sync'
+{wd,Wd} = require 'wd-sync'
+
 should = require 'should'
 
+# 3/ simple WdWrap example
+
 describe "WdWrap", ->
-  
+
   describe "passing browser", ->  
-    
+
     browser = null
-    
+
     before (done) ->
       browser = wd.remote(mode:'sync')
       done()
-      
+
     it "should work", WdWrap 
       with: -> 
         browser
@@ -147,6 +155,7 @@ describe "WdWrap", ->
       @title().toLowerCase().should.include 'hello world'
 
       @quit()  
+
 ```
 
 ## a slightly leaner syntax
@@ -160,6 +169,8 @@ Wd sample below:
 # assumes that selenium server is running
 
 {wd,Wd} = require 'wd-sync'
+  
+# 4/ leaner Wd syntax
 
 browser = wd.remote(mode:'sync')
 
@@ -181,19 +192,23 @@ Wd ->
   console.log @title()
 
   @quit()
+
 ```
 
 WdWrap sample below, using the mocha test framework:
 ```coffeescript
 # Assumes that the selenium server is running
 
-{wd,WdWrap} = require 'wd-sync'
+{wd,Wd} = require 'wd-sync'
+
 should = require 'should'
+      
+# 5/ leaner WdWrap syntax
 
 describe "WdWrap", ->
-  
+
   describe "passing browser", ->  
-    
+
     browser = null
     # do this only once
     WdWrap = WdWrap 
@@ -201,11 +216,11 @@ describe "WdWrap", ->
         browser
       pre: ->
         @timeout 30000
-    
+
     before (done) ->
       browser = wd.remote(mode:'sync')
       done()
-            
+
     it "should work", WdWrap ->      
       @init()
 
@@ -221,6 +236,8 @@ describe "WdWrap", ->
       @title().toLowerCase().should.include 'hello world'
 
       @quit()  
+
+
 ```
 
 
@@ -235,6 +252,8 @@ This is useful when writing test helpers.
 # assumes that selenium server is running
 
 {wd,Wd} = require 'wd-sync'
+  
+# 6/ retrieving the current browser
 
 browser = wd.remote(mode:'sync')
 
@@ -248,6 +267,7 @@ Wd with:browser, ->
   console.log myOwnGetTitle()          
 
   @quit()
+
 ```
 
 ## modes
