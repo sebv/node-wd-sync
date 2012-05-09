@@ -41,6 +41,12 @@ npm install wd-sync
 
 ### local / selenium server: 
 
+1/ starts the selenium server with chromedriver:
+```  
+java -jar selenium-server-standalone-2.21.0.jar -Dwebdriver.chrome.driver=<PATH>/chromedriver
+```
+
+2/run tests
 ```
 cake test 
 ```
