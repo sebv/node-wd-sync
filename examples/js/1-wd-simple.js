@@ -11,7 +11,7 @@ try {
 
 // 1/ simple Wd example 
 
-browser = wd.remote({mode: 'sync'});
+browser = wd.remote();
 
 Wd( function() {
   

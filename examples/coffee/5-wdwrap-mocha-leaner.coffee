@@ -24,7 +24,7 @@ describe "WdWrap", ->
         @timeout 30000
 
     before (done) ->
-      browser = wd.remote(mode:'sync')
+      browser = wd.remote()
       done()
 
     it "should work", WdWrap ->      

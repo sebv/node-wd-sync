@@ -8,7 +8,7 @@ catch err
   
 # 4/ leaner Wd syntax
 
-browser = wd.remote(mode:'sync')
+browser = wd.remote()
 
 # do this only once
 Wd = Wd with:browser 

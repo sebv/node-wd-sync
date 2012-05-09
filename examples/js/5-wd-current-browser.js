@@ -11,7 +11,7 @@ try {
 
 // 5/ retrieving the current browser
 
-var browser = wd.remote( {mode: 'sync'} );
+var browser = wd.remote();
 
 // do this once
 Wd = Wd( {with: browser} );

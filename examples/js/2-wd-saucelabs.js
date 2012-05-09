@@ -23,8 +23,7 @@ browser = wd.remote(
   "ondemand.saucelabs.com", 
   80, 
   username, 
-  accessKey, 
-  { mode: 'sync' }
+  accessKey
 );
 
 Wd( function() {

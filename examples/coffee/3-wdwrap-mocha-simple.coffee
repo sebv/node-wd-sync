@@ -18,7 +18,7 @@ describe "WdWrap", ->
     browser = null
 
     before (done) ->
-      browser = wd.remote(mode:'sync')
+      browser = wd.remote()
       done()
 
     it "should work", WdWrap 

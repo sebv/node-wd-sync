@@ -8,7 +8,7 @@ catch err
   
 # 6/ retrieving the current browser
 
-browser = wd.remote(mode:'sync')
+browser = wd.remote()
 
 myOwnGetTitle = ->    
   wd.current().title()

@@ -24,7 +24,7 @@ describe("WdWrap", function() {
     });
     
     before( function(done) {
-      browser = wd.remote({ mode: 'sync' });
+      browser = wd.remote();
       done();
     });
     

@@ -19,8 +19,7 @@ browser = wd.remote \
   "ondemand.saucelabs.com",
   80,
   username,
-  accessKey,
-  mode:'sync'
+  accessKey
 
 Wd with:browser, ->
   console.log "server status:", @status()          
