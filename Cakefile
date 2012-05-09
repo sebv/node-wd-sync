@@ -36,25 +36,31 @@ fixRequire = (s) ->
 # buid the dynamic doc files
 task 'doc:build', ->
   ctx = {}
-  
+  # retrieving coffee example code  
   for filename in fs.readdirSync('./examples/coffee') \
     when filename.match /\.coffee/
       key = filename.replace(/\-/g,'').replace('.','')
-      ctx[key] = fixRequire ( fs.readFileSync("./examples/coffee/#{filename}", 'utf8') )      
-  
+      ctx[key] = fixRequire ( fs.readFileSync("./examples/coffee/#{filename}", 'utf8') )        
+  # retrieving js example code
   for filename in fs.readdirSync('./examples/js') \
     when filename.match /\.js/
       key = filename.replace(/\-/g,'').replace('.','')
       ctx[key] = fixRequire ( fs.readFileSync("./examples/js/#{filename}", 'utf8') )      
-  
-  template = fs.readFileSync('./doc/template/README-template.md', 'utf8')
+  # README
+  template = fs.readFileSync('./doc/template/README-template.md', 'utf8')  
   fs.writeFile \
     "./README.md" 
     , (whiskers.render template, ctx) 
     , (err) -> console.log err if err
-
   template = fs.readFileSync('./doc/template/COFFEE-DOC-template.md', 'utf8')
+  # COFFEE DOC
   fs.writeFile \
     "./doc/COFFEE-DOC.md" 
+    , (whiskers.render template, ctx) 
+    , (err) -> console.log err if err
+  template = fs.readFileSync('./doc/template/JS-DOC-template.md', 'utf8')
+  # JS DOC
+  fs.writeFile \
+    "./doc/JS-DOC.md" 
     , (whiskers.render template, ctx) 
     , (err) -> console.log err if err
