@@ -46,13 +46,18 @@ npm install wd-sync
 java -jar selenium-server-standalone-2.21.0.jar -Dwebdriver.chrome.driver=<PATH>/chromedriver
 ```
 
-2/run tests
+2/ run tests
 ```
 cake test 
 ```
 
 ### remote / Sauce Labs 
 
+1/ follow the instruction2 [here](http://github.com/sebv/node-wd-sync/blob/master/test/sauce/README.md) to
+configure your username and access key.
+ 
+
+2/ run tests
 ```
 cake test:sauce
 ```
