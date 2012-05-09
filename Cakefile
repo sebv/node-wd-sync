@@ -33,13 +33,20 @@ fixRequire = (s) ->
 
 # buid the dynamic doc files
 task 'doc:build', ->
-  template = fs.readFileSync('./doc/template/README-template.markdown', 'utf8')
   ctx = {}
+  
   for filename in fs.readdirSync('./examples/coffee') \
     when filename.match /\.coffee/
-      key = filename.replace(/\-/g,'').replace('.coffee','')
+      key = filename.replace(/\-/g,'').replace('.','')
       ctx[key] = fixRequire ( fs.readFileSync("./examples/coffee/#{filename}", 'utf8') )      
+  
+  for filename in fs.readdirSync('./examples/js') \
+    when filename.match /\.js/
+      key = filename.replace(/\-/g,'').replace('.','')
+      ctx[key] = fixRequire ( fs.readFileSync("./examples/js/#{filename}", 'utf8') )      
+  
+  template = fs.readFileSync('./doc/template/README-template.md', 'utf8')
   fs.writeFile \
-    "./README.markdown" 
+    "./README.md" 
     , (whiskers.render template, ctx) 
     , (err) -> console.log err if err

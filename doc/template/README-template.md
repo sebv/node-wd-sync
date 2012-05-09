@@ -23,7 +23,7 @@ npm install wd-sync
 ### JavaScript
 
 ```javascript
-{1wdsimplecoffee}
+{1wdsimplejs}
 ``` 
 
 ## doc and example
