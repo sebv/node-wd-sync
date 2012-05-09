@@ -88,6 +88,11 @@ This is useful when writing test helpers.
 {6wdcurrentbrowsercoffee}
 ```
 
+## supported methods
+
+* [full JsonWireProtocol mapping](http://github.com/sebv/node-wd-sync/blob/master/doc/jsonwiremap-all.md)
+* [supported JsonWireProtocol mapping](http://github.com/sebv/node-wd-sync/blob/master/doc/jsonwiremap-supported.md)
+
 
 ## doc 
 
