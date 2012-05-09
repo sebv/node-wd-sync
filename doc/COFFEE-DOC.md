@@ -1,4 +1,4 @@
-# wd-sync
+# wd-sync with CofffeeScript
 
 A synchronous version with a nice api of [wd](http://github.com/admc/wd), 
 the lightweight  [WebDriver / Selenium2](http://seleniumhq.org/projects/webdriver/) 
@@ -13,9 +13,9 @@ npm install wd-sync
 ```
 
 
-## usage (coffeescript)
+## usage
 
-When creating a new browser with remote, an extra mode option need to be 
+When creating a new browser with remote, an extra 'mode' option need to be 
 passed.
 
 All the methods from [wd](http://github.com/admc/wd) are available. The element retrieval 
@@ -59,7 +59,7 @@ Wd with:browser, ->
 
 ## Sauce Labs example
 
-Remote testing with [Sauce Labs](http://saucelabs.com) works. The extra mode
+Remote testing with [Sauce Labs](http://saucelabs.com) works. The extra 'mode'
 option is also needed here.
 
 ```coffeescript
@@ -105,16 +105,21 @@ Wd with:browser, ->
 
 ## WdWrap
 
-WdWrap is a wrapper around Wd. It returns a function with a callback arguments, 
-called last, after other commands have been executed. 
+WdWrap is a wrapper around Wd. It takes a function as argument and return a function like below:
 
-The example below is using the mocha test framework. The usual 'done' callback 
-is managed within WdWrap.
+```coffeescript
+(done) ->
+  // execute function
+  done()
+```
 
-The 'use' parameter is a function returning the browser evaluated each time the block is opened. 
-
+It's main use is within an asynchronous test framework, when only using this synchronous api is used, 
+It manages the done callback for you.
+ 
 A 'pre' method may also be specified. It is called before the Wd block starts, in the original 
 context (In Mocha, it can be used to configure timeouts). 
+
+The example below is using the mocha test framework.
 
 ```coffeescript
 # Assumes that the selenium server is running

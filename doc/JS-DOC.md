@@ -1,4 +1,4 @@
-# wd-sync
+# wd-sync with JavaScript
 
 A synchronous version with a nice api of [wd](http://github.com/admc/wd), 
 the lightweight  [WebDriver / Selenium2](http://seleniumhq.org/projects/webdriver/) 
@@ -15,7 +15,7 @@ npm install wd-sync
 
 ## usage
 
-When creating a new browser with remote, an extra mode option need to be 
+When creating a new browser with remote, an extra 'mode' option need to be 
 passed.
 
 All the methods from [wd](http://github.com/admc/wd) are available. The element retrieval 
@@ -63,7 +63,7 @@ Wd( function() {
 
 ## Sauce Labs example
 
-Remote testing with [Sauce Labs](http://saucelabs.com) works. The extra mode
+Remote testing with [Sauce Labs](http://saucelabs.com) works. The extra 'mode'
 option is also needed here.
 
 ```javascript
@@ -117,16 +117,24 @@ Wd( function() {
 
 ## WdWrap
 
-WdWrap is a wrapper around Wd. It returns a function with a callback arguments, 
-called last, after other commands have been executed. 
+WdWrap is a wrapper around Wd. It takes a function as argument and return a function like below:
 
-The example below is using the mocha test framework. The usual 'done' callback 
-is managed within WdWrap.
+```javascript
+(function(done) {
+  // execute function
+  return done();
+});
+```
 
+It's main use is within an asynchronous test framework, when only using this synchronous api is used, 
+It manages the done callback for you.
+ 
 A 'pre' method may also be specified. It is called before the Wd block starts, in the original 
 context (In Mocha, it can be used to configure timeouts). 
 
-```coffeescript
+The example below is using the mocha test framework.
+
+```javascript
 // Assumes that the selenium server is running
 // Use 'mocha' to run (npm install -g mocha)
 
@@ -178,9 +186,10 @@ describe("WdWrap", function() {
 
 Since JavaScript has no short equivalent for the '@' alias, most this section is not relevant in JavaScript.  
 
-Using the pre option like in the mocha sample below may still be beneficial, althought not as good as the coffee
+Using the 'pre' option like in the mocha sample below may still be beneficial, althought not as good as the coffee
 script syntax.
-```coffeescript
+
+```javascript
 // Assumes that the selenium server is running
 // Use 'mocha' to run (npm install -g mocha)
 
@@ -236,9 +245,9 @@ It can be retrieved with the wd.current() function.
 
 This is useful when writing test helpers.
 
-Don't forget to set the use option in the block, or globably like in the sample below. 
+Don't forget to set the 'use' option in the block, or globably like in the sample below. 
 
-```coffeescript
+```javascript
 // assumes that selenium server is running
 
 var wd = require('wd-sync').wd
@@ -275,14 +284,14 @@ Probably best to use the 'sync' mode.
 
 A few methods have the mixed-args mode forced on them.
 
-```coffeescript
-mode: 'sync'
-mode: 'async'
+```javascript
+{mode: 'sync'}
+{mode: 'async'}
 
-mode: ['mixed']
-mode: ['mixed','args']
+{mode: ['mixed']}
+{mode: ['mixed','args']}
 
-mode: ['mixed','fibers']
+{mode: ['mixed','fibers']}
 
 # methods forced to ['mixed','args']
 ['executeAsync', 'element', 'getAttribute', 'text']
@@ -304,4 +313,4 @@ java -jar selenium-server-standalone-2.21.0.jar -Dwebdriver.chrome.driver=./chro
 
 ## per methods tests / code example
 
-check in [wd-by-method-test.coffee](https://github.com/sebv/node-wd-sync/blob/master/test/unit/wd-by-method-test.coffee)
+check in [wd-by-method-test.js](https://github.com/sebv/node-wd-sync/blob/master/test/unit/wd-by-method-test.js)
