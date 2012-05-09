@@ -42,16 +42,21 @@ option is also needed here.
 
 ## WdWrap
 
-WdWrap is a wrapper around Wd. It returns a function with a callback arguments, 
-called last, after other commands have been executed. 
+WdWrap is a wrapper around Wd. It takes a function as argument and return a function like below:
 
-The example below is using the mocha test framework. The usual 'done' callback 
-is managed within WdWrap.
+```coffeescript
+(done) ->
+  // execute function
+  done()
+```
 
-The 'use' parameter is a function returning the browser evaluated each time the block is opened. 
-
+It's main use is within an asynchronous test framework, when only using this synchronous api is used, 
+It manages the done callback for you.
+ 
 A 'pre' method may also be specified. It is called before the Wd block starts, in the original 
 context (In Mocha, it can be used to configure timeouts). 
+
+The example below is using the mocha test framework.
 
 ```coffeescript
 {3wdwrapmochasimplecoffee}
