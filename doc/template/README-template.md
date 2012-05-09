@@ -431,6 +431,8 @@ Doc modifications must be done in the doc/template directory.
   </tbody>
 </table>
 
+* [full mapping](http://github.com/sebv/node-wd-sync/blob/master/doc/jsonwiremap-all.md)
+* [supported mapping](http://github.com/sebv/node-wd-sync/blob/master/doc/jsonwiremap-supported.md)
 
 ## tests
 
