@@ -66,8 +66,8 @@ The example below is using the mocha test framework.
 
 Since JavaScript has no short equivalent for the '@' alias, most this section is not relevant in JavaScript.  
 
-Using the 'pre' option like in the mocha sample below may still be beneficial, althought not as good as the coffee
-script syntax.
+Using the 'pre' option like in the mocha sample below may still be beneficial, althought not as good as the 
+CoffeeScript syntax.
 
 ```javascript
 {4wdwrapmochaleanerjs}
@@ -118,7 +118,7 @@ cake test
 
 ### remote / Sauce Labs 
 
-1/ follow the instruction2 [here](http://github.com/sebv/node-wd-sync/blob/master/test/sauce/README.md) to
+1/ follow the instructions [here](http://github.com/sebv/node-wd-sync/blob/master/test/sauce/README.md) to
 configure your username and access key.
  
 
