@@ -324,7 +324,7 @@ mode: ['mixed','fibers']
 ```
 
 
-## Selenium server
+## selenium server
 
 Download the Selenium server [here](http://seleniumhq.org/download/).
 
