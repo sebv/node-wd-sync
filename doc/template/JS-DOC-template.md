@@ -88,6 +88,32 @@ Don't forget to set the 'use' option in the block, or globably like in the sampl
 {5wdcurrentbrowserjs}
 ```
 
+## tests
+
+### local / selenium server: 
+
+1/ starts the selenium server with chromedriver:
+```  
+java -jar selenium-server-standalone-2.21.0.jar -Dwebdriver.chrome.driver=<PATH>/chromedriver
+```
+
+2/ run tests
+```
+cake test 
+```
+
+### remote / Sauce Labs 
+
+1/ follow the instruction2 [here](http://github.com/sebv/node-wd-sync/blob/master/test/sauce/README.md) to
+configure your username and access key.
+ 
+
+2/ run tests
+```
+cake test:sauce
+```
+
+
 ## modes
 
 Check [make-sync](http://github.com/sebv/node-make-sync/blob/master/README.markdown#modes) for more details. 
@@ -105,7 +131,7 @@ A few methods have the mixed-args mode forced on them.
 {mode: ['mixed','fibers']}
 
 # methods forced to ['mixed','args']
-['executeAsync', 'element', 'getAttribute', 'text']
+['executeAsync']
 ```
 
 
