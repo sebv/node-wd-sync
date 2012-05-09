@@ -32,6 +32,8 @@ npm install wd-sync
 * [JavaScript](http://github.com/sebv/node-wd-sync/blob/master/doc/JS-DOC.md)
 * [JsonWireProtocol official doc](http://code.google.com/p/selenium/wiki/JsonWireProtocol)
 
+Doc modifications must be done in the doc/template directory.
+
 ## examples
 
 * [CoffeeScript](http://github.com/sebv/node-wd-sync/tree/master/examples/coffee)
