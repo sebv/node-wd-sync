@@ -90,7 +90,7 @@ Wd( function() {
 * [JavaScript](http://github.com/sebv/node-wd-sync/blob/master/doc/JS-DOC.md)
 * [JsonWireProtocol official doc](http://code.google.com/p/selenium/wiki/JsonWireProtocol)
 
-Doc modifications must be done in the doc/template directory.
+Doc modifications must be done in the doc/template directory, then run 'cake doc:build'.
 
 ## examples
 
@@ -508,7 +508,7 @@ cake test
 
 ### remote / Sauce Labs 
 
-1/ follow the instruction2 [here](http://github.com/sebv/node-wd-sync/blob/master/test/sauce/README.md) to
+1/ follow the instructions [here](http://github.com/sebv/node-wd-sync/blob/master/test/sauce/README.md) to
 configure your username and access key.
  
 
