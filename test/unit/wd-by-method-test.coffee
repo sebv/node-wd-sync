@@ -19,7 +19,7 @@ test = (browserName) ->
 
   it "init", WdWrap ->
     @init browserName: browserName
-
+  
   it "sessionCapabilities", WdWrap ->
     capabilities = @sessionCapabilities()
     should.exist capabilities
@@ -38,7 +38,7 @@ test = (browserName) ->
   
   it "get", WdWrap ->
     @get "http://127.0.0.1:8181/test-page.html"
-
+    
   it "refresh", WdWrap ->
     @refresh()
   
@@ -72,7 +72,7 @@ test = (browserName) ->
     scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
     res = @executeAsync scriptAsJs          
     res.should.equal "OK"
-
+  
   it "setWaitTimeout / setImplicitWaitTimeout", WdWrap ->
     @setWaitTimeout 0
     scriptAsCoffee = 
@@ -88,7 +88,7 @@ test = (browserName) ->
     @setImplicitWaitTimeout 2000
     should.exist (@elementByCss "#setWaitTimeout .child")
     @setWaitTimeout 0
-
+  
   it "setAsyncScriptTimeout", WdWrap ->
     @setAsyncScriptTimeout 2000
     scriptAsCoffee =
@@ -102,11 +102,10 @@ test = (browserName) ->
     res = @executeAsync scriptAsJs          
     res.should.equal "OK"
     
-        
   it "element", WdWrap ->      
     should.exist (@element "name", "elementByName")
     should.not.exist (@element "name", "elementByName2") 
-
+  
   it "elementByLinkText", WdWrap ->      
     should.exist (@elementByLinkText "click helloByLinkText")
     should.not.exist (@elementByLinkText "click helloByLinkText2") 
@@ -142,6 +141,7 @@ test = (browserName) ->
   it "clickElement", WdWrap ->
     anchor = @elementByCss "#clickElement a" 
     (@text anchor).should.equal "not clicked"
+    
     scriptAsCoffee = 
       '''
         jQuery ->
@@ -151,6 +151,7 @@ test = (browserName) ->
       '''
     scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'      
     @execute scriptAsJs
+    
     (@text anchor).should.equal "not clicked"
     @clickElement anchor
     (@text anchor).should.equal "clicked"
