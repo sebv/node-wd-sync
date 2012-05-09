@@ -135,7 +135,7 @@ A few methods have the mixed-args mode forced on them.
 ```
 
 
-## Selenium server
+## selenium server
 
 Download the Selenium server [here](http://seleniumhq.org/download/).
 
