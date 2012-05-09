@@ -15,16 +15,15 @@ npm install wd-sync
 
 ## usage
 
-When creating a new browser with remote, an extra 'mode' option need to be 
-passed.
-
 All the methods from [wd](http://github.com/admc/wd) are available. The element retrieval 
 methods have been modified to return 'undefined' when the element is not found rather than
 throw a 'Not Found' error.
 
-In sync mode, the browser function must to be run within a Wd block. This 
+The browser functions must to be run within a Wd block. This 
 block holds the fiber environment. The Wd block context is set to the browser, 
 so that the browser methods may be accessed using '@'.
+
+The 'executeAsync' method may still be run asynchronously.
 
 ```coffeescript
 # assumes that selenium server is running
@@ -33,7 +32,7 @@ so that the browser methods may be accessed using '@'.
   
 # 1/ simple Wd example 
 
-browser = wd.remote(mode:'sync')
+browser = wd.remote()
 
 Wd with:browser, ->        
   console.log "server status:", @status()
@@ -59,8 +58,7 @@ Wd with:browser, ->
 
 ## Sauce Labs example
 
-Remote testing with [Sauce Labs](http://saucelabs.com) works. The extra 'mode'
-option is also needed here.
+Remote testing with [Sauce Labs](http://saucelabs.com) works. 
 
 ```coffeescript
 # configure saucelabs username/access key here
@@ -80,8 +78,7 @@ browser = wd.remote \
   "ondemand.saucelabs.com",
   80,
   username,
-  accessKey,
-  mode:'sync'
+  accessKey
 
 Wd with:browser, ->
   console.log "server status:", @status()          
@@ -138,7 +135,7 @@ describe "WdWrap", ->
     browser = null
 
     before (done) ->
-      browser = wd.remote(mode:'sync')
+      browser = wd.remote()
       done()
 
     it "should work", WdWrap 
@@ -178,7 +175,7 @@ Wd sample below:
   
 # 4/ leaner Wd syntax
 
-browser = wd.remote(mode:'sync')
+browser = wd.remote()
 
 # do this only once
 Wd = Wd with:browser 
@@ -225,7 +222,7 @@ describe "WdWrap", ->
         @timeout 30000
 
     before (done) ->
-      browser = wd.remote(mode:'sync')
+      browser = wd.remote()
       done()
 
     it "should work", WdWrap ->      
@@ -262,7 +259,7 @@ This is useful when writing test helpers.
   
 # 6/ retrieving the current browser
 
-browser = wd.remote(mode:'sync')
+browser = wd.remote()
 
 myOwnGetTitle = ->    
   wd.current().title()
@@ -300,27 +297,6 @@ configure your username and access key.
 2/ run tests
 ```
 cake test:sauce
-```
-
-
-## modes
-
-Check [make-sync](http://github.com/sebv/node-make-sync/blob/master/README.markdown#modes) for more details. 
-Probably best to use the 'sync' mode. 
-
-A few methods have the mixed-args mode forced on them.
-
-```coffeescript
-mode: 'sync'
-mode: 'async'
-
-mode: ['mixed']
-mode: ['mixed','args']
-
-mode: ['mixed','fibers']
-
-# methods forced to ['mixed','args']
-['executeAsync']
 ```
 
 
