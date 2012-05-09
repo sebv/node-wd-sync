@@ -52,14 +52,8 @@ Wd with:browser, ->
 ```javascript
 // assumes that selenium server is running
 
-var wd, Wd; 
-try {
-  wd = require('wd-sync').wd;
-  Wd = require('wd-sync').Wd;  
-} catch (err) {
-  wd = require('../../index').wd;
-  Wd = require('../../index').Wd;  
-}
+var wd = require('wd-sync').wd
+, Wd = require('wd-sync').Wd;
 
 // 1/ simple Wd example 
 

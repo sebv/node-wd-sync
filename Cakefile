@@ -29,8 +29,10 @@ task 'grep:dirty', 'Lookup for debugger and console.log in code', ->
 
 # remove local import in examples
 fixRequire = (s) ->
-  s.replace /\{wd.*\ntry.*\n.*\ncatch.*\n.*\n/m, "{wd,Wd} = require 'wd-sync'\n"
-
+  s = s.replace /\{wd.*\ntry.*\n.*\ncatch.*\n.*\n/m, "{wd,Wd} = require 'wd-sync'\n"
+  s.replace /var.*\ntry.*\n.*\n.*\n.*catch.*\n.*\n.*\n\}.*\n/ , \
+    "var wd = require('wd-sync').wd\n, Wd = require('wd-sync').Wd;\n" 
+    
 # buid the dynamic doc files
 task 'doc:build', ->
   ctx = {}
