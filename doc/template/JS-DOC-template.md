@@ -59,8 +59,9 @@ context (In Mocha, it can be used to configure timeouts).
 
 Since JavaScript has no short equivalent for the '@' alias, most this section is not relevant in JavaScript.  
 
-Using the pre option like in the mocha sample below may still be beneficial, althought not as good as the coffee
+Using the 'pre' option like in the mocha sample below may still be beneficial, althought not as good as the coffee
 script syntax.
+
 ```coffeescript
 {4wdwrapmochaleanerjs}
 ```
@@ -73,7 +74,7 @@ It can be retrieved with the wd.current() function.
 
 This is useful when writing test helpers.
 
-Don't forget to set the use option in the block, or globably like in the sample below. 
+Don't forget to set the 'use' option in the block, or globably like in the sample below. 
 
 ```coffeescript
 {5wdcurrentbrowserjs}
@@ -115,4 +116,4 @@ java -jar selenium-server-standalone-2.21.0.jar -Dwebdriver.chrome.driver=./chro
 
 ## per methods tests / code example
 
-check in [wd-by-method-test.coffee](https://github.com/sebv/node-wd-sync/blob/master/test/unit/wd-by-method-test.coffee)
+check in [wd-by-method-test.js](https://github.com/sebv/node-wd-sync/blob/master/test/unit/wd-by-method-test.js)
