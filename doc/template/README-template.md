@@ -11,34 +11,35 @@ Remote testing with [Sauce Labs](http://saucelabs.com) also works.
 ```
 npm install wd-sync
 ```
-## doc and example
 
 ## code samples
 
-<table>
-  <tr>
-    <td width="50%">
+### CoffeeScript
+
 ```coffeescript
-{1wdsimple}
-```    
-    </td>
-    <td width="50%">
-```coffeescript
-{1wdsimple}
+{1wdsimplecoffee}
 ```        
-    </td>
-  </tr>
-</table>
+
+### JavaScript
+
+```javascript
+{1wdsimplecoffee}
+``` 
+
+## doc and example
 
 
-## Selenium server
+## Tests
 
-Download the Selenium server [here](http://seleniumhq.org/download/).
-
-Download the Chromedriver [here](http://code.google.com/p/chromedriver/downloads/list).
-
-To start the server:
+### local / selenium server: 
 
 ```
-java -jar selenium-server-standalone-2.21.0.jar -Dwebdriver.chrome.driver=./chromedriver
+cake test 
 ```
+
+### remote / Sauce Labs 
+
+```
+cake test:sauce
+```
+
