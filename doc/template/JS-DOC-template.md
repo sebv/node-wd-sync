@@ -99,7 +99,7 @@ Don't forget to set the 'use' option in the block, or globably like in the sampl
 * [JavaScript](http://github.com/sebv/node-wd-sync/blob/master/doc/JS-DOC.md)
 * [JsonWireProtocol official doc](http://code.google.com/p/selenium/wiki/JsonWireProtocol)
 
-Doc modifications must be done in the doc/template directory.
+Doc modifications must be done in the doc/template directory, then run 'cake doc:build'.
 
 
 ## tests
