@@ -22,8 +22,7 @@ buildOptions = (mode) ->
   }
   
 patch = (browser, mode) ->
-  # modifying elements so that it just returns undefined
-  # when the element searched is not found  
+  # modifying element methods to avoid them throwing not found error  
   for k,v of browser when (typeof v is 'function') \
     and (k.match /^element/) and (not k.match /^elements/)
       do ->
