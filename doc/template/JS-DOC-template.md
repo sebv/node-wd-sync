@@ -13,7 +13,7 @@ npm install wd-sync
 ```
 
 
-## usage (coffeescript)
+## usage
 
 When creating a new browser with remote, an extra mode option need to be 
 passed.
@@ -23,20 +23,20 @@ methods have been modified to return 'undefined' when the element is not found r
 throw a 'Not Found' error.
 
 In sync mode, the browser function must to be run within a Wd block. This 
-block holds the fiber environment. The Wd block context is set to the browser, 
-so that the browser methods may be accessed using '@'.
+block holds the fiber environment. 
 
-```coffeescript
-{1wdsimple}
+```javascript
+{1wdsimplejs}
 ```
+
 
 ## Sauce Labs example
 
 Remote testing with [Sauce Labs](http://saucelabs.com) works. The extra mode
 option is also needed here.
 
-```coffeescript
-{2wdsaucelabs}
+```javascript
+{2wdsaucelabsjs}
 ```
 
 
@@ -48,29 +48,21 @@ called last, after other commands have been executed.
 The example below is using the mocha test framework. The usual 'done' callback 
 is managed within WdWrap.
 
-The 'use' parameter is a function returning the browser evaluated each time the block is opened. 
-
 A 'pre' method may also be specified. It is called before the Wd block starts, in the original 
 context (In Mocha, it can be used to configure timeouts). 
 
 ```coffeescript
-{3wdwrapmochasimple}
+{3wdwrapmochasimplejs}
 ```
 
-## a slightly leaner syntax
+## a slightly leaner syntax (or the lack of it)
 
-When there is a browser parameter and no callback, Wd or WdWrap
-returns a version of itself with a browser default added.
+Since JavaScript has no short equivalent for the '@' alias, most this section is not relevant in JavaScript.  
 
-Wd sample below:
-
+Using the pre option like in the mocha sample below may still be beneficial, althought not as good as the coffee
+script syntax.
 ```coffeescript
-{4wdleaner}
-```
-
-WdWrap sample below, using the mocha test framework:
-```coffeescript
-{5wdwrapmochaleaner}
+{4wdwrapmochaleanerjs}
 ```
 
 
@@ -81,8 +73,10 @@ It can be retrieved with the wd.current() function.
 
 This is useful when writing test helpers.
 
+Don't forget to set the use option in the block, or globably like in the sample below. 
+
 ```coffeescript
-{6wdcurrentbrowser}
+{5wdcurrentbrowserjs}
 ```
 
 ## modes
