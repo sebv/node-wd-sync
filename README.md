@@ -88,6 +88,7 @@ Wd( function() {
 
 * [CoffeeScript](http://github.com/sebv/node-wd-sync/blob/master/doc/COFFEE-DOC.md)
 * [JavaScript](http://github.com/sebv/node-wd-sync/blob/master/doc/JS-DOC.md)
+* [JsonWireProtocol official doc](http://code.google.com/p/selenium/wiki/JsonWireProtocol)
 
 ## examples
 
