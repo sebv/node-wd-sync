@@ -119,7 +119,7 @@ cake test
 
 ### remote / Sauce Labs 
 
-1/ follow the instruction2 [here](http://github.com/sebv/node-wd-sync/blob/master/test/sauce/README.md) to
+1/ follow the instructions [here](http://github.com/sebv/node-wd-sync/blob/master/test/sauce/README.md) to
 configure your username and access key.
  
 
