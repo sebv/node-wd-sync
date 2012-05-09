@@ -28,6 +28,9 @@ npm install wd-sync
 
 ## doc 
 
+* [CoffeeScript](http://github.com/sebv/node-wd-sync/blob/master/doc/COFFEE-DOC.md)
+* [JavaScript](http://github.com/sebv/node-wd-sync/blob/master/doc/JS-DOC.md)
+
 ## examples
 
 * [CoffeeScript](http://github.com/sebv/node-wd-sync/tree/master/examples/coffee)
