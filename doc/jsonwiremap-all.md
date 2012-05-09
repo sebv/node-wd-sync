@@ -527,10 +527,10 @@
       <td style="border: 1px solid #ccc; padding: 5px;">
         <ul>
           <li>
-            getAttribute(element, attrName) -> value)
+            getAttribute(element, attrName) -> value
           </li>
           <li>
-            getValue(element) -> value)
+            getValue(element) -> value
           </li>
         </ul>
       </td>      
