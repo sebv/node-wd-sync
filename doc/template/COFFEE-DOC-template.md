@@ -1,4 +1,4 @@
-# wd-sync
+# wd-sync with CofffeeScript
 
 A synchronous version with a nice api of [wd](http://github.com/admc/wd), 
 the lightweight  [WebDriver / Selenium2](http://seleniumhq.org/projects/webdriver/) 
@@ -15,7 +15,7 @@ npm install wd-sync
 
 ## usage
 
-When creating a new browser with remote, an extra mode option need to be 
+When creating a new browser with remote, an extra 'mode' option need to be 
 passed.
 
 All the methods from [wd](http://github.com/admc/wd) are available. The element retrieval 
@@ -32,7 +32,7 @@ so that the browser methods may be accessed using '@'.
 
 ## Sauce Labs example
 
-Remote testing with [Sauce Labs](http://saucelabs.com) works. The extra mode
+Remote testing with [Sauce Labs](http://saucelabs.com) works. The extra 'mode'
 option is also needed here.
 
 ```coffeescript
