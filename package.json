@@ -1,6 +1,6 @@
 {
     "name": "wd-sync"
-  , "version": "0.1.3"
+  , "version": "0.1.4"
   , "description": "sync version of wd using fibers."
   , "keywords": ["selenium","webdriver","test","fibers", "sync"]
   , "author": "Seb Vincent <seb.vincent@gmail.com>"
