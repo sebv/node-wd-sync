@@ -1,4 +1,5 @@
 # Assumes that the selenium server is running
+# Use 'mocha' to run (npm install -g mocha)
 
 {wd,WdWrap}={}
 try 
@@ -13,8 +14,8 @@ should = require 'should'
 describe "WdWrap", ->
 
   describe "passing browser", ->  
-
     browser = null
+    
     # do this only once
     WdWrap = WdWrap 
       with: -> 

@@ -2,11 +2,11 @@
 username = '<USERNAME>'
 accessKey = '<ACCESS KEY>'
 
-{wd,WdWrap}={}
+{wd,Wd}={}
 try 
-  {wd,WdWrap} = require 'wd-sync' 
+  {wd,Wd} = require 'wd-sync' 
 catch err
-  {wd,WdWrap} = require '../../index' 
+  {wd,Wd} = require '../../index' 
 
 # 2/ wd saucelabs example 
 

@@ -10,7 +10,7 @@ catch err
 
 browser = wd.remote(mode:'sync')
 
-myOwnGetTitle = ->
+myOwnGetTitle = ->    
   wd.current().title()
 
 Wd with:browser, ->        
