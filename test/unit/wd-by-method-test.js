@@ -207,7 +207,7 @@
       });
       this.execute(scriptAsJs);
       (this.text(current)).should.equal("");
-      this.moveTo(a1);
+      this.moveTo(a1, 5, 5);
       (this.text(current)).should.equal("a1");
       this.moveTo(a2);
       return (this.text(current)).should.equal("a2");
@@ -234,7 +234,7 @@
       var anchor, scriptAsCoffee, scriptAsJs;
       anchor = this.elementByCss("#click a");
       (this.text(anchor)).should.equal("not clicked");
-      scriptAsCoffee = 'jQuery ->\n  a = $(\'#click a\')\n  a.click ->\n    a.html \'clicked\'              ';
+      scriptAsCoffee = 'jQuery ->\n  window.num_of_clicks = 0\n  a = $(\'#click a\')\n  a.click ->\n    window.num_of_clicks = window.num_of_clicks + 1\n    a.html "clicked #{window.num_of_clicks}"             ';
       scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
         bare: 'on'
       });
@@ -242,8 +242,10 @@
       (this.text(anchor)).should.equal("not clicked");
       this.moveTo(anchor);
       this.click(0);
-      (this.text(anchor)).should.equal("clicked");
-      return this.click();
+      (this.text(anchor)).should.equal("clicked 1");
+      this.moveTo(anchor);
+      this.click();
+      return (this.text(anchor)).should.equal("clicked 2");
     }));
     it("doubleclick", WdWrap(function() {
       var anchor, scriptAsCoffee, scriptAsJs;

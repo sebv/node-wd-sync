@@ -208,7 +208,7 @@ test = (browserName) ->
     scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'      
     @execute scriptAsJs
     (@text current).should.equal ""
-    @moveTo a1 
+    @moveTo a1, 5, 5 
     (@text current).should.equal "a1"      
     @moveTo a2 
     (@text current).should.equal "a2"
@@ -248,17 +248,21 @@ test = (browserName) ->
     scriptAsCoffee = 
       '''
         jQuery ->
+          window.num_of_clicks = 0
           a = $('#click a')
           a.click ->
-            a.html 'clicked'              
+            window.num_of_clicks = window.num_of_clicks + 1
+            a.html "clicked #{window.num_of_clicks}"             
       '''
     scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'      
     @execute scriptAsJs
     (@text anchor).should.equal "not clicked"
     @moveTo anchor
     @click 0
-    (@text anchor).should.equal "clicked"
-    @click() 
+    (@text anchor).should.equal "clicked 1"
+    @moveTo anchor
+    @click()
+    (@text anchor).should.equal "clicked 2"
              
   it "doubleclick", WdWrap ->
     anchor = @elementByCss "#doubleclick a" 

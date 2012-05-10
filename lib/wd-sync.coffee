@@ -36,23 +36,7 @@ patch = (browser, mode) ->
               done err,res...
           args.push cb
           _v.apply @, args
-
-  # fixing moveTo it can be called with only one argument 
-  _moveTo = browser.moveTo
-  browser.moveTo = (args..., done) ->
-    args.push undefined while args.length < 3
-    args.push done
-    _moveTo.apply @, args
-    
-  # fixing click and doubleclick so it can be called without arguments 
-  for m in ['click','doubleclick']
-    do ->
-      _m = browser[m]
-      browser[m] = (args..., done) ->
-        args.push 0 if args.length is 0 # default to left button
-        args.push done
-        _m.apply @, args
-       
+  
   # making methods synchronous
   options = buildOptions( mode )
   MakeSync browser, options
