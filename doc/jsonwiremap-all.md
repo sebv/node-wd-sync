@@ -33,7 +33,7 @@
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
         <ul>
-          <li>all sessions: NA</li>
+          <li>all sessions: sessions() -> sessions</li>
           <li>
             current session: <br>
             altSessionCapabilities() -> capabilities

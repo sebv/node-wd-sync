@@ -77,7 +77,7 @@ Doc modifications must be done in the doc/template directory, then run 'cake doc
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
         <ul>
-          <li>all sessions: NA</li>
+          <li>all sessions: sessions() -> sessions</li>
           <li>
             current session: <br>
             altSessionCapabilities() -> capabilities

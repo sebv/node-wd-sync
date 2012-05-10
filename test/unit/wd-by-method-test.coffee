@@ -17,6 +17,9 @@ test = (browserName) ->
   it "status", WdWrap ->
     should.exist @status()
 
+  it "sessions", WdWrap ->
+    should.exist @sessions()
+
   it "init", WdWrap ->
     @init browserName: browserName
   

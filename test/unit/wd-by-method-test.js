@@ -31,6 +31,9 @@
     it("status", WdWrap(function() {
       return should.exist(this.status());
     }));
+    it("sessions", WdWrap(function() {
+      return should.exist(this.sessions());
+    }));
     it("init", WdWrap(function() {
       return this.init({
         browserName: browserName
@@ -426,12 +429,13 @@
         app.close();
         return done();
       });
-      describe("using chrome", function() {
+      return describe("using chrome", function() {
         return test('chrome');
       });
-      return describe("using firefox", function() {
-        return test('firefox');
-      });
+      /*describe "using firefox", ->
+        test 'firefox'
+      */
+
     });
   });
 
