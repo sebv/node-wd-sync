@@ -272,11 +272,20 @@ Doc modifications must be done in the doc/template directory, then run 'cake doc
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
         <ul>
-          <li>element(using, value) -> element</li>
-          <li>elementByLinkText(value) -> element</li>
-          <li>elementById(value) -> element</li>
-          <li>elementByName(value) -> element</li>
-          <li>elementByCss(value) -> element</li>
+          <li>
+            element(using, value) -> element <br>
+          </li>
+          <li>
+            element<i>suffix</i>(value) -> element <br> 
+              <i>suffix:  
+              ByClassName, ByCssSelector, ById,  
+              ByName, ByLinkText, ByPartialLinkText, 
+              ByTagName, ByXPath, ByCss</i>
+          </li>
+          <li>
+            see also hasElement, hasElement<i>suffix</i>, elementOrNull, element<i>suffix</i>OrNull, 
+            elementIfExists, element<i>suffix</i>IfExists, in the elements section.
+          </li>
         <ul>
       </td>      
     </tr>
@@ -287,11 +296,50 @@ Doc modifications must be done in the doc/template directory, then run 'cake doc
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
         <ul>
-          <li>elements(using, value) -> elements</li>
-          <li>elementsByLinkText(value) -> elements</li>
-          <li>elementsById(value) -> elements</li>
-          <li>elementsByName(value) -> elements</li>
-          <li>elementsByCss(value) -> elements</li>
+          <li>
+            elements(using, value) -> elements <br>
+          </li>
+          <li>
+            elements<i>suffix</i>(value) -> elements <br> 
+              <i>suffix:  
+              ByClassName, ByCssSelector, ById,  
+              ByName, ByLinkText, ByPartialLinkText, 
+              ByTagName, ByXPath, ByCss</i>
+          </li>
+          <li>
+            hasElement(using, value) -> boolean <br>
+          </li>
+          <li>
+            hasElement<i>suffix</i>(value) -> boolean <br> 
+              <i>suffix:  
+              ByClassName, ByCssSelector, ById,  
+              ByName, ByLinkText, ByPartialLinkText, 
+              ByTagName, ByXPath, ByCss</i>
+          </li>                    
+          <li>
+            elementOrNull(using, value) -> element <br>
+            (avoids not found error throw and returns null instead)   
+          </li>
+          <li>
+            element<i>suffix</i>OrNull(value) -> element <br> 
+            (avoids not found error throw and returns null instead) <br>
+              <i>suffix:  
+              ByClassName, ByCssSelector, ById,  
+              ByName, ByLinkText, ByPartialLinkText, 
+              ByTagName, ByXPath, ByCss</i>
+          </li>
+          <li>
+            elementIfExists(using, value) -> element <br>
+            (avoids not found error throw and returns undefined instead)   
+          </li>
+          <li>
+            element<i>suffix</i>IfExists(value) -> element <br> 
+            (avoids not found error throw and returns undefined instead) <br>
+              <i>suffix:  
+              ByClassName, ByCssSelector, ById,  
+              ByName, ByLinkText, ByPartialLinkText, 
+              ByTagName, ByXPath, ByCss</i>
+          </li>
         <ul>
       </td>      
     </tr>
