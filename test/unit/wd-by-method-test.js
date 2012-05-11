@@ -11,7 +11,7 @@
   express = require('express');
 
   test = function(browserName) {
-    var browser, capabilities;
+    var browser, capabilities, funcSuffix, _fn, _i, _len, _ref1;
     browser = null;
     WdWrap = WdWrap({
       "with": (function() {
@@ -127,42 +127,74 @@
       should.exist(this.element("name", "elementByName"));
       return should.not.exist(this.element("name", "elementByName2"));
     }));
-    it("elementByLinkText", WdWrap(function() {
-      should.exist(this.elementByLinkText("click helloByLinkText"));
-      return should.not.exist(this.elementByLinkText("click helloByLinkText2"));
+    it("hasElement", WdWrap(function() {
+      (this.hasElement("name", "elementByName")).should.be["true"];
+      return (this.hasElement("name", "elementByName2")).should.be["false"];
     }));
-    it("elementById", WdWrap(function() {
-      should.exist(this.elementById("elementById"));
-      return should.not.exist(this.elementById("elementById2"));
-    }));
-    it("elementByName", WdWrap(function() {
-      should.exist(this.elementByName("elementByName"));
-      return should.not.exist(this.elementByName("elementByName2"));
-    }));
-    it("elementByCss", WdWrap(function() {
-      should.exist(this.elementByCss("#elementByCss"));
-      return should.not.exist(this.elementByCss("#elementByCss2"));
-    }));
-    it("elements", WdWrap(function() {
+    it("element", WdWrap(function() {
       (this.elements("name", "elementsByName")).should.have.length(3);
       return (this.elements("name", "elementsByName2")).should.eql([]);
     }));
-    it("elementsById", WdWrap(function() {
-      (this.elementsById("elementsById")).should.have.length(3);
-      return (this.elementsById("elementsById2")).should.eql([]);
-    }));
-    it("elementsByName", WdWrap(function() {
-      (this.elementsByName("elementsByName")).should.have.length(3);
-      return (this.elementsByName("elementsByName2")).should.eql([]);
-    }));
-    it("elementsByCss", WdWrap(function() {
-      (this.elementsByCss("#elementsByCss")).should.have.length(2);
-      return (this.elementsByCss("#elementsByCss2")).should.eql([]);
-    }));
-    it("elementsByLinkText", WdWrap(function() {
-      (this.elementsByLinkText("click elementsByLinkText")).should.have.length(2);
-      return (this.elementsByLinkText("click elementsByLinkText2")).should.eql([]);
-    }));
+    _ref1 = ['ByClassName', 'ByCssSelector', 'ById', 'ByName', 'ByLinkText', 'ByPartialLinkText', 'ByTagName', 'ByXPath', 'ByCss'];
+    _fn = function() {
+      var elementFuncName, elementsFuncName, hasElementFuncName, searchSeveralText, searchSeveralText2, searchText, searchText2;
+      elementFuncName = 'element' + funcSuffix;
+      hasElementFuncName = 'hasElement' + funcSuffix;
+      elementsFuncName = 'elements' + funcSuffix;
+      searchText = elementFuncName;
+      if (searchText.match(/ByLinkText/)) {
+        searchText = "click " + searchText;
+      }
+      if (searchText.match(/ByCss/)) {
+        searchText = "#" + searchText;
+      }
+      if (searchText.match(/ByXPath/)) {
+        searchText = "//div[@id='elementByXPath']/input";
+      }
+      if (searchText.match(/ByTagName/)) {
+        searchText = "span";
+      }
+      searchText2 = elementFuncName + '2';
+      if (searchText.match(/ByXPath/)) {
+        searchText2 = "//div[@id='elementByXPath2']/input";
+      }
+      if (searchText.match(/ByTagName/)) {
+        searchText2 = "span2";
+      }
+      searchSeveralText = searchText.replace('element', 'elements');
+      searchSeveralText2 = searchText2.replace('element', 'elements');
+      it(elementFuncName, WdWrap(function() {
+        should.exist(this[elementFuncName](searchText));
+        return should.not.exist(this[elementFuncName](searchText2));
+      }));
+      it(elementFuncName + 'OrNull', WdWrap(function() {
+        should.exist(this[elementFuncName + 'OrNull'](searchText));
+        return should.not.exist(this[elementFuncName + 'OrNull'](searchText2));
+      }));
+      it(elementFuncName + 'IfExists', WdWrap(function() {
+        should.exist(this[elementFuncName + 'IfExists'](searchText));
+        return should.not.exist(this[elementFuncName + 'IfExists'](searchText2));
+      }));
+      it(hasElementFuncName, WdWrap(function() {
+        (this[hasElementFuncName](searchText)).should.be["true"];
+        return (this[hasElementFuncName](searchText2)).should.be["false"];
+      }));
+      return it(elementsFuncName, WdWrap(function() {
+        var res;
+        res = this[elementsFuncName](searchSeveralText);
+        if (!(elementsFuncName.match(/ByTagName/))) {
+          res.should.have.length(3);
+        } else {
+          (res.length > 1).should.be["true"];
+        }
+        res = this[elementsFuncName](searchSeveralText2);
+        return res.should.eql([]);
+      }));
+    };
+    for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+      funcSuffix = _ref1[_i];
+      _fn();
+    }
     it("getAttribute", WdWrap(function() {
       var testDiv;
       testDiv = this.elementById("getAttribute");
@@ -429,13 +461,12 @@
         app.close();
         return done();
       });
-      return describe("using chrome", function() {
+      describe("using chrome", function() {
         return test('chrome');
       });
-      /*describe "using firefox", ->
-        test 'firefox'
-      */
-
+      return describe("using firefox", function() {
+        return test('firefox');
+      });
     });
   });
 

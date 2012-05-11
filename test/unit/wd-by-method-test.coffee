@@ -114,47 +114,76 @@ test = (browserName) ->
     scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
     res = @executeAsync scriptAsJs          
     res.should.equal "OK"
-    
-  it "element", WdWrap ->      
-    should.exist (@element "name", "elementByName")
-    should.not.exist (@element "name", "elementByName2") 
   
-  it "elementByLinkText", WdWrap ->      
-    should.exist (@elementByLinkText "click helloByLinkText")
-    should.not.exist (@elementByLinkText "click helloByLinkText2") 
+  
+  it "element", WdWrap ->      
+    should.exist @element "name", "elementByName"
+    should.not.exist @element "name", "elementByName2"
 
-  it "elementById", WdWrap ->      
-    should.exist (@elementById "elementById")
-    should.not.exist (@elementById "elementById2") 
-      
-  it "elementByName", WdWrap ->      
-    should.exist (@elementByName "elementByName")
-    should.not.exist (@elementByName "elementByName2") 
+  it "hasElement", WdWrap ->      
+    (@hasElement "name", "elementByName").should.be.true;
+    (@hasElement "name", "elementByName2").should.be.false;
 
-  it "elementByCss", WdWrap ->      
-    should.exist (@elementByCss "#elementByCss")
-    should.not.exist (@elementByCss "#elementByCss2")
-
-  it "elements", WdWrap ->      
+  it "element", WdWrap ->      
     (@elements "name", "elementsByName").should.have.length 3
     (@elements "name", "elementsByName2").should.eql []
 
-  it "elementsById", WdWrap ->      
-    (@elementsById "elementsById").should.have.length 3
-    (@elementsById "elementsById2").should.eql []
+          
+  
+  for funcSuffix in [
+    'ByClassName'
+    , 'ByCssSelector' 
+    , 'ById'
+    , 'ByName' 
+    , 'ByLinkText'
+    , 'ByPartialLinkText'
+    , 'ByTagName' 
+    , 'ByXPath' 
+    , 'ByCss'
+  ]     
+    do ->
+      elementFuncName = 'element' + funcSuffix
+      hasElementFuncName = 'hasElement' + funcSuffix
+      elementsFuncName = 'elements' + funcSuffix
+      
+      searchText = elementFuncName;
+      searchText = "click #{searchText}" if searchText.match /ByLinkText/
+      searchText = "##{searchText}" if searchText.match /ByCss/
+      searchText = "//div[@id='elementByXPath']/input" if searchText.match /ByXPath/
+      searchText = "span" if searchText.match /ByTagName/
+          
+      searchText2 = elementFuncName + '2';
+      searchText2 = "//div[@id='elementByXPath2']/input" if searchText.match /ByXPath/
+      searchText2 = "span2" if searchText.match /ByTagName/
+        
+      searchSeveralText = searchText.replace('element','elements') 
+      searchSeveralText2 = searchText2.replace('element','elements') 
+       
+      it elementFuncName, WdWrap ->  
+        should.exist @[elementFuncName] searchText
+        should.not.exist @[elementFuncName] searchText2
+      
+      it elementFuncName + 'OrNull', WdWrap ->
+        should.exist @[elementFuncName + 'OrNull'] searchText
+        should.not.exist @[elementFuncName + 'OrNull'] searchText2
 
-  it "elementsByName", WdWrap ->      
-    (@elementsByName "elementsByName").should.have.length 3
-    (@elementsByName "elementsByName2").should.eql []
+      it elementFuncName + 'IfExists', WdWrap ->
+        should.exist @[elementFuncName + 'IfExists'] searchText
+        should.not.exist @[elementFuncName + 'IfExists'] searchText2
 
-  it "elementsByCss", WdWrap ->      
-    (@elementsByCss "#elementsByCss").should.have.length 2
-    (@elementsByCss "#elementsByCss2").should.eql []
+      it hasElementFuncName, WdWrap ->
+        (@[hasElementFuncName] searchText).should.be.true
+        (@[hasElementFuncName] searchText2).should.be.false
 
-  it "elementsByLinkText", WdWrap ->      
-    (@elementsByLinkText "click elementsByLinkText").should.have.length 2
-    (@elementsByLinkText "click elementsByLinkText2").should.eql []
-
+      it elementsFuncName, WdWrap ->
+        res = @[elementsFuncName] searchSeveralText
+        unless(elementsFuncName.match /ByTagName/)
+          res.should.have.length 3
+        else
+          (res.length > 1).should.be.true
+        res = @[elementsFuncName] searchSeveralText2
+        res.should.eql []
+  
   it "getAttribute", WdWrap ->
     testDiv = @elementById "getAttribute"      
     should.exist testDiv
