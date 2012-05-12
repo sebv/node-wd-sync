@@ -97,7 +97,7 @@ test = (browserName) ->
     scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'      
     @execute scriptAsJs
     # selenium server throws not found exception, this is normal
-    should.not.exist (@elementByCss "#setWaitTimeout .child")
+    should.not.exist (@elementByCssIfExists "#setWaitTimeout .child")
     @setImplicitWaitTimeout 2000
     should.exist (@elementByCss "#setWaitTimeout .child")
     @setWaitTimeout 0
@@ -118,7 +118,7 @@ test = (browserName) ->
   
   it "element", WdWrap ->      
     should.exist @element "name", "elementByName"
-    should.not.exist @element "name", "elementByName2"
+    (-> @element "name", "elementByName2").should.throw()
 
   it "hasElement", WdWrap ->      
     (@hasElement "name", "elementByName").should.be.true;
@@ -128,8 +128,7 @@ test = (browserName) ->
     (@elements "name", "elementsByName").should.have.length 3
     (@elements "name", "elementsByName2").should.eql []
 
-          
-  
+            
   for funcSuffix in [
     'ByClassName'
     , 'ByCssSelector' 
@@ -161,7 +160,7 @@ test = (browserName) ->
        
       it elementFuncName, WdWrap ->  
         should.exist @[elementFuncName] searchText
-        should.not.exist @[elementFuncName] searchText2
+        (-> @[elementFuncName] searchText2).should.throw()
       
       it elementFuncName + 'OrNull', WdWrap ->
         should.exist @[elementFuncName + 'OrNull'] searchText

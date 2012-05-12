@@ -21,22 +21,7 @@ buildOptions = (mode) ->
     exclude: mixedArgsMethods.concat eventEmitterMethods.concat [/^_/]
   }
   
-patch = (browser, mode) ->
-  # modifying element methods to avoid them throwing not found error  
-  for k,v of browser when (typeof v is 'function') \
-    and (k.match /^element/) and (not k.match /^elements/)
-      do ->
-        _v = v
-        browser[k] = (args...,done) ->
-          cb = (err,res...) ->
-            if err?.status is 7
-              # not found
-              done null, undefined        
-            else
-              done err,res...
-          args.push cb
-          _v.apply @, args
-  
+patch = (browser, mode) ->  
   # making methods synchronous
   options = buildOptions( mode )
   MakeSync browser, options
@@ -46,19 +31,15 @@ patch = (browser, mode) ->
         
 wdSync = 
   # similar to wd
-  remote: (args...) ->
-    # extracting mode from args
+  remote: (args...) ->   
+    # extracting mode from args 
     mode = 'sync'
-    args = args.filter (arg) ->
-      if arg.mode?
-        mode = arg.mode
-        false
-      else true
-    
     browser = wd.remote(args...)
+    for arg in args      
+      mode = arg.mode if arg.mode?      
     patch browser, mode 
     return browser
-    
+        
   # retrieve the browser currently in use
   # useful when writting helpers  
   current: -> Fiber.current.wd_sync_browser
