@@ -108,7 +108,7 @@
         bare: 'on'
       });
       this.execute(scriptAsJs);
-      should.not.exist(this.elementByCss("#setWaitTimeout .child"));
+      should.not.exist(this.elementByCssIfExists("#setWaitTimeout .child"));
       this.setImplicitWaitTimeout(2000);
       should.exist(this.elementByCss("#setWaitTimeout .child"));
       return this.setWaitTimeout(0);
@@ -125,7 +125,9 @@
     }));
     it("element", WdWrap(function() {
       should.exist(this.element("name", "elementByName"));
-      return should.not.exist(this.element("name", "elementByName2"));
+      return (function() {
+        return this.element("name", "elementByName2");
+      }).should["throw"]();
     }));
     it("hasElement", WdWrap(function() {
       (this.hasElement("name", "elementByName")).should.be["true"];
@@ -165,7 +167,9 @@
       searchSeveralText2 = searchText2.replace('element', 'elements');
       it(elementFuncName, WdWrap(function() {
         should.exist(this[elementFuncName](searchText));
-        return should.not.exist(this[elementFuncName](searchText2));
+        return (function() {
+          return this[elementFuncName](searchText2);
+        }).should["throw"]();
       }));
       it(elementFuncName + 'OrNull', WdWrap(function() {
         should.exist(this[elementFuncName + 'OrNull'](searchText));
