@@ -120,6 +120,14 @@ test = (browserName) ->
     should.exist @element "name", "elementByName"
     (-> @element "name", "elementByName2").should.throw()
 
+  it "elementOrNull", WdWrap ->      
+    should.exist @elementOrNull "name", "elementByName"
+    should.not.exist @elementOrNull "name", "elementByName2"
+
+  it "elementIfExists", WdWrap ->      
+    should.exist @elementIfExists "name", "elementByName"
+    should.not.exist @elementIfExists "name", "elementByName2"
+
   it "hasElement", WdWrap ->      
     (@hasElement "name", "elementByName").should.be.true;
     (@hasElement "name", "elementByName2").should.be.false;
