@@ -129,6 +129,14 @@
         return this.element("name", "elementByName2");
       }).should["throw"]();
     }));
+    it("elementOrNull", WdWrap(function() {
+      should.exist(this.elementOrNull("name", "elementByName"));
+      return should.not.exist(this.elementOrNull("name", "elementByName2"));
+    }));
+    it("elementIfExists", WdWrap(function() {
+      should.exist(this.elementIfExists("name", "elementByName"));
+      return should.not.exist(this.elementIfExists("name", "elementByName2"));
+    }));
     it("hasElement", WdWrap(function() {
       (this.hasElement("name", "elementByName")).should.be["true"];
       return (this.hasElement("name", "elementByName2")).should.be["false"];
