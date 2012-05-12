@@ -51,7 +51,7 @@ Wd( function() {
   browser.elementByCss('#ires'); // waiting for new page to load
   console.log(browser.title());
   
-  console.log(browser.elementByName('not_exists')); // undefined
+  console.log(browser.elementByNameIfExists('not_exists')); // undefined
   
   browser.quit();
 

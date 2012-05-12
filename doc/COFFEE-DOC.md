@@ -50,7 +50,7 @@ Wd with:browser, ->
   @elementByCss '#ires' # waiting for new page to load
   console.log @title()
 
-  console.log @elementByName 'not_exists' # undefined
+  console.log @elementByNameIfExists 'not_exists' # undefined
 
   @quit()  
 
