@@ -15,9 +15,7 @@ npm install wd-sync
 
 ## usage
 
-All the methods from [wd](http://github.com/admc/wd) are available. The element retrieval 
-methods have been modified to return 'undefined' when the element is not found rather than
-throw a 'Not Found' error.
+All the methods from [wd](http://github.com/admc/wd) are available. 
 
 The browser functions must to be run within a Wd block. This 
 block holds the fiber environment. The Wd block context is set to the browser, 
