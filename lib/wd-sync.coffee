@@ -30,6 +30,7 @@ patch = (browser, mode) ->
       browser[k] = MakeSync browser[k], mode:['mixed', 'args']
         
 wdSync = 
+  SPECIAL_KEYS: wd.SPECIAL_KEYS
   # similar to wd
   remote: (args...) ->   
     # extracting mode from args 

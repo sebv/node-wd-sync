@@ -322,11 +322,28 @@ test = (browserName) ->
     @doubleclick()
       
   it "type", WdWrap ->
+    altKey = wd.SPECIAL_KEYS['Alt']
+    nullKey = wd.SPECIAL_KEYS['NULL']    
     inputField = @elementByCss "#type input"       
     should.exist (inputField)
-    @type inputField, "Hello World"
+    @type inputField, "Hello"
+    (@getValue inputField).should.equal "Hello" 
+    @type inputField, [altKey, nullKey, " World"]
     (@getValue inputField).should.equal "Hello World" 
     @type inputField, "\n" # no effect
+    (@getValue inputField).should.equal "Hello World" 
+
+  it "keys", WdWrap ->
+    altKey = wd.SPECIAL_KEYS['Alt']
+    nullKey = wd.SPECIAL_KEYS['NULL']    
+    inputField = @elementByCss "#keys input"           
+    should.exist (inputField)
+    @clickElement inputField
+    @keys "Hello"
+    (@getValue inputField).should.equal "Hello" 
+    @keys [altKey, nullKey, " World"]
+    (@getValue inputField).should.equal "Hello World" 
+    @keys "\n" # no effect
     (@getValue inputField).should.equal "Hello World" 
 
   it "clear", WdWrap ->
