@@ -310,12 +310,30 @@
       return this.doubleclick();
     }));
     it("type", WdWrap(function() {
-      var inputField;
+      var altKey, inputField, nullKey;
+      altKey = wd.SPECIAL_KEYS['Alt'];
+      nullKey = wd.SPECIAL_KEYS['NULL'];
       inputField = this.elementByCss("#type input");
       should.exist(inputField);
-      this.type(inputField, "Hello World");
+      this.type(inputField, "Hello");
+      (this.getValue(inputField)).should.equal("Hello");
+      this.type(inputField, [altKey, nullKey, " World"]);
       (this.getValue(inputField)).should.equal("Hello World");
       this.type(inputField, "\n");
+      return (this.getValue(inputField)).should.equal("Hello World");
+    }));
+    it("keys", WdWrap(function() {
+      var altKey, inputField, nullKey;
+      altKey = wd.SPECIAL_KEYS['Alt'];
+      nullKey = wd.SPECIAL_KEYS['NULL'];
+      inputField = this.elementByCss("#keys input");
+      should.exist(inputField);
+      this.clickElement(inputField);
+      this.keys("Hello");
+      (this.getValue(inputField)).should.equal("Hello");
+      this.keys([altKey, nullKey, " World"]);
+      (this.getValue(inputField)).should.equal("Hello World");
+      this.keys("\n");
       return (this.getValue(inputField)).should.equal("Hello World");
     }));
     it("clear", WdWrap(function() {
