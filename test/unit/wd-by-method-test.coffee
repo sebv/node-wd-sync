@@ -482,11 +482,28 @@ test = (browserName) ->
       '''
     scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'      
     @execute scriptAsJs
-    should.not.exist browser.elementByCssIfExists "#waitForCondition .child"
+    should.not.exist @elementByCssIfExists "#waitForCondition .child"
     exprCond = "$('#waitForCondition .child').length > 0"
     (@waitForCondition exprCond, 2000, 200).should.be.true
     (@waitForCondition exprCond, 2000).should.be.true
     (@waitForCondition exprCond).should.be.true
+  
+  it "waitForConditionInBrowser", WdWrap ->
+    scriptAsCoffee = 
+      '''
+        setTimeout ->
+          $('#waitForConditionInBrowser').html '<div class="child">a waitForCondition child</div>'
+        , 1500
+      '''
+    scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'      
+    @execute scriptAsJs
+    should.not.exist @elementByCssIfExists "#waitForConditionInBrowser .child"
+    @setAsyncScriptTimeout 5000
+    exprCond = "$('#waitForConditionInBrowser .child').length > 0"
+    (@waitForConditionInBrowser exprCond, 2000, 200).should.be.true         
+    #(@waitForConditionInBrowser exprCond, 2000).should.be.true         
+    #(@waitForConditionInBrowser exprCond).should.be.true         
+    @setAsyncScriptTimeout 0
                
   it "close", WdWrap ->        
     @close()

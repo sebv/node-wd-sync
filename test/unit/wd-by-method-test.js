@@ -476,11 +476,24 @@
         bare: 'on'
       });
       this.execute(scriptAsJs);
-      should.not.exist(browser.elementByCssIfExists("#waitForCondition .child"));
+      should.not.exist(this.elementByCssIfExists("#waitForCondition .child"));
       exprCond = "$('#waitForCondition .child').length > 0";
       (this.waitForCondition(exprCond, 2000, 200)).should.be["true"];
       (this.waitForCondition(exprCond, 2000)).should.be["true"];
       return (this.waitForCondition(exprCond)).should.be["true"];
+    }));
+    it("waitForConditionInBrowser", WdWrap(function() {
+      var exprCond, scriptAsCoffee, scriptAsJs;
+      scriptAsCoffee = 'setTimeout ->\n  $(\'#waitForConditionInBrowser\').html \'<div class="child">a waitForCondition child</div>\'\n, 1500';
+      scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
+        bare: 'on'
+      });
+      this.execute(scriptAsJs);
+      should.not.exist(this.elementByCssIfExists("#waitForConditionInBrowser .child"));
+      this.setAsyncScriptTimeout(5000);
+      exprCond = "$('#waitForConditionInBrowser .child').length > 0";
+      (this.waitForConditionInBrowser(exprCond, 2000, 200)).should.be["true"];
+      return this.setAsyncScriptTimeout(0);
     }));
     it("close", WdWrap(function() {
       return this.close();
