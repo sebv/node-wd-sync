@@ -428,7 +428,7 @@
       url.should.include("test-page.html");
       return url.should.include("http://");
     }));
-    it("allCookies / setCookies / deleteAllCookies / deleteCookie ", WdWrap(function() {
+    it("allCookies / setCookies / deleteAllCookies / deleteCookie", WdWrap(function() {
       var cookies;
       this.deleteAllCookies();
       this.allCookies().should.eql([]);
@@ -468,6 +468,19 @@
         secure: true
       });
       return this.deleteAllCookies();
+    }));
+    it("waitForCondition", WdWrap(function() {
+      var exprCond, scriptAsCoffee, scriptAsJs;
+      scriptAsCoffee = 'setTimeout ->\n  $(\'#waitForCondition\').html \'<div class="child">a waitForCondition child</div>\'\n, 1500';
+      scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
+        bare: 'on'
+      });
+      this.execute(scriptAsJs);
+      should.not.exist(browser.elementByCssIfExists("#waitForCondition .child"));
+      exprCond = "$('#waitForCondition .child').length > 0";
+      (this.waitForCondition(exprCond, 2000, 200)).should.be["true"];
+      (this.waitForCondition(exprCond, 2000)).should.be["true"];
+      return (this.waitForCondition(exprCond)).should.be["true"];
     }));
     it("close", WdWrap(function() {
       return this.close();

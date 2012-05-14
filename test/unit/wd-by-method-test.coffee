@@ -438,7 +438,7 @@ test = (browserName) ->
     url.should.include "test-page.html"
     url.should.include "http://"
   
-  it "allCookies / setCookies / deleteAllCookies / deleteCookie ", WdWrap ->
+  it "allCookies / setCookies / deleteAllCookies / deleteCookie", WdWrap ->
     @deleteAllCookies()
     @allCookies().should.eql []
     @setCookie \
@@ -472,6 +472,21 @@ test = (browserName) ->
       , value: 'orange'
       , secure: true
     @deleteAllCookies()
+
+  it "waitForCondition", WdWrap ->
+    scriptAsCoffee = 
+      '''
+        setTimeout ->
+          $('#waitForCondition').html '<div class="child">a waitForCondition child</div>'
+        , 1500
+      '''
+    scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'      
+    @execute scriptAsJs
+    should.not.exist browser.elementByCssIfExists "#waitForCondition .child"
+    exprCond = "$('#waitForCondition .child').length > 0"
+    (@waitForCondition exprCond, 2000, 200).should.be.true
+    (@waitForCondition exprCond, 2000).should.be.true
+    (@waitForCondition exprCond).should.be.true
                
   it "close", WdWrap ->        
     @close()
