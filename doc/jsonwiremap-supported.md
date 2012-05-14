@@ -457,16 +457,31 @@
     <tr>
       <td style="border: 1px solid #ccc; padding: 5px;">
         EXTRA: waitForCondition<br>
-        Wait for JavaScript condition to be true.
+        Waits for JavaScript condition to be true (polling within wd client).
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        waitForCondition(conditionExpr, timeout, pollFreq) -> (boolean)
+        waitForCondition(conditionExpr, timeout, pollFreq) -> boolean
         <ul>
         <li>conditionExpr should return a boolean</li>
         <li>timeout and pollFreq are optional (default: 1000, 100).</li>
         <li>return true if condition satisfied, error otherwise.</li>
         </ul>
       </td>      
-    </tr>        
+    </tr>
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 5px;">
+        EXTRA: waitForConditionInBrowser<br>
+        Waits for JavaScript condition to be true. (async script polling within browser)
+      </td>
+      <td style="border: 1px solid #ccc; padding: 5px;">
+        waitForConditionInBrowser(conditionExpr, timeout, pollFreq) -> boolean
+        <ul>
+        <li>setAsyncScriptTimeout must be set to value higher than timeout</li>
+        <li>conditionExpr should return a boolean</li>
+        <li>timeout and pollFreq are optional (default: 1000, 100).</li>
+        <li>return true if condition satisfied, error otherwise.</li>
+        </ul>
+      </td>      
+    </tr>    
   </tbody>
 </table>
