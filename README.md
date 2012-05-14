@@ -553,8 +553,7 @@ Doc modifications must be done in the doc/template directory, then run 'cake doc
         Double-clicks at the current mouse coordinates (set by moveto).
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        doubleclick(button) <br>
-        buttons: {left: 0, middle: 1 , right: 2}
+        doubleclick() <br>
       </td>      
     </tr>
   </tbody>
