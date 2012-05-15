@@ -608,8 +608,8 @@ test = (browserName) ->
     @setAsyncScriptTimeout 5000
     exprCond = "$('#waitForConditionInBrowser .child').length > 0"
     (@waitForConditionInBrowser exprCond, 2000, 200).should.be.true         
-    #(@waitForConditionInBrowser exprCond, 2000).should.be.true         
-    #(@waitForConditionInBrowser exprCond).should.be.true         
+    (@waitForConditionInBrowser exprCond, 2000).should.be.true         
+    (@waitForConditionInBrowser exprCond).should.be.true         
     @setAsyncScriptTimeout 0
                
   it "close", WdWrap ->        
