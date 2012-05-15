@@ -167,11 +167,25 @@
         <ul>
           <li>
             execute script: <br>
-            execute(code) -> value
+            execute(code, args) -> value
+            <ul>
+              <li>args is an optional Array</li>
+            </ul>
           </li>
           <li>
-            evaluate expression: <br>
+            execute script within try/catch using eval(code): <br>
+            safeExecute(code, args) -> value
+            <ul>
+              <li>args is an optional Array</li>
+            </ul>
+          </li>
+          <li>
+            evaluate expression (using execute): <br>
             eval(code) -> value
+          </li>
+          <li>
+            evaluate expression (using safeExecute): <br>
+            safeEval(code) -> value
           </li>
         </ul>
       </td>      
@@ -182,7 +196,22 @@
         Inject a snippet of JavaScript into the page for execution in the context of the currently selected frame.
       </td>
       <td style="border: 1px solid #ccc; padding: 5px;">
-        executeAsync(code) -> value
+        <ul>
+          <li>
+            execute async script: <br>
+            executeAsync(code, args) -> value
+            <ul>
+              <li>args is an optional Array</li>
+            </ul>
+          </li>
+          <li>
+            execute async script within try/catch using eval(code): <br>
+            safeExecuteAsync(code, args) -> value
+            <ul>
+              <li>args is an optional Array</li>
+            </ul>
+          </li>
+        </ul>   
       </td>      
     </tr>
     <tr>
