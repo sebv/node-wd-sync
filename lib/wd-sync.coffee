@@ -6,6 +6,7 @@ wd = require("wd")
 # to use it this way.
 mixedArgsMethods = [
   'executeAsync'  
+  , 'safeExecuteAsync'  
 ]
 
 # EventEmitter methods are excluded

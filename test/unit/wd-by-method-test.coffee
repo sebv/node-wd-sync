@@ -2,6 +2,7 @@
 should = require 'should'
 CoffeeScript = require 'coffee-script'      
 express = require 'express'
+async = require 'async'
 
 test = (browserName) ->
 
@@ -54,18 +55,41 @@ test = (browserName) ->
     @forward()
     @url().should.include "?p=2"
     @get "http://127.0.0.1:8181/test-page.html"
-  
+
   it "eval", WdWrap ->
     (@eval "1+2").should.equal 3
     (@eval "document.title").should.equal "TEST PAGE"
     (@eval "$('#eval').length").should.equal 1
     (@eval "$('#eval li').length").should.equal 2
-
-  it "execute", WdWrap ->
+    
+  it "safeEval", WdWrap ->
+    (@safeEval "1+2").should.equal 3
+    (@safeEval "document.title").should.equal "TEST PAGE"
+    (@safeEval "$('#eval').length").should.equal 1
+    (@safeEval "$('#eval li').length").should.equal 2
+    (=> @safeEval "++wrong >expr").should.throw(/Error response status/)  
+  
+  it "execute (no args)", WdWrap ->
     @execute "window.wd_sync_execute_test = 'It worked!'"
     (@eval "window.wd_sync_execute_test").should.equal 'It worked!'
 
-  it "executeAsync (async mode)", (done) ->
+  it "execute (with args)", WdWrap ->
+    script = "window.wd_sync_execute_test = 'It worked! ' + (arguments[0] + arguments[1])"
+    @execute script, [10, 5]
+    (@eval "window.wd_sync_execute_test").should.equal 'It worked! 15'
+
+  it "safeExecute (no args)", WdWrap ->
+    @safeExecute "window.wd_sync_execute_test = 'It worked!'"
+    (@eval "window.wd_sync_execute_test").should.equal 'It worked!'
+    (=> @safeExecute "a wrong <> expr").should.throw(/Error response status/)
+
+  it "safeExecute (with args)", WdWrap ->
+    script = "window.wd_sync_execute_test = 'It worked! ' + (arguments[0] + arguments[1])"
+    @safeExecute script, [10, 5]
+    (@eval "window.wd_sync_execute_test").should.equal 'It worked! 15'
+    (=> @safeExecute "a wrong <> expr", [10, 5]).should.throw(/Error response status/)
+  
+  it "executeAsync (async mode, no args)", (done) ->
     scriptAsCoffee =
       """
         [args...,done] = arguments
@@ -76,7 +100,58 @@ test = (browserName) ->
       res.should.equal "OK"
       done()
 
-  it "executeAsync (sync mode)", WdWrap ->
+  it "executeAsync (async mode, with args)", (done) ->
+    scriptAsCoffee =
+      """
+        [args...,done] = arguments
+        done("OK " + (args[0]+args[1]))              
+      """
+    scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
+    browser.executeAsync scriptAsJs, [10, 4], (err,res) ->          
+      res.should.equal "OK 14"
+      done()
+  
+  it "safeExecuteAsync (async mode, no args)", (done) ->
+    async.series [
+      (done) ->
+        scriptAsCoffee =
+          """
+            [args...,done] = arguments
+            done "OK"              
+          """
+        scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
+        browser.safeExecuteAsync scriptAsJs, (err,res) ->          
+          res.should.equal "OK"
+          done(null)
+      (done) ->
+        browser.safeExecuteAsync "a @@ wrong expr!", (err,res) ->          
+          should.exist err
+          (err instanceof Error).should.be.true
+          done(null)
+    ], ->
+      done()
+      
+  it "safeExecuteAsync (async mode, with args)", (done) ->
+    async.series [
+      (done) ->
+        scriptAsCoffee =
+          """
+            [args...,done] = arguments
+            done("OK " + (args[0]+args[1]))              
+          """
+        scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
+        browser.safeExecuteAsync scriptAsJs, [10, 4], (err,res) ->          
+          res.should.equal "OK 14"
+          done(null)
+      (done) ->
+        browser.safeExecuteAsync "a @@ wrong expr!", [10, 4], (err,res) ->          
+          should.exist err
+          (err instanceof Error).should.be.true
+          done(null)
+    ], ->
+      done()
+
+  it "executeAsync (sync mode, no args)", WdWrap ->
     scriptAsCoffee =
       """
         [args...,done] = arguments
@@ -85,6 +160,38 @@ test = (browserName) ->
     scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
     res = @executeAsync scriptAsJs          
     res.should.equal "OK"
+
+  it "executeAsync (sync mode, with args)", WdWrap ->
+    scriptAsCoffee =
+      """
+        [args...,done] = arguments
+        done("OK " + (args[0] + args[1]))              
+      """
+    scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
+    res = @executeAsync scriptAsJs, [10, 2]          
+    res.should.equal "OK 12"
+  
+  it "safeExecuteAsync (sync mode, no args)", WdWrap ->
+    scriptAsCoffee =
+      """
+        [args...,done] = arguments
+        done "OK"              
+      """
+    scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
+    res = @safeExecuteAsync scriptAsJs          
+    res.should.equal "OK"
+    (=> @safeExecuteAsync "!!!a wrong expr").should.throw(/Error response status/)
+    
+  it "safeExecuteAsync (sync mode, with args)", WdWrap ->
+    scriptAsCoffee =
+      """
+        [args...,done] = arguments
+        done("OK " + (args[0] + args[1]))              
+      """
+    scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
+    res = @safeExecuteAsync scriptAsJs, [10, 2]          
+    res.should.equal "OK 12"
+    (=> @safeExecuteAsync "!!!a wrong expr", [10, 2]).should.throw(/Error response status/)
   
   it "setWaitTimeout / setImplicitWaitTimeout", WdWrap ->
     @setWaitTimeout 0
