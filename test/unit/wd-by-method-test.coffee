@@ -611,6 +611,16 @@ test = (browserName) ->
     (@waitForConditionInBrowser exprCond, 2000).should.be.true         
     (@waitForConditionInBrowser exprCond).should.be.true         
     @setAsyncScriptTimeout 0
+
+  it "err.inspect", WdWrap ->        
+    err = null;
+    try
+      browser.safeExecute "invalid-code> here"
+    catch _err
+      err = _err
+    should.exist err
+    (err instanceof Error).should.be.true
+    err.inspect().should.include '"screen": "[hidden]"'
                
   it "close", WdWrap ->        
     @close()
