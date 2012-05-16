@@ -598,7 +598,8 @@
       return this.deleteAllCookies();
     }));
     it("waitForCondition", WdWrap(function() {
-      var exprCond, scriptAsCoffee, scriptAsJs;
+      var exprCond, scriptAsCoffee, scriptAsJs,
+        _this = this;
       scriptAsCoffee = 'setTimeout ->\n  $(\'#waitForCondition\').html \'<div class="child">a waitForCondition child</div>\'\n, 1500';
       scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
         bare: 'on'
@@ -608,10 +609,14 @@
       exprCond = "$('#waitForCondition .child').length > 0";
       (this.waitForCondition(exprCond, 2000, 200)).should.be["true"];
       (this.waitForCondition(exprCond, 2000)).should.be["true"];
-      return (this.waitForCondition(exprCond)).should.be["true"];
+      (this.waitForCondition(exprCond)).should.be["true"];
+      return (function() {
+        return _this.waitForCondition("sdsds ;;sdsd {}");
+      }).should["throw"](/Error response status/);
     }));
     it("waitForConditionInBrowser", WdWrap(function() {
-      var exprCond, scriptAsCoffee, scriptAsJs;
+      var exprCond, scriptAsCoffee, scriptAsJs,
+        _this = this;
       scriptAsCoffee = 'setTimeout ->\n  $(\'#waitForConditionInBrowser\').html \'<div class="child">a waitForCondition child</div>\'\n, 1500';
       scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
         bare: 'on'
@@ -623,6 +628,9 @@
       (this.waitForConditionInBrowser(exprCond, 2000, 200)).should.be["true"];
       (this.waitForConditionInBrowser(exprCond, 2000)).should.be["true"];
       (this.waitForConditionInBrowser(exprCond)).should.be["true"];
+      (function() {
+        return _this.waitForConditionInBrowser("sdsds ;;sdsd {}");
+      }).should["throw"](/Error response status/);
       return this.setAsyncScriptTimeout(0);
     }));
     it("err.inspect", WdWrap(function() {
@@ -635,7 +643,8 @@
       }
       should.exist(err);
       (err instanceof Error).should.be["true"];
-      return err.inspect().should.include('"screen": "[hidden]"');
+      err.inspect().should.include('"screen": "[hidden]"');
+      return err.inspect().should.include('browser-error:');
     }));
     it("close", WdWrap(function() {
       return this.close();

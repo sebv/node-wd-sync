@@ -199,7 +199,7 @@ Doc modifications must be done in the doc/template directory, then run 'cake doc
             </ul>
           </li>
           <li>
-            execute script within try/catch using eval(code): <br>
+            execute script using eval(code): <br>
             safeExecute(code, args) -> value
             <ul>
               <li>args is an optional Array</li>
@@ -231,7 +231,7 @@ Doc modifications must be done in the doc/template directory, then run 'cake doc
             </ul>
           </li>
           <li>
-            execute async script within try/catch using eval(code): <br>
+            execute async script using eval(code): <br>
             safeExecuteAsync(code, args) -> value
             <ul>
               <li>args is an optional Array</li>

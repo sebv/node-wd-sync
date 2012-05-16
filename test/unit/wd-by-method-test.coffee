@@ -594,7 +594,8 @@ test = (browserName) ->
     (@waitForCondition exprCond, 2000, 200).should.be.true
     (@waitForCondition exprCond, 2000).should.be.true
     (@waitForCondition exprCond).should.be.true
-  
+    (=> @waitForCondition "sdsds ;;sdsd {}").should.throw(/Error response status/)
+    
   it "waitForConditionInBrowser", WdWrap ->
     scriptAsCoffee = 
       '''
@@ -610,6 +611,7 @@ test = (browserName) ->
     (@waitForConditionInBrowser exprCond, 2000, 200).should.be.true         
     (@waitForConditionInBrowser exprCond, 2000).should.be.true         
     (@waitForConditionInBrowser exprCond).should.be.true         
+    (=> @waitForConditionInBrowser "sdsds ;;sdsd {}").should.throw(/Error response status/)
     @setAsyncScriptTimeout 0
 
   it "err.inspect", WdWrap ->        
@@ -621,7 +623,8 @@ test = (browserName) ->
     should.exist err
     (err instanceof Error).should.be.true
     err.inspect().should.include '"screen": "[hidden]"'
-               
+    err.inspect().should.include 'browser-error:'
+    
   it "close", WdWrap ->        
     @close()
   
