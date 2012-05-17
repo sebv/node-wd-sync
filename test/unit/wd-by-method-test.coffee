@@ -12,6 +12,10 @@ test = (browserName) ->
 
   it "wd.remote", (done) ->
     browser = wd.remote(mode:'sync')
+    browser.on "status", (info) ->
+      console.log "\u001b[36m%s\u001b[0m", info
+    browser.on "command", (meth, path) ->
+      console.log " > \u001b[33m%s\u001b[0m: %s", meth, path    
     Wd = Wd with:browser
     done()
 
