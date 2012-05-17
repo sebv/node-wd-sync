@@ -20,7 +20,7 @@ All the methods from [wd](http://github.com/admc/wd) are available.
 The browser function must to be run within a Wd block. This 
 block holds the fiber environment. 
 
-The 'executeAsync' method may still be run asynchronously.
+The 'executeAsync' and 'safeExecuteAsync' methods may still be run asynchronously.
 
 ```javascript
 {1wdsimplejs}

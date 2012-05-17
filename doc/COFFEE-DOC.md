@@ -21,7 +21,7 @@ The browser functions must to be run within a Wd block. This
 block holds the fiber environment. The Wd block context is set to the browser, 
 so that the browser methods may be accessed using '@'.
 
-The 'executeAsync' method may still be run asynchronously.
+The 'executeAsync' and 'safeExecuteAsync' methods may still be run asynchronously.
 
 ```coffeescript
 # assumes that selenium server is running
