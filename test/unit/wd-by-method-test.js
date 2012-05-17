@@ -25,6 +25,12 @@
       browser = wd.remote({
         mode: 'sync'
       });
+      browser.on("status", function(info) {
+        return console.log("\u001b[36m%s\u001b[0m", info);
+      });
+      browser.on("command", function(meth, path) {
+        return console.log(" > \u001b[33m%s\u001b[0m: %s", meth, path);
+      });
       Wd = Wd({
         "with": browser
       });
