@@ -290,7 +290,7 @@
         searchText = "click " + searchText;
       }
       if (searchText.match(/ByCss/)) {
-        searchText = "#" + searchText;
+        searchText = "." + searchText;
       }
       if (searchText.match(/ByXPath/)) {
         searchText = "//div[@id='elementByXPath']/input";
@@ -298,7 +298,7 @@
       if (searchText.match(/ByTagName/)) {
         searchText = "span";
       }
-      searchText2 = elementFuncName + '2';
+      searchText2 = searchText + '2';
       if (searchText.match(/ByXPath/)) {
         searchText2 = "//div[@id='elementByXPath2']/input";
       }
