@@ -12,7 +12,7 @@ task 'compile', 'Compile All coffee files', ->
   u.coffee.compile COFFEE_PATHS
 
 task 'compile:watch', 'Compile All coffee files and watch for changes', ->
-  u.coffee.compile COFFEE_PATHS, true
+  u.coffee.compile COFFEE_PATHS, watch:true
 
 task 'clean', 'Remove all js files', ->
   u.js.clean JS_PATHS 
