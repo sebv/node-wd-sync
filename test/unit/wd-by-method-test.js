@@ -328,10 +328,12 @@
       return it(elementsFuncName, WdWrap(function() {
         var res;
         res = this[elementsFuncName](searchSeveralText);
-        if (!(elementsFuncName.match(/ByTagName/))) {
-          res.should.have.length(3);
-        } else {
+        if (elementsFuncName.match(/ById/)) {
+          res.should.have.length(1);
+        } else if (elementsFuncName.match(/ByTagName/)) {
           (res.length > 1).should.be["true"];
+        } else {
+          res.should.have.length(3);
         }
         res = this[elementsFuncName](searchSeveralText2);
         return res.should.eql([]);
