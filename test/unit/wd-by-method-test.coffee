@@ -214,18 +214,34 @@ test = (browserName) ->
     @setWaitTimeout 0
   
   it "setAsyncScriptTimeout", WdWrap ->
+    @setAsyncScriptTimeout 500
+    scriptAsCoffee =
+      """
+        [args...,done] = arguments
+        setTimeout ->
+          done "OK"
+        , 2000
+      """
+    scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
+    err = null;
+    try
+      @executeAsync scriptAsJs
+    catch _err
+      err = _err
+    should.exist err
+    err.status.should.equal 28
     @setAsyncScriptTimeout 2000
     scriptAsCoffee =
       """
         [args...,done] = arguments
         setTimeout ->
           done "OK"
-        , 1000
+        , 500
       """
     scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
     res = @executeAsync scriptAsJs          
     res.should.equal "OK"
-  
+    @setAsyncScriptTimeout 0
   
   it "element", WdWrap ->      
     should.exist @element "name", "elementByName"
@@ -652,6 +668,6 @@ describe "method by method tests", ->
     
   describe "using chrome", ->
     test 'chrome'
-    
+  
   describe "using firefox", ->
     test 'firefox'

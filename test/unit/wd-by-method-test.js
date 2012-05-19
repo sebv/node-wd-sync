@@ -248,14 +248,28 @@
       return this.setWaitTimeout(0);
     }));
     it("setAsyncScriptTimeout", WdWrap(function() {
-      var res, scriptAsCoffee, scriptAsJs;
+      var err, res, scriptAsCoffee, scriptAsJs;
+      this.setAsyncScriptTimeout(500);
+      scriptAsCoffee = "[args...,done] = arguments\nsetTimeout ->\n  done \"OK\"\n, 2000";
+      scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
+        bare: 'on'
+      });
+      err = null;
+      try {
+        this.executeAsync(scriptAsJs);
+      } catch (_err) {
+        err = _err;
+      }
+      should.exist(err);
+      err.status.should.equal(28);
       this.setAsyncScriptTimeout(2000);
-      scriptAsCoffee = "[args...,done] = arguments\nsetTimeout ->\n  done \"OK\"\n, 1000";
+      scriptAsCoffee = "[args...,done] = arguments\nsetTimeout ->\n  done \"OK\"\n, 500";
       scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
         bare: 'on'
       });
       res = this.executeAsync(scriptAsJs);
-      return res.should.equal("OK");
+      res.should.equal("OK");
+      return this.setAsyncScriptTimeout(0);
     }));
     it("element", WdWrap(function() {
       should.exist(this.element("name", "elementByName"));
