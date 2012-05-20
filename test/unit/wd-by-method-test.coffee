@@ -345,7 +345,8 @@ test = (browserName) ->
         jQuery ->
           a = $('#clickElement a')
           a.click ->
-            a.html 'clicked'              
+            a.html 'clicked'    
+            false          
       '''
     scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'      
     @execute scriptAsJs
@@ -409,46 +410,53 @@ test = (browserName) ->
     (@text resDiv).should.equal 'button down'
     @buttonUp()
     (@text resDiv).should.equal 'button up'
-                            
+  
   it "click", WdWrap ->      
-    anchor = @elementByCss "#click a" 
-    (@text anchor).should.equal "not clicked"
+    numOfClicksDiv = @elementByCss "#click .numOfClicks"
+    buttonNumberDiv= @elementByCss "#click .buttonNumber"
     scriptAsCoffee = 
       '''
         jQuery ->
-          window.num_of_clicks = 0
-          a = $('#click a')
-          a.click ->
-            window.num_of_clicks = window.num_of_clicks + 1
-            a.html "clicked #{window.num_of_clicks}"             
+          window.numOfClick = 0
+          numOfClicksDiv = $('#click .numOfClicks')
+          buttonNumberDiv = $('#click .buttonNumber')
+          numOfClicksDiv.mousedown (eventObj) ->
+            button = eventObj.button
+            button = 'default' unless button?
+            window.numOfClick = window.numOfClick + 1
+            numOfClicksDiv.html "clicked #{window.numOfClick}"
+            buttonNumberDiv.html "#{button}"    
+            false                                         
       '''
     scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'      
     @execute scriptAsJs
-    (@text anchor).should.equal "not clicked"
-    @moveTo anchor
+    (@text numOfClicksDiv).should.equal "not clicked"     
+    @moveTo numOfClicksDiv
     @click 0
-    (@text anchor).should.equal "clicked 1"
-    @moveTo anchor
+    (@text numOfClicksDiv).should.equal "clicked 1" 
+    (@text buttonNumberDiv).should.equal "0" 
+    @moveTo numOfClicksDiv
     @click()
-    (@text anchor).should.equal "clicked 2"
-             
+    (@text numOfClicksDiv).should.equal "clicked 2" 
+    (@text buttonNumberDiv).should.equal "0" 
+    # not testing right click, cause not sure how to dismiss the right 
+    # click menu in chrome and firefox    
+  
   it "doubleclick", WdWrap ->
-    anchor = @elementByCss "#doubleclick a" 
-    (@text anchor).should.equal "not clicked"
+    div = @elementByCss "#doubleclick div" 
+    (@text div).should.equal "not clicked"
     scriptAsCoffee = 
-      '''
-        jQuery ->
-          a = $('#doubleclick a')
-          a.click ->
-            a.html 'clicked'              
-      '''
-    scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'      
-    @execute scriptAsJs
-    (@text anchor).should.equal "not clicked"
-    @moveTo anchor
-    @doubleclick 0
-    (@text anchor).should.equal "clicked"
+          '''
+            jQuery ->
+              div = $('#doubleclick div')
+              div.dblclick ->
+                div.html 'doubleclicked'                                                 
+          '''
+    scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'  
+    @execute scriptAsJs    
+    @moveTo div
     @doubleclick()
+    (@text div).should.equal "doubleclicked"
       
   it "type", WdWrap ->
     altKey = wd.SPECIAL_KEYS['Alt']
@@ -528,6 +536,7 @@ test = (browserName) ->
         a = $('#acceptAlert a')
         a.click ->
           alert "coffee is running out"
+          false
       """
     scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
     res = @execute scriptAsJs          
@@ -542,6 +551,7 @@ test = (browserName) ->
         a = $('#dismissAlert a')
         a.click ->
           alert "coffee is running out"
+          false
       """
     scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
     res = @execute scriptAsJs          

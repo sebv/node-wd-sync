@@ -380,7 +380,7 @@
       var anchor, scriptAsCoffee, scriptAsJs;
       anchor = this.elementByCss("#clickElement a");
       (this.text(anchor)).should.equal("not clicked");
-      scriptAsCoffee = 'jQuery ->\n  a = $(\'#clickElement a\')\n  a.click ->\n    a.html \'clicked\'              ';
+      scriptAsCoffee = 'jQuery ->\n  a = $(\'#clickElement a\')\n  a.click ->\n    a.html \'clicked\'    \n    false          ';
       scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
         bare: 'on'
       });
@@ -428,36 +428,36 @@
       return (this.text(resDiv)).should.equal('button up');
     }));
     it("click", WdWrap(function() {
-      var anchor, scriptAsCoffee, scriptAsJs;
-      anchor = this.elementByCss("#click a");
-      (this.text(anchor)).should.equal("not clicked");
-      scriptAsCoffee = 'jQuery ->\n  window.num_of_clicks = 0\n  a = $(\'#click a\')\n  a.click ->\n    window.num_of_clicks = window.num_of_clicks + 1\n    a.html "clicked #{window.num_of_clicks}"             ';
+      var buttonNumberDiv, numOfClicksDiv, scriptAsCoffee, scriptAsJs;
+      numOfClicksDiv = this.elementByCss("#click .numOfClicks");
+      buttonNumberDiv = this.elementByCss("#click .buttonNumber");
+      scriptAsCoffee = 'jQuery ->\n  window.numOfClick = 0\n  numOfClicksDiv = $(\'#click .numOfClicks\')\n  buttonNumberDiv = $(\'#click .buttonNumber\')\n  numOfClicksDiv.mousedown (eventObj) ->\n    button = eventObj.button\n    button = \'default\' unless button?\n    window.numOfClick = window.numOfClick + 1\n    numOfClicksDiv.html "clicked #{window.numOfClick}"\n    buttonNumberDiv.html "#{button}"    \n    false                                         ';
       scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
         bare: 'on'
       });
       this.execute(scriptAsJs);
-      (this.text(anchor)).should.equal("not clicked");
-      this.moveTo(anchor);
+      (this.text(numOfClicksDiv)).should.equal("not clicked");
+      this.moveTo(numOfClicksDiv);
       this.click(0);
-      (this.text(anchor)).should.equal("clicked 1");
-      this.moveTo(anchor);
+      (this.text(numOfClicksDiv)).should.equal("clicked 1");
+      (this.text(buttonNumberDiv)).should.equal("0");
+      this.moveTo(numOfClicksDiv);
       this.click();
-      return (this.text(anchor)).should.equal("clicked 2");
+      (this.text(numOfClicksDiv)).should.equal("clicked 2");
+      return (this.text(buttonNumberDiv)).should.equal("0");
     }));
     it("doubleclick", WdWrap(function() {
-      var anchor, scriptAsCoffee, scriptAsJs;
-      anchor = this.elementByCss("#doubleclick a");
-      (this.text(anchor)).should.equal("not clicked");
-      scriptAsCoffee = 'jQuery ->\n  a = $(\'#doubleclick a\')\n  a.click ->\n    a.html \'clicked\'              ';
+      var div, scriptAsCoffee, scriptAsJs;
+      div = this.elementByCss("#doubleclick div");
+      (this.text(div)).should.equal("not clicked");
+      scriptAsCoffee = 'jQuery ->\n  div = $(\'#doubleclick div\')\n  div.dblclick ->\n    div.html \'doubleclicked\'                                                 ';
       scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
         bare: 'on'
       });
       this.execute(scriptAsJs);
-      (this.text(anchor)).should.equal("not clicked");
-      this.moveTo(anchor);
-      this.doubleclick(0);
-      (this.text(anchor)).should.equal("clicked");
-      return this.doubleclick();
+      this.moveTo(div);
+      this.doubleclick();
+      return (this.text(div)).should.equal("doubleclicked");
     }));
     it("type", WdWrap(function() {
       var altKey, inputField, nullKey;
@@ -539,7 +539,7 @@
       var a, res, scriptAsCoffee, scriptAsJs;
       a = this.elementByCss("#acceptAlert a");
       should.exist(a);
-      scriptAsCoffee = "a = $('#acceptAlert a')\na.click ->\n  alert \"coffee is running out\"";
+      scriptAsCoffee = "a = $('#acceptAlert a')\na.click ->\n  alert \"coffee is running out\"\n  false";
       scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
         bare: 'on'
       });
@@ -551,7 +551,7 @@
       var a, res, scriptAsCoffee, scriptAsJs;
       a = this.elementByCss("#dismissAlert a");
       should.exist(a);
-      scriptAsCoffee = "a = $('#dismissAlert a')\na.click ->\n  alert \"coffee is running out\"";
+      scriptAsCoffee = "a = $('#dismissAlert a')\na.click ->\n  alert \"coffee is running out\"\n  false";
       scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
         bare: 'on'
       });
