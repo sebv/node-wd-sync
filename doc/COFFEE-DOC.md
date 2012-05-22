@@ -109,7 +109,7 @@ In this mode, no need to run the Selenium server.
   
 # 3/ headless Wd example 
 
-browser = wd.remote()
+browser = wd.headless()
 
 Wd with:browser, ->        
   @init browserName:'firefox'
