@@ -12,6 +12,7 @@
   }
   , "dependencies": {
     "wd": "git://github.com/sebv/wd.git",
+    "wd-zombie": "latest",
     "make-sync": "0.1.x"    
   }
   , "devDependencies" : {

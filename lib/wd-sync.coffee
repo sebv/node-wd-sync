@@ -1,4 +1,6 @@
 wd = require("wd")
+wdZombie = require("wd-zombie")
+
 {MakeSync,Sync} = require 'make-sync'
 {EventEmitter} = require 'events'
 
@@ -37,6 +39,16 @@ wdSync =
     # extracting mode from args 
     mode = 'sync'
     browser = wd.remote(args...)
+    for arg in args      
+      mode = arg.mode if arg.mode?      
+    patch browser, mode 
+    return browser
+
+  # return headless zombie
+  headless: (args...) ->   
+    # extracting mode from args 
+    mode = 'sync'
+    browser = wdZombie.remote(args...)
     for arg in args      
       mode = arg.mode if arg.mode?      
     patch browser, mode 

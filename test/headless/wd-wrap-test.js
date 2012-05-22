@@ -5,11 +5,11 @@
   _ref = require('../common/wd-wrap-test-base'), browse = _ref.browse, passingBrowser = _ref.passingBrowser, withoutPassingBrowser = _ref.withoutPassingBrowser;
 
   describe("passing browser", function() {
-    return passingBrowser('remote');
+    return passingBrowser('headless');
   });
 
   describe("without passing browser", function() {
-    return withoutPassingBrowser('remote');
+    return withoutPassingBrowser('headless');
   });
 
 }).call(this);

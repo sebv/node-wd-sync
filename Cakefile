@@ -20,8 +20,11 @@ task 'clean', 'Remove all js files', ->
 task 'test', 'Run All tests', ->
   u.mocha.test 'test/unit'
 
-task 'test:sauce', 'Run Sauce Labs integration test', ->
+task 'test:sauce', 'Run Sauce Labs integration tests', ->
   u.mocha.test 'test/sauce'
+
+task 'test:headless', 'Run headless tests', ->
+  u.mocha.test 'test/headless'
 
 task 'grep:dirty', 'Lookup for debugger and console.log in code', ->
   u.grep.debug()

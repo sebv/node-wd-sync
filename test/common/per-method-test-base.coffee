@@ -1,23 +1,29 @@
 {wd,Wd, WdWrap} = require '../../index'
 should = require 'should'
 CoffeeScript = require 'coffee-script'      
-express = require 'express'
 async = require 'async'
+express = require 'express'
 
-test = (browserName) ->
+test = (type, browserName) ->
 
   browser = null;
   WdWrap = WdWrap with: (-> browser)
   capabilities = null
 
-  it "wd.remote", (done) ->
-    browser = wd.remote(mode:'sync')
-    browser.on "status", (info) ->
-      console.log "\u001b[36m%s\u001b[0m", info
-    browser.on "command", (meth, path) ->
-      console.log " > \u001b[33m%s\u001b[0m: %s", meth, path    
-    Wd = Wd with:browser
-    done()
+  it "wd.remote or wd.headless", (done) ->
+    switch type
+      when 'remote'
+        browser = wd.remote()
+        browser.on "status", (info) ->
+          console.log "\u001b[36m%s\u001b[0m", info
+        browser.on "command", (meth, path) ->
+          console.log " > \u001b[33m%s\u001b[0m: %s", meth, path    
+        Wd = Wd with:browser
+        done()
+      when 'headless'
+        browser = wd.headless()
+        Wd = Wd with:browser
+        done()      
 
   it "status", WdWrap ->
     should.exist @status()
@@ -26,7 +32,10 @@ test = (browserName) ->
     should.exist @sessions()
 
   it "init", WdWrap ->
-    @init browserName: browserName
+    @init(
+      browserName: browserName
+      #debug: true
+    )
   
   it "sessionCapabilities", WdWrap ->
     capabilities = @sessionCapabilities()
@@ -50,16 +59,19 @@ test = (browserName) ->
   it "refresh", WdWrap ->
     @refresh()
 
-  it "back / forward", WdWrap ->
-    @refresh()
+  it "get other page", WdWrap ->
     @get "http://127.0.0.1:8181/test-page.html?p=2"
     @url().should.include "?p=2"
+
+  it "back", WdWrap ->
     @back()
     @url().should.not.include "?p=2"
+  
+  it "forward", WdWrap ->
     @forward()
-    @url().should.include "?p=2"
-    @get "http://127.0.0.1:8181/test-page.html"
-
+    @url().should.include "?p=2"    
+    #@get "http://127.0.0.1:8181/test-page.html"
+  
   it "eval", WdWrap ->
     (@eval "1+2").should.equal 3
     (@eval "document.title").should.equal "TEST PAGE"
@@ -71,8 +83,12 @@ test = (browserName) ->
     (@safeEval "document.title").should.equal "TEST PAGE"
     (@safeEval "$('#eval').length").should.equal 1
     (@safeEval "$('#eval li').length").should.equal 2
-    (=> @safeEval "++wrong >expr").should.throw(/Error response status/)  
-  
+    switch type
+      when 'remote'    
+        (=> @safeEval "++wrong >expr").should.throw(/Error response status/)  
+      when 'headless'    
+        (=> @safeEval "++wrong >expr").should.throw(/Evaluation failure/)
+        
   it "execute (no args)", WdWrap ->
     @execute "window.wd_sync_execute_test = 'It worked!'"
     (@eval "window.wd_sync_execute_test").should.equal 'It worked!'
@@ -85,13 +101,21 @@ test = (browserName) ->
   it "safeExecute (no args)", WdWrap ->
     @safeExecute "window.wd_sync_execute_test = 'It worked!'"
     (@eval "window.wd_sync_execute_test").should.equal 'It worked!'
-    (=> @safeExecute "a wrong <> expr").should.throw(/Error response status/)
+    switch type
+      when 'remote'    
+        (=> @safeExecute "a wrong <> expr").should.throw(/Error response status/)
+      when 'headless'    
+        (=> @safeExecute "a wrong <> expr").should.throw(/Execution failure/)
 
   it "safeExecute (with args)", WdWrap ->
     script = "window.wd_sync_execute_test = 'It worked! ' + (arguments[0] + arguments[1])"
     @safeExecute script, [10, 5]
     (@eval "window.wd_sync_execute_test").should.equal 'It worked! 15'
-    (=> @safeExecute "a wrong <> expr", [10, 5]).should.throw(/Error response status/)
+    switch type
+      when 'remote'    
+        (=> @safeExecute "a wrong <> expr", [10, 5]).should.throw(/Error response status/)
+      when 'headless'    
+        (=> @safeExecute "a wrong <> expr", [10, 5]).should.throw(/Execution failure/)
   
   it "executeAsync (async mode, no args)", (done) ->
     scriptAsCoffee =
@@ -184,7 +208,11 @@ test = (browserName) ->
     scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
     res = @safeExecuteAsync scriptAsJs          
     res.should.equal "OK"
-    (=> @safeExecuteAsync "!!!a wrong expr").should.throw(/Error response status/)
+    switch type
+      when 'remote'    
+        (=> @safeExecuteAsync "!!!a wrong expr").should.throw(/Error response status/)
+      when 'headless'    
+        (=> @safeExecuteAsync "!!!a wrong expr").should.throw(/Execution failure/)
     
   it "safeExecuteAsync (sync mode, with args)", WdWrap ->
     scriptAsCoffee =
@@ -195,7 +223,11 @@ test = (browserName) ->
     scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
     res = @safeExecuteAsync scriptAsJs, [10, 2]          
     res.should.equal "OK 12"
-    (=> @safeExecuteAsync "!!!a wrong expr", [10, 2]).should.throw(/Error response status/)
+    switch type
+      when 'remote'    
+        (=> @safeExecuteAsync "!!!a wrong expr", [10, 2]).should.throw(/Error response status/)
+      when 'headless'    
+        (=> @safeExecuteAsync "!!!a wrong expr", [10, 2]).should.throw(/Execution failure/)
   
   it "setWaitTimeout / setImplicitWaitTimeout", WdWrap ->
     @setWaitTimeout 0
@@ -242,15 +274,16 @@ test = (browserName) ->
     res = @executeAsync scriptAsJs          
     res.should.equal "OK"
     @setAsyncScriptTimeout 0
-  
-  it "element", WdWrap ->      
-    should.exist @element "name", "elementByName"
+    
+  it "element", WdWrap ->
+    should.exist @element "name", "elementByName"      
     (-> @element "name", "elementByName2").should.throw()
-
+  
+  
   it "elementOrNull", WdWrap ->      
     should.exist @elementOrNull "name", "elementByName"
-    should.not.exist @elementOrNull "name", "elementByName2"
-
+    #should.not.exist @elementOrNull "name", "elementByName2"
+  
   it "elementIfExists", WdWrap ->      
     should.exist @elementIfExists "name", "elementByName"
     should.not.exist @elementIfExists "name", "elementByName2"
@@ -466,10 +499,11 @@ test = (browserName) ->
     @type inputField, "Hello"
     (@getValue inputField).should.equal "Hello" 
     @type inputField, [altKey, nullKey, " World"]
-    (@getValue inputField).should.equal "Hello World" 
-    @type inputField, "\n" # no effect
+    (@getValue inputField).should.equal "Hello World"       
+    @type inputField, [wd.SPECIAL_KEYS.Return] # no effect
     (@getValue inputField).should.equal "Hello World" 
 
+  
   it "keys", WdWrap ->
     altKey = wd.SPECIAL_KEYS['Alt']
     nullKey = wd.SPECIAL_KEYS['NULL']    
@@ -480,9 +514,9 @@ test = (browserName) ->
     (@getValue inputField).should.equal "Hello" 
     @keys [altKey, nullKey, " World"]
     (@getValue inputField).should.equal "Hello World" 
-    @keys "\n" # no effect
+    @type inputField, [wd.SPECIAL_KEYS.Return] # no effect
     (@getValue inputField).should.equal "Hello World" 
-
+  
   it "clear", WdWrap ->
     inputField = @elementByCss "#clear input"
     should.exist (inputField)
@@ -527,7 +561,7 @@ test = (browserName) ->
     should.exist (textDiv)
     (@textPresent 'sunny', textDiv).should.be.true
     (@textPresent 'raining', textDiv).should.be.false          
-
+  
   it "acceptAlert", WdWrap ->
     a = @elementByCss "#acceptAlert a"
     should.exist (a)
@@ -611,7 +645,7 @@ test = (browserName) ->
       , value: 'orange'
       , secure: true
     @deleteAllCookies()
-
+  
   it "waitForCondition", WdWrap ->
     scriptAsCoffee = 
       '''
@@ -626,7 +660,12 @@ test = (browserName) ->
     (@waitForCondition exprCond, 2000, 200).should.be.true
     (@waitForCondition exprCond, 2000).should.be.true
     (@waitForCondition exprCond).should.be.true
-    (=> @waitForCondition "sdsds ;;sdsd {}").should.throw(/Error response status/)
+    switch type
+      when 'remote'    
+        (=> @waitForCondition "sdsds ;;sdsd {}").should.throw(/Error response status/)
+      when 'headless'    
+        (=> @waitForCondition "sdsds ;;sdsd {}").should.throw(/Evaluation failure/)
+    
     
   it "waitForConditionInBrowser", WdWrap ->
     scriptAsCoffee = 
@@ -643,41 +682,42 @@ test = (browserName) ->
     (@waitForConditionInBrowser exprCond, 2000, 200).should.be.true         
     (@waitForConditionInBrowser exprCond, 2000).should.be.true         
     (@waitForConditionInBrowser exprCond).should.be.true         
-    (=> @waitForConditionInBrowser "sdsds ;;sdsd {}").should.throw(/Error response status/)
+    switch type
+      when 'remote'    
+        (=> @waitForConditionInBrowser "sdsds ;;sdsd {}").should.throw(/Error response status/)
+        (=> @waitForCondition "sdsds ;;sdsd {}").should.throw(/Error response status/)
+      when 'headless'    
+        (=> @waitForConditionInBrowser "sdsds ;;sdsd {}").should.throw(/Execution failure/)
     @setAsyncScriptTimeout 0
-
+  
+  
   it "err.inspect", WdWrap ->        
     err = null;
     try
       browser.safeExecute "invalid-code> here"
     catch _err
       err = _err
-    should.exist err
+    should.exist err    
     (err instanceof Error).should.be.true
-    err.inspect().should.include '"screen": "[hidden]"'
-    err.inspect().should.include 'browser-error:'
+    switch type
+      when 'remote'
+        err.inspect().should.include '"screen": "[hidden]"'
+        err.inspect().should.include 'browser-error:'
     
   it "close", WdWrap ->        
     @close()
   
   it "quit", WdWrap ->        
     @quit()
-  
-describe "wd-sync", -> \
-describe "method by method tests", ->
-  app = null;
-  before (done) ->
-    app = express.createServer()
-    app.use(express.static(__dirname + '/assets'));
-    app.listen 8181
-    done()
+
+class Express
+  start: (done) ->
+    @app = express.createServer()
+    @app.use(express.static(__dirname + '/assets'));
+    @app.listen 8181
+        
+  stop: (done) ->
+    @app.close()
     
-  after (done) ->
-    app.close()
-    done()
-    
-  describe "using chrome", ->
-    test 'chrome'
-  
-  describe "using firefox", ->
-    test 'firefox'
+exports.test = test
+exports.Express = Express
