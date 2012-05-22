@@ -6,7 +6,7 @@ try
 catch err
   {wd,Wd} = require '../../index' 
   
-# 6/ retrieving the current browser
+# 7/ retrieving the current browser
 
 browser = wd.remote()
 

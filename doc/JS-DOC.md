@@ -111,6 +111,42 @@ Wd( function() {
 ```
 
 
+## Headless example
+
+This uses the [wd-zombie](http://sebv/node-wd-zombie.git) module,
+which implements the wd interface using [Zombie](http://github.com/assaf/zombie). 
+
+In this mode, no need to run selenium-server.
+
+```coffeescript
+var wd = require('wd-sync').wd
+, Wd = require('wd-sync').Wd;
+
+// 3/ headless Wd example 
+
+browser = wd.headless();
+
+Wd( function() {
+  
+  browser.init();
+  
+  browser.get("http://saucelabs.com/test/guinea-pig");
+  console.log(browser.title());
+  
+  divEl = browser.elementByCss('#i_am_an_id');
+  console.log(browser.text(divEl));
+  
+  var textField = browser.elementById('i_am_a_textbox');
+  browser.type(textField, "Hello World");
+  browser.type(textField, wd.SPECIAL_KEYS.Return);
+    
+  browser.quit();
+
+});
+
+```
+
+
 ## WdWrap
 
 WdWrap is a wrapper around Wd. It takes a function as argument and return a function like below:
@@ -139,7 +175,7 @@ var wd = require('wd-sync').wd
 
 should = require('should');
 
-// 3/ simple WdWrap example
+// 4/ simple WdWrap example
 
 describe("WdWrap", function() {
 
@@ -192,7 +228,7 @@ var wd = require('wd-sync').wd
 
 should = require('should');
 
-// 4/ leaner WdWrap syntax
+// 5/ leaner WdWrap syntax
 
 describe("WdWrap", function() {
   describe("passing browser", function() {
@@ -247,7 +283,7 @@ Don't forget to set the 'use' option in the block, or globably like in the sampl
 var wd = require('wd-sync').wd
 , Wd = require('wd-sync').Wd;
 
-// 5/ retrieving the current browser
+// 6/ retrieving the current browser
 
 var browser = wd.remote();
 

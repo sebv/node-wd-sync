@@ -12,7 +12,7 @@ try {
 
 should = require('should');
 
-// 4/ leaner WdWrap syntax
+// 5/ leaner WdWrap syntax
 
 describe("WdWrap", function() {
   describe("passing browser", function() {

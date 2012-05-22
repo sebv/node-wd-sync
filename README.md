@@ -4,7 +4,9 @@ A synchronous version with a nice api of [wd](http://github.com/admc/wd),
 the lightweight  [WebDriver / Selenium2](http://seleniumhq.org/projects/webdriver/) 
 client for node.js, built using  [node-fibers](http://github.com/laverdet/node-fibers).
 
-Remote testing with [Sauce Labs](http://saucelabs.com) also works.
+The following environement are also available: 
+  * Remote testing with [Sauce Labs](http://saucelabs.com).
+  * Headless testing using [Zombie](http://github.com/assaf/zombie). 
 
 ## install
 
@@ -620,6 +622,11 @@ Doc modifications must be done in the doc/template directory, then run 'cake doc
 * [full JsonWireProtocol mapping](http://github.com/sebv/node-wd-sync/blob/master/doc/jsonwiremap-all.md)
 * [supported JsonWireProtocol mapping](http://github.com/sebv/node-wd-sync/blob/master/doc/jsonwiremap-supported.md)
 
+## headless
+  
+To use the Zombie headless browser, just call 'wd.headless()' intead of 'wd.remote()' when initializing the browser. 
+See doc and examples for more details. 
+  
 ## tests
 
 ### local / selenium server: 

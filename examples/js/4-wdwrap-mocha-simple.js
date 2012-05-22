@@ -12,7 +12,7 @@ try {
 
 should = require('should');
 
-// 3/ simple WdWrap example
+// 4/ simple WdWrap example
 
 describe("WdWrap", function() {
 

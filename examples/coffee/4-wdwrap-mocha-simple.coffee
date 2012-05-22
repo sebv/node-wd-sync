@@ -8,26 +8,25 @@ catch err
   {wd,WdWrap} = require '../../index' 
 
 should = require 'should'
-      
-# 5/ leaner WdWrap syntax
+
+# 4/ simple WdWrap example
 
 describe "WdWrap", ->
 
   describe "passing browser", ->  
+
     browser = null
-    
-    # do this only once
-    WdWrap = WdWrap 
-      with: -> 
-        browser
-      pre: ->
-        @timeout 30000
 
     before (done) ->
       browser = wd.remote()
       done()
 
-    it "should work", WdWrap ->      
+    it "should work", WdWrap 
+      with: -> 
+        browser
+      pre: ->
+        @timeout 30000 
+    , ->      
       @init()
 
       @get "http://google.com"
@@ -42,4 +41,3 @@ describe "WdWrap", ->
       @title().toLowerCase().should.include 'hello world'
 
       @quit()  
-

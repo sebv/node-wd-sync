@@ -37,6 +37,18 @@ Remote testing with [Sauce Labs](http://saucelabs.com) works.
 ```
 
 
+## Headless example
+
+This uses the [wd-zombie](http://sebv/node-wd-zombie.git) module,
+which implements the wd interface using [Zombie](http://github.com/assaf/zombie). 
+
+In this mode, no need to run selenium-server.
+
+```coffeescript
+{3wdheadlessjs}
+```
+
+
 ## WdWrap
 
 WdWrap is a wrapper around Wd. It takes a function as argument and return a function like below:
@@ -57,7 +69,7 @@ context (In Mocha, it can be used to configure timeouts).
 The example below is using the mocha test framework.
 
 ```javascript
-{3wdwrapmochasimplejs}
+{4wdwrapmochasimplejs}
 ```
 
 ## a slightly leaner syntax (or the lack of it)
@@ -68,7 +80,7 @@ Using the 'pre' option like in the mocha sample below may still be beneficial, a
 CoffeeScript syntax.
 
 ```javascript
-{4wdwrapmochaleanerjs}
+{5wdwrapmochaleanerjs}
 ```
 
 
@@ -82,7 +94,7 @@ This is useful when writing test helpers.
 Don't forget to set the 'use' option in the block, or globably like in the sample below. 
 
 ```javascript
-{5wdcurrentbrowserjs}
+{6wdcurrentbrowserjs}
 ```
 
 ## supported methods

@@ -97,6 +97,36 @@ Wd with:browser, ->
   @quit()
 ```
 
+## Headless example
+
+This uses the [wd-zombie](http://sebv/node-wd-zombie.git) module,
+which implements the wd interface using [Zombie](http://github.com/assaf/zombie). 
+
+In this mode, no need to run selenium-server.
+
+```coffeescript
+{wd,Wd} = require 'wd-sync'
+  
+# 3/ headless Wd example 
+
+browser = wd.remote()
+
+Wd with:browser, ->        
+  @init browserName:'firefox'
+
+  @get "http://saucelabs.com/test/guinea-pig"
+  console.log @title()          
+
+  divEl = @elementByCss '#i_am_an_id'
+  console.log @text divEl
+
+  textField = @elementByName 'i_am_a_textbox'
+  @type textField , "Hello World"  
+  @type textField , wd.SPECIAL_KEYS.Return
+
+  @quit()  
+
+```
 
 ## WdWrap
 
@@ -124,7 +154,7 @@ The example below is using the mocha test framework.
 
 should = require 'should'
 
-# 3/ simple WdWrap example
+# 4/ simple WdWrap example
 
 describe "WdWrap", ->
 
@@ -171,7 +201,7 @@ Wd sample below:
 
 {wd,Wd} = require 'wd-sync'
   
-# 4/ leaner Wd syntax
+# 5/ leaner Wd syntax
 
 browser = wd.remote()
 
@@ -205,7 +235,7 @@ WdWrap sample below, using the mocha test framework:
 
 should = require 'should'
       
-# 5/ leaner WdWrap syntax
+# 6/ leaner WdWrap syntax
 
 describe "WdWrap", ->
 
@@ -255,7 +285,7 @@ This is useful when writing test helpers.
 
 {wd,Wd} = require 'wd-sync'
   
-# 6/ retrieving the current browser
+# 7/ retrieving the current browser
 
 browser = wd.remote()
 

@@ -9,7 +9,7 @@ try {
   Wd = require('../../index').Wd;  
 }
 
-// 5/ retrieving the current browser
+// 6/ retrieving the current browser
 
 var browser = wd.remote();
 
