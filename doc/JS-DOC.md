@@ -116,7 +116,7 @@ Wd( function() {
 This uses the [wd-zombie](http://sebv/node-wd-zombie.git) module,
 which implements the wd interface using [Zombie](http://github.com/assaf/zombie). 
 
-In this mode, no need to run selenium-server.
+In this mode, no need to run the Selenium server.
 
 ```coffeescript
 var wd = require('wd-sync').wd
@@ -345,6 +345,11 @@ configure your username and access key.
 2/ run tests
 ```
 cake test:sauce
+```
+
+### headless 
+```
+cake test:headless
 ```
 
 
