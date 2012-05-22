@@ -1,6 +1,6 @@
 {
     "name": "wd-sync"
-  , "version": "0.1.5"
+  , "version": "0.1.6"
   , "description": "sync version of wd using fibers."
   , "keywords": ["selenium","webdriver","test","fibers", "sync"]
   , "author": "Seb Vincent <seb.vincent@gmail.com>"
@@ -12,7 +12,7 @@
   }
   , "dependencies": {
     "wd": "git://github.com/sebv/wd.git",
-    "wd-zombie": "latest",
+    "wd-zombie": "git://github.com/sebv/node-wd-zombie.git",
     "make-sync": "0.1.x"    
   }
   , "devDependencies" : {
@@ -20,8 +20,8 @@
     , "sv-cake-utils" : "0.1.x"
     , "mocha": "1.0.x"    
     ,"should": "0.6.x"
-    , "express" : "latest"
-    , "whiskers" : "latest"        
-    , "async" : "latest"        
+    , "express" : "2.5.x"
+    , "whiskers" : "0.2.x"        
+    , "async" : "0.1.x"        
   }
 }
