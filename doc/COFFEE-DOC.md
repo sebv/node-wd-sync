@@ -102,14 +102,12 @@ Wd with:browser, ->
 This uses the [wd-zombie](http://sebv/node-wd-zombie.git) module,
 which implements the wd interface using [Zombie](http://github.com/assaf/zombie). 
 
-IMPORTANT: For headless mode to work, you must add 'wd-zombie' to your project 
-package.json.
+IMPORTANT: A 'wd-zombie' dependenciy must be added to your project package.json.
 
 In this mode, no need to run the Selenium server.
 
 ```coffeescript
-# IMPORTANT: For headless mode to work, you must add 'wd-zombie' to 
-# your project package.json.
+# a dependency to 'wd-zombie' must be configured in package.json  
 
 {wd,Wd} = require 'wd-sync'
   
