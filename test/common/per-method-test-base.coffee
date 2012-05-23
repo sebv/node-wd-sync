@@ -54,13 +54,13 @@ test = (type, browserName) ->
     @setPageLoadTimeout 500
   
   it "get", WdWrap ->
-    @get "http://127.0.0.1:8181/test-page.html"
+    @get "http://127.0.0.1:8181/per-method-test-page.html"
     
   it "refresh", WdWrap ->
     @refresh()
 
   it "get other page", WdWrap ->
-    @get "http://127.0.0.1:8181/test-page.html?p=2"
+    @get "http://127.0.0.1:8181/per-method-test-page.html?p=2"
     @url().should.include "?p=2"
 
   it "back", WdWrap ->
@@ -70,7 +70,7 @@ test = (type, browserName) ->
   it "forward", WdWrap ->
     @forward()
     @url().should.include "?p=2"    
-    #@get "http://127.0.0.1:8181/test-page.html"
+    #@get "http://127.0.0.1:8181/per-method-test-page.html"
   
   it "eval", WdWrap ->
     (@eval "1+2").should.equal 3
@@ -608,7 +608,7 @@ test = (type, browserName) ->
       
   it "url", WdWrap ->
     url = @url() 
-    url.should.include "test-page.html"
+    url.should.include "per-method-test-page.html"
     url.should.include "http://"
   
   it "allCookies / setCookies / deleteAllCookies / deleteCookie", WdWrap ->

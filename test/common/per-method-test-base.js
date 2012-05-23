@@ -70,13 +70,13 @@
       return this.setPageLoadTimeout(500);
     }));
     it("get", WdWrap(function() {
-      return this.get("http://127.0.0.1:8181/test-page.html");
+      return this.get("http://127.0.0.1:8181/per-method-test-page.html");
     }));
     it("refresh", WdWrap(function() {
       return this.refresh();
     }));
     it("get other page", WdWrap(function() {
-      this.get("http://127.0.0.1:8181/test-page.html?p=2");
+      this.get("http://127.0.0.1:8181/per-method-test-page.html?p=2");
       return this.url().should.include("?p=2");
     }));
     it("back", WdWrap(function() {
@@ -618,7 +618,7 @@
     it("url", WdWrap(function() {
       var url;
       url = this.url();
-      url.should.include("test-page.html");
+      url.should.include("per-method-test-page.html");
       return url.should.include("http://");
     }));
     it("allCookies / setCookies / deleteAllCookies / deleteCookie", WdWrap(function() {

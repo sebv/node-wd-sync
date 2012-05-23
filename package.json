@@ -23,5 +23,6 @@
     , "express" : "2.5.x"
     , "whiskers" : "0.2.x"        
     , "async" : "0.1.x"        
+    , "underscore" : "latest"        
   }
 }
