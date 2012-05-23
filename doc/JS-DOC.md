@@ -123,7 +123,7 @@ In this mode, no need to run the Selenium server.
 
 ```coffeescript
 // IMPORTANT: For headless mode to work, you must add 'wd-zombie' to 
-// your project  package.json.
+// your project package.json.
 
 var wd = require('wd-sync').wd
 , Wd = require('wd-sync').Wd;

@@ -1,5 +1,5 @@
 # IMPORTANT: For headless mode to work, you must add 'wd-zombie' to 
-# your project  package.json.
+# your project package.json.
 
 {wd,Wd}={}
 try 
