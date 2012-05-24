@@ -40,7 +40,7 @@ wdSync =
     mode = 'sync'
     browser = wd.remote(args...)
     for arg in args      
-      mode = arg.mode if arg.mode?      
+      mode = arg.mode if arg?.mode?      
     patch browser, mode 
     return browser
 
@@ -50,7 +50,7 @@ wdSync =
     mode = 'sync'
     browser = wdZombie.remote(args...)
     for arg in args      
-      mode = arg.mode if arg.mode?      
+      mode = arg.mode if arg?.mode?      
     patch browser, mode 
     return browser
         
