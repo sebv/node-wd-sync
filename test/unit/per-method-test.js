@@ -5,7 +5,7 @@
   _ref = require('../common/per-method-test-base'), test = _ref.test, Express = _ref.Express;
 
   describe("wd-sync", function() {
-    return describe("method by method tests", function() {
+    return describe("unit", function() {
       var express;
       express = new Express;
       before(function(done) {
@@ -16,12 +16,8 @@
         express.stop(done);
         return done(null);
       });
-      describe("using chrome", function() {
-        return test('remote', 'chrome');
-      });
-      return describe("using firefox", function() {
-        return test('remote', 'firefox');
-      });
+      test('remote', 'chrome');
+      return test('remote', 'firefox');
     });
   });
 

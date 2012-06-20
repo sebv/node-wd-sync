@@ -80,8 +80,8 @@ wdSync =
     browser = wdZombie.remote(args...)
     for arg in args      
       mode = arg.mode if arg?.mode?      
-    patch browser, mode 
-    return browser
+    browser = patch browser, mode 
+    browser
         
   # retrieve the browser currently in use
   # useful when writting helpers  

@@ -23,6 +23,6 @@
     , "whiskers" : "0.2.x"        
     , "async" : "0.1.x"        
     , "underscore" : "latest"        
-    , "wd-zombie": "git://github.com/sebv/node-wd-zombie.git"
+    , "wd-zombie": "0.0.2"
   }
 }

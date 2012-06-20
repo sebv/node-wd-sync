@@ -6,20 +6,22 @@
 
   describe("wd-sync", function() {
     return describe("headless", function() {
-      return describe("basic tests", function() {
-        describe("browsing", function() {
-          var browserName, _i, _len, _ref1, _results;
-          _ref1 = [void 0, 'zombie'];
-          _results = [];
-          for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-            browserName = _ref1[_i];
-            _results.push(testWithBrowser('headless', browserName));
+      var browserName, _i, _len, _ref1;
+      _ref1 = [void 0, 'zombie'];
+      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+        browserName = _ref1[_i];
+        testWithBrowser({
+          type: 'headless',
+          desired: {
+            browserName: browserName
           }
-          return _results;
         });
-        return describe("ws.current()", function() {
-          return testCurrent('headless');
-        });
+      }
+      return testCurrent({
+        type: 'headless',
+        desired: {
+          browserName: 'chrome'
+        }
       });
     });
   });

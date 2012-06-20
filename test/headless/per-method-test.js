@@ -5,7 +5,7 @@
   _ref = require('../common/per-method-test-base'), test = _ref.test, Express = _ref.Express;
 
   describe("wd-sync", function() {
-    return describe("method by method tests", function() {
+    return describe("headless", function() {
       var express;
       express = new Express;
       before(function(done) {
@@ -16,9 +16,7 @@
         express.stop(done);
         return done(null);
       });
-      return describe("using zombie", function() {
-        return test('headless', 'zombie');
-      });
+      return test('headless', 'zombie');
     });
   });
 
