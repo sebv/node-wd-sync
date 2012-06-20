@@ -650,3 +650,12 @@ cake test:sauce
 ```
 cake test:headless
 ```
+
+## todo
+
+Unit Test, Doc, and wd-zombie implementation for:
+
+* waitForElement
+* isVisible
+
+Doc for the element class
