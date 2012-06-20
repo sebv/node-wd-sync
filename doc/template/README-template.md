@@ -595,9 +595,9 @@ cake test:headless
 
 ## todo
 
-Unit Test, Doc, and wd-zombie implementation for:
+unit test, doc, and wd-zombie implementation for:
 
 * waitForElement
 * isVisible
 
-Doc for the element class
+doc + example for methods returning element instances 
