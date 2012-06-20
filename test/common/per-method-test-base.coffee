@@ -55,7 +55,7 @@ test = (type, browserName) ->
   
   it "get", WdWrap ->
     @get "http://127.0.0.1:8181/per-method-test-page.html"
-    
+
   it "refresh", WdWrap ->
     @refresh()
 
@@ -597,15 +597,14 @@ test = (type, browserName) ->
     else
       @acceptAlert()
         
-      
   it "active", WdWrap ->
     i1 = @elementByCss "#active .i1" 
     i2 = @elementByCss "#active .i2" 
-    @clickElement i1
-    @active().should.equal i1
+    i1.click()
+    @active().value.should.equal i1.value
     @clickElement i2
-    @active().should.equal i2
-      
+    @active().value.should.equal i2.value
+
   it "url", WdWrap ->
     url = @url() 
     url.should.include "per-method-test-page.html"
@@ -703,7 +702,7 @@ test = (type, browserName) ->
       when 'remote'
         err.inspect().should.include '"screen": "[hidden]"'
         err.inspect().should.include 'browser-error:'
-    
+
   it "close", WdWrap ->        
     @close()
   

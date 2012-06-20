@@ -610,10 +610,10 @@
       var i1, i2;
       i1 = this.elementByCss("#active .i1");
       i2 = this.elementByCss("#active .i2");
-      this.clickElement(i1);
-      this.active().should.equal(i1);
+      i1.click();
+      this.active().value.should.equal(i1.value);
       this.clickElement(i2);
-      return this.active().should.equal(i2);
+      return this.active().value.should.equal(i2.value);
     }));
     it("url", WdWrap(function() {
       var url;

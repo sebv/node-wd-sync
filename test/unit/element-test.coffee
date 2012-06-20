@@ -1,7 +1,7 @@
-{test,Express} = require '../common/per-method-test-base'
+{test,Express} = require '../common/element-test-base'
   
 describe "wd-sync", -> \
-describe "method by method tests", ->
+describe "element tests", ->
   express = new Express
   before (done) ->
     express.start(done)
@@ -13,6 +13,6 @@ describe "method by method tests", ->
     
   describe "using chrome", ->
     test 'remote', 'chrome'
-
+###  
   describe "using firefox", ->
     test 'remote', 'firefox'

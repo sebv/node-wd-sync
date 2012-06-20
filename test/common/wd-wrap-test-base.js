@@ -16,9 +16,9 @@
     return describe("WdWrap", function() {});
   });
 
-  browse = function() {
+  browse = function(opt) {
     var queryField;
-    this.init();
+    this.init(opt.desired);
     this.get("http://saucelabs.com/test/guinea-pig");
     this.title().toLowerCase().should.include('sauce labs');
     queryField = this.elementById('i_am_a_textbox');
@@ -27,52 +27,60 @@
     return this.quit();
   };
 
-  getBrowser = function(type) {
-    switch (type) {
+  getBrowser = function(opt) {
+    switch (opt.type) {
       case 'remote':
-        return wd.remote();
+        return wd.remote(opt.remoteConfig);
       case 'headless':
         return wd.headless();
     }
   };
 
-  passingBrowser = function(type) {
-    before(function(done) {
-      browser = getBrowser(type);
-      return done();
+  passingBrowser = function(opt) {
+    return describe("wd-wrap tests", function() {
+      return describe("passing browser", function() {
+        before(function(done) {
+          browser = getBrowser(opt);
+          return done();
+        });
+        return it("should work", WdWrap({
+          "with": function() {
+            return browser;
+          },
+          pre: function() {
+            this.timeout(opt.timeout || TIMEOUT);
+            return someText = 'Test1';
+          }
+        }, function() {
+          someText.should.equal('Test1');
+          return browse.apply(this, [opt]);
+        }));
+      });
     });
-    return it("should work", WdWrap({
-      "with": function() {
-        return browser;
-      },
-      pre: function() {
-        this.timeout(TIMEOUT);
-        return someText = 'Test1';
-      }
-    }, function() {
-      someText.should.equal('Test1');
-      return browse.apply(this);
-    }));
   };
 
-  withoutPassingBrowser = function(type) {
+  withoutPassingBrowser = function(opt) {
     WdWrap = WdWrap({
       pre: function() {
-        this.timeout(TIMEOUT);
+        this.timeout(opt.timeout || TIMEOUT);
         return someText = 'Test2';
       },
       "with": function() {
         return browser;
       }
     });
-    before(function(done) {
-      browser = getBrowser(type);
-      return done();
+    return describe("wd-wrap tests", function() {
+      return describe("without passing browser", function() {
+        before(function(done) {
+          browser = getBrowser(opt);
+          return done();
+        });
+        return it("should work", WdWrap(function() {
+          someText.should.equal('Test2');
+          return browse.apply(this, [opt]);
+        }));
+      });
     });
-    return it("should work", WdWrap(function() {
-      someText.should.equal('Test2');
-      return browse.apply(this);
-    }));
   };
 
   exports.browse = browse;

@@ -6,20 +6,22 @@
 
   describe("wd-sync", function() {
     return describe("unit", function() {
-      return describe("basic tests", function() {
-        describe("browsing", function() {
-          var browserName, _i, _len, _ref1, _results;
-          _ref1 = ['chrome', 'firefox', void 0];
-          _results = [];
-          for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-            browserName = _ref1[_i];
-            _results.push(testWithBrowser('remote', browserName));
+      var browserName, _i, _len, _ref1;
+      _ref1 = ['chrome', 'firefox', void 0];
+      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+        browserName = _ref1[_i];
+        testWithBrowser({
+          type: 'remote',
+          desired: {
+            browserName: browserName
           }
-          return _results;
         });
-        return describe("ws.current()", function() {
-          return testCurrent('remote');
-        });
+      }
+      return testCurrent({
+        type: 'remote',
+        desired: {
+          browserName: 'chrome'
+        }
       });
     });
   });

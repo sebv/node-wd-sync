@@ -1,7 +1,14 @@
-{browse, passingBrowser, withoutPassingBrowser} = require '../common/wd-wrap-test-base'
+{passingBrowser, withoutPassingBrowser} = require '../common/wd-wrap-test-base'
 
-describe "passing browser", ->  
-  passingBrowser 'remote'
-
-describe "without passing browser", ->    
-  withoutPassingBrowser 'remote'
+describe "wd-sync", ->
+  describe "unit", ->
+  
+    passingBrowser 
+      type: 'remote' 
+      desired:
+        browserName:'chrome'
+  
+    withoutPassingBrowser  
+      type: 'remote'
+      desired:
+        browserName:'chrome'

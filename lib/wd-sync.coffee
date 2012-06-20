@@ -1,4 +1,5 @@
 wd = require("wd")
+
 wdZombie = require("wd-zombie")
 
 {MakeSync,Sync} = require 'make-sync'
@@ -21,17 +22,45 @@ buildOptions = (mode) ->
   {
     mode: mode
     include: '*'
-    exclude: mixedArgsMethods.concat eventEmitterMethods.concat [/^_/]
+    exclude: mixedArgsMethods.concat eventEmitterMethods.concat [/^_/,'toString']
   }
-  
+
+# async wrapper used to hide implementation, avoiding 
+# async interface calling itself 
+wrapAsyncObject = (obj) ->
+  res = {}
+  for k,v of obj when (typeof v) is 'function'
+    do ->
+      _v = v
+      res[k] = (args...) ->        
+        _v.apply obj, args
+  res
+
+wrapSyncObject = (obj, options) ->
+  res = {}
+  for k,v of obj when (typeof v) is 'function'
+    do ->
+      _v = v
+      res[k] = (args...) ->        
+        _res = _v.apply obj, args        
+        if _res?.browser?
+          # element returned   
+          MakeSync _res, options
+        _res
+  res
+
 patch = (browser, mode) ->  
+  browser = wrapAsyncObject browser
+
   # making methods synchronous
   options = buildOptions( mode )
   MakeSync browser, options
   for k in mixedArgsMethods # methods forced to mixed-args mode 
     do ->
       browser[k] = MakeSync browser[k], mode:['mixed', 'args']
-        
+  browser = wrapSyncObject browser, options 
+  browser
+          
 wdSync = 
   SPECIAL_KEYS: wd.SPECIAL_KEYS
   # similar to wd
@@ -41,8 +70,8 @@ wdSync =
     browser = wd.remote(args...)
     for arg in args      
       mode = arg.mode if arg?.mode?      
-    patch browser, mode 
-    return browser
+    browser = patch browser, mode 
+    browser
 
   # return headless zombie
   headless: (args...) ->   
