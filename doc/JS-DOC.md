@@ -175,7 +175,7 @@ The example below is using the mocha test framework.
 // Use 'mocha' to run (npm install -g mocha)
 
 var wd = require('wd-sync').wd
-, Wd = require('wd-sync').Wd;
+, WdWrap = require('wd-sync').Wd;
 
 should = require('should');
 
@@ -228,7 +228,7 @@ CoffeeScript syntax.
 // Use 'mocha' to run (npm install -g mocha)
 
 var wd = require('wd-sync').wd
-, Wd = require('wd-sync').Wd;
+, WdWrap = require('wd-sync').Wd;
 
 should = require('should');
 

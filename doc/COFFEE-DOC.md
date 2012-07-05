@@ -154,7 +154,7 @@ The example below is using the mocha test framework.
 # Assumes that the selenium server is running
 # Use 'mocha' to run (npm install -g mocha)
 
-{wd,Wd} = require 'wd-sync'
+{wd,WdWrap} = require 'wd-sync'
 
 should = require 'should'
 
@@ -235,7 +235,7 @@ WdWrap sample below, using the mocha test framework:
 # Assumes that the selenium server is running
 # Use 'mocha' to run (npm install -g mocha)
 
-{wd,Wd} = require 'wd-sync'
+{wd,WdWrap} = require 'wd-sync'
 
 should = require 'should'
       
