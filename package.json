@@ -1,6 +1,6 @@
 {
     "name": "wd-sync"
-  , "version": "0.1.8"
+  , "version": "0.1.9"
   , "description": "sync version of wd using fibers."
   , "keywords": ["selenium","webdriver","test","fibers", "sync"]
   , "author": "Seb Vincent <seb.vincent@gmail.com>"
@@ -11,7 +11,7 @@
     "test": "cake test"
   }
   , "dependencies": {
-    "wd": "0.0.20",
+    "wd": "git://github.com/sebv/wd.git",
     "make-sync": "0.1.x"    
   }
   , "devDependencies" : {
