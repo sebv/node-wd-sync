@@ -50,13 +50,20 @@ test = (type, browserName) ->
       should.exist capabilities
       should.exist capabilities.browserName
       should.exist capabilities.platform
-  
-    # would do with better test, but can't be bothered
-    it "setPageLoadTimeout", WdWrap ->
-      @setPageLoadTimeout 500
-  
+
     it "get", WdWrap ->
       @get "http://127.0.0.1:8181/per-method-test-page.html"
+  
+    it "setPageLoadTimeout", WdWrap ->
+      unless capabilities.browserName is 'chrome'
+        @setPageLoadTimeout 5000            
+  
+    it "get (following setPageLoadTimeout)", WdWrap ->
+      @get "http://127.0.0.1:8181/per-method-test-page.html"
+
+      it "setPageLoadTimeout (disabling)", WdWrap ->
+        unless capabilities.browserName is 'chrome'
+          @setPageLoadTimeout -1       
 
     it "refresh", WdWrap ->
       @refresh()

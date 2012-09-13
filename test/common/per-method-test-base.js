@@ -68,11 +68,21 @@
         should.exist(capabilities.browserName);
         return should.exist(capabilities.platform);
       }));
-      it("setPageLoadTimeout", WdWrap(function() {
-        return this.setPageLoadTimeout(500);
-      }));
       it("get", WdWrap(function() {
         return this.get("http://127.0.0.1:8181/per-method-test-page.html");
+      }));
+      it("setPageLoadTimeout", WdWrap(function() {
+        if (capabilities.browserName !== 'chrome') {
+          return this.setPageLoadTimeout(5000);
+        }
+      }));
+      it("get (following setPageLoadTimeout)", WdWrap(function() {
+        this.get("http://127.0.0.1:8181/per-method-test-page.html");
+        return it("setPageLoadTimeout (disabling)", WdWrap(function() {
+          if (capabilities.browserName !== 'chrome') {
+            return this.setPageLoadTimeout(-1);
+          }
+        }));
       }));
       it("refresh", WdWrap(function() {
         return this.refresh();
