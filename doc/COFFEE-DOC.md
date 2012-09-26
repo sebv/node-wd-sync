@@ -152,7 +152,7 @@ The example below is using the mocha test framework.
 
 ```coffeescript
 # Assumes that the selenium server is running
-# Use 'mocha' to run (npm install -g mocha)
+# Use 'mocha --compilers coffee:coffee-script' to run (npm install -g mocha)
 
 {wd,WdWrap} = require 'wd-sync'
 
@@ -233,7 +233,7 @@ Wd ->
 WdWrap sample below, using the mocha test framework:
 ```coffeescript
 # Assumes that the selenium server is running
-# Use 'mocha' to run (npm install -g mocha)
+# Use 'mocha --compilers coffee:coffee-script' to run (npm install -g mocha)
 
 {wd,WdWrap} = require 'wd-sync'
 

@@ -1,5 +1,5 @@
 # Assumes that the selenium server is running
-# Use 'mocha' to run (npm install -g mocha)
+# Use 'mocha --compilers coffee:coffee-script' to run (npm install -g mocha)
 
 {wd,WdWrap}={}
 try 
