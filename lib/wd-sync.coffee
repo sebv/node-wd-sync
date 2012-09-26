@@ -120,6 +120,15 @@ WdWrap = (options, cb) ->
       options2 = options if not options2?
       WdWrap options2, cb2      
 
+sleep = (ms) ->
+  fiber = Fiber.current
+  setTimeout ->
+    fiber.run()
+  , ms
+  Fiber.yield()
+
+
 exports.Wd= Wd
 exports.WdWrap = WdWrap
 exports.wd = wdSync
+exports.sleep = sleep
