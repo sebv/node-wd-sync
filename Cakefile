@@ -37,7 +37,7 @@ fixRequire = (s) ->
   s = s.replace /var.*Wd;.*\ntry.*\n.*\n.*\n.*catch.*\n.*\n.*\n\}.*\n/ , \
     "var wd = require('wd-sync').wd\n, Wd = require('wd-sync').Wd;\n" 
   s = s.replace /var.*WdWrap;.*\ntry.*\n.*\n.*\n.*catch.*\n.*\n.*\n\}.*\n/ , \
-    "var wd = require('wd-sync').wd\n, WdWrap = require('wd-sync').Wd;\n" 
+    "var wd = require('wd-sync').wd\n, WdWrap = require('wd-sync').WdWrap;\n" 
   s
     
 # buid the dynamic doc files
