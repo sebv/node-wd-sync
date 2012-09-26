@@ -177,7 +177,7 @@ The example below is using the mocha test framework.
 var wd = require('wd-sync').wd
 , WdWrap = require('wd-sync').Wd;
 
-should = require('should');
+var should = require('should');
 
 // 4/ simple WdWrap example
 
@@ -230,7 +230,7 @@ CoffeeScript syntax.
 var wd = require('wd-sync').wd
 , WdWrap = require('wd-sync').Wd;
 
-should = require('should');
+var should = require('should');
 
 // 5/ leaner WdWrap syntax
 

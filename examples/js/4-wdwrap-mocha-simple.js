@@ -10,7 +10,7 @@ try {
   WdWrap = require('../../index').WdWrap;  
 }
 
-should = require('should');
+var should = require('should');
 
 // 4/ simple WdWrap example
 
