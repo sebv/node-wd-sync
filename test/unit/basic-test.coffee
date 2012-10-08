@@ -2,7 +2,7 @@
 
 describe "wd-sync", -> 
   describe "unit", ->
-    for browserName in ['chrome', 'firefox', undefined]
+    for browserName in ['chrome']
       testWithBrowser 
         type: 'remote' 
         desired:

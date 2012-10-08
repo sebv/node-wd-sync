@@ -28,7 +28,7 @@ describe "wd-sync", ->
           + 'in the file config.coffee.'
         done()
 
-    for browserName in ['chrome', 'firefox','IE', undefined]
+    for browserName in ['chrome','IE']
       testWithBrowser 
         type: 'remote' 
         timeout: TIMEOUT 

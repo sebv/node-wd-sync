@@ -11,11 +11,11 @@
     "test": "cake test"
   }
   , "dependencies": {
-    "wd": "git://github.com/sebv/wd.git",
+    "wd": "latest",
     "make-sync": "0.1.x"    
   }
   , "devDependencies" : {
-    "coffee-script" : "git://github.com/jashkenas/coffee-script.git"        
+    "coffee-script" : "latest"        
     , "sv-cake-utils" : "0.1.x"
     , "mocha": "1.0.x"    
     ,"should": "1.1.x"

@@ -22,7 +22,7 @@ task 'test', 'Run unit tests (uninstall zombie first)', ->
     u.mocha.test 'test/unit' unless err
 
 task 'test:unit', 'Run unit tests', ->
-  u.mocha.test 'test/unit' unless err
+  u.mocha.test 'test/unit'
 
 task 'test:sauce', 'Run Sauce Labs integration tests', ->
   u.mocha.test 'test/sauce'
