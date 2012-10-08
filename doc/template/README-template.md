@@ -4,7 +4,7 @@ A synchronous version with a nice api of [wd](http://github.com/admc/wd),
 the lightweight  [WebDriver / Selenium2](http://seleniumhq.org/projects/webdriver/) 
 client for node.js, built using  [node-fibers](http://github.com/laverdet/node-fibers).
 
-Can also be configured to do remote testing with [Sauce Labs](http://saucelabs.com).
+Remote testing with [Sauce Labs](http://saucelabs.com) also works.
 
 ## install
 

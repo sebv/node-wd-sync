@@ -4,7 +4,7 @@ A synchronous version with a nice api of [wd](http://github.com/admc/wd),
 the lightweight  [WebDriver / Selenium2](http://seleniumhq.org/projects/webdriver/) 
 client for node.js, built using  [node-fibers](http://github.com/laverdet/node-fibers).
 
-Can also be configured to do remote testing with [Sauce Labs](http://saucelabs.com).
+Remote testing with [Sauce Labs](http://saucelabs.com) also works.
 
 ## install
 
@@ -1611,19 +1611,26 @@ Doc and README modifications must be done in the doc/template directory, then ru
   </tbody>
 </table>
 
-* [full JsonWireProtocol mapping](http://github.com/sebv/node-wd-sync/blob/master/doc/jsonwiremap-all.md)
-* [supported JsonWireProtocol mapping](http://github.com/sebv/node-wd-sync/blob/master/doc/jsonwiremap-supported.md)
+* [supported JsonWireProtocol mapping](http://github.com/sebv/node-wd-sync/blob/master/doc/jsonwire-mapping.md)
+* [full JsonWireProtocol mapping](http://github.com/sebv/node-wd-sync/blob/master/doc/jsonwire-full-mapping.md)
   
 ## available environments
 
-###
-* local [WebDriver / Selenium2](http://seleniumhq.org/projects/webdriver/) server
-* Remote testing with [Sauce Labs](http://saucelabs.com).
-* Headless testing using [Zombie](http://github.com/assaf/zombie).
+### WebDriver 
 
-Note:
-  - This is only worth using for simple pages, not relying heavily on Javacripts.   
-  - This package wont be maintained/improved, at least until Zombie 2 is stable. 
+local [WebDriver / Selenium2](http://seleniumhq.org/projects/webdriver/) server
+
+### Sauce Labs
+
+Remote testing with [Sauce Labs](http://saucelabs.com).
+
+### Headless
+
+Headless testing using [Zombie](http://github.com/assaf/zombie).
+
+notes regarding headless/zombie:
+- only worth using for simple pages, not relying heavily on Javacripts.   
+- the headless functionality wont be maintained/improved, at least until Zombie 2 is stable. 
 
 ## tests
 
@@ -1657,6 +1664,12 @@ cake test:sauce
 
 ### headless 
 
+once:
+```
+cake test:headless
+```
+
+then:
 ```
 cake test:headless
 ```
@@ -1664,3 +1677,4 @@ cake test:headless
 ## todo
 
 doc + example for methods returning element instances 
+

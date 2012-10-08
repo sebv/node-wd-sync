@@ -132,6 +132,10 @@ Wd with:browser, ->
 
 ```
 
+notes regarding headless/zombie:
+- only worth using for simple pages, not relying heavily on Javacripts.   
+- the headless functionality wont be maintained/improved, at least until Zombie 2 is stable. 
+
 ## WdWrap
 
 WdWrap is a wrapper around Wd. It takes a function as argument and return a function like below:
@@ -308,9 +312,8 @@ Wd with:browser, ->
 
 ## supported methods
 
-* [full JsonWireProtocol mapping](http://github.com/sebv/node-wd-sync/blob/master/doc/jsonwiremap-all.md)
-* [supported JsonWireProtocol mapping](http://github.com/sebv/node-wd-sync/blob/master/doc/jsonwiremap-supported.md)
-
+* [supported JsonWireProtocol mapping](http://github.com/sebv/node-wd-sync/blob/master/doc/jsonwire-mapping.md)
+* [full JsonWireProtocol mapping](http://github.com/sebv/node-wd-sync/blob/master/doc/jsonwire-full-mapping.md)
 
 ## doc 
 
@@ -329,9 +332,14 @@ Doc modifications must be done in the doc/template directory, then run 'cake doc
 java -jar selenium-server-standalone-2.21.0.jar -Dwebdriver.chrome.driver=<PATH>/chromedriver
 ```
 
-2/ run tests
+2a/ run tests
 ```
-cake test 
+cake test:local 
+```
+
+2b/ run clean test (making sure wd-zombie is not installed first)
+```
+cake test
 ```
 
 ### remote / Sauce Labs 
@@ -346,6 +354,13 @@ cake test:sauce
 ```
 
 ### headless 
+
+once:
+```
+cake test:headless
+```
+
+then:
 ```
 cake test:headless
 ```
