@@ -19,12 +19,12 @@ task 'compile:watch', 'Compile All coffee files and watch for changes', ->
 task 'clean', 'Remove all js files', ->
   u.js.clean JS_PATHS 
 
-task 'test', 'Run unit tests (uninstall zombie first)', ->
+task 'test', 'Run local tests (uninstall zombie first)', ->
   u.exec 'npm uninstall wd-zombie', (err) ->    
-    u.mocha.test 'test/unit' unless err
+    u.mocha.test 'test/local' unless err
 
-task 'test:unit', 'Run unit tests', ->
-  u.mocha.test 'test/unit'
+task 'test:local', 'Run local tests', ->
+  u.mocha.test 'test/local'
 
 task 'test:sauce', 'Run Sauce Labs integration tests', ->
   u.mocha.test 'test/sauce'
