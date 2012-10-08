@@ -4,9 +4,7 @@ A synchronous version with a nice api of [wd](http://github.com/admc/wd),
 the lightweight  [WebDriver / Selenium2](http://seleniumhq.org/projects/webdriver/) 
 client for node.js, built using  [node-fibers](http://github.com/laverdet/node-fibers).
 
-The following environements are also available: 
-  * Remote testing with [Sauce Labs](http://saucelabs.com).
-  * Headless testing using [Zombie](http://github.com/assaf/zombie). 
+Can also be configured to do remote testing with [Sauce Labs](http://saucelabs.com).
 
 ## install
 
@@ -1616,6 +1614,17 @@ Doc and README modifications must be done in the doc/template directory, then ru
 * [full JsonWireProtocol mapping](http://github.com/sebv/node-wd-sync/blob/master/doc/jsonwiremap-all.md)
 * [supported JsonWireProtocol mapping](http://github.com/sebv/node-wd-sync/blob/master/doc/jsonwiremap-supported.md)
   
+## available environments
+
+###
+* local [WebDriver / Selenium2](http://seleniumhq.org/projects/webdriver/) server
+* Remote testing with [Sauce Labs](http://saucelabs.com).
+* Headless testing using [Zombie](http://github.com/assaf/zombie).
+
+Note:
+  - This is only worth using for simple pages, not relying heavily on Javacripts.   
+  - This package wont be maintained/improved, at least until Zombie 2 is stable. 
+
 ## tests
 
 ### local / selenium server: 
@@ -1625,9 +1634,14 @@ Doc and README modifications must be done in the doc/template directory, then ru
 java -jar selenium-server-standalone-2.21.0.jar -Dwebdriver.chrome.driver=<PATH>/chromedriver
 ```
 
-2/ run tests
+2a/ run tests
 ```
-cake test 
+cake test:local 
+```
+
+2b/ run clean test (making sure wd-zombie is not installed first)
+```
+cake test
 ```
 
 ### remote / Sauce Labs 
@@ -1642,15 +1656,11 @@ cake test:sauce
 ```
 
 ### headless 
+
 ```
 cake test:headless
 ```
 
 ## todo
-
-unit test, doc, and wd-zombie implementation for:
-
-* waitForElement
-* isVisible
 
 doc + example for methods returning element instances 
