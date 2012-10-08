@@ -17,11 +17,18 @@ task 'compile:watch', 'Compile All coffee files and watch for changes', ->
 task 'clean', 'Remove all js files', ->
   u.js.clean JS_PATHS 
 
-task 'test', 'Run All tests', ->
-  u.mocha.test 'test/unit'
+task 'test', 'Run unit tests (uninstall zombie first)', ->
+  u.exec 'npm uninstall wd-zombie', (err) ->    
+    u.mocha.test 'test/unit' unless err
+
+task 'test:unit', 'Run unit tests', ->
+  u.mocha.test 'test/unit' unless err
 
 task 'test:sauce', 'Run Sauce Labs integration tests', ->
   u.mocha.test 'test/sauce'
+
+task 'test:prepare:headless', 'install zombie', ->
+  u.exec 'npm install wd-zombie@0.0.x'
 
 task 'test:headless', 'Run headless tests', ->
   u.mocha.test 'test/headless'
