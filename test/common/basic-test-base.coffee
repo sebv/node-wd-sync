@@ -1,6 +1,6 @@
 {wd,Wd} = require '../../index'
 should = require 'should'
-TIMEOUT = 30000
+TIMEOUT = 45000
 
 testWithBrowser = (opt) ->
   describe "basic browsing", ->
