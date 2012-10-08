@@ -352,12 +352,12 @@ test = (type, browserName) ->
 
 class Express
   start: (done) ->
-    @app = express.createServer()
+    @app = express()
     @app.use(express.static(__dirname + '/assets'));
-    @app.listen 8181
+    @server = @app.listen 8181
         
   stop: (done) ->
-    @app.close()
+    @server.close()
     
 exports.test = test
 exports.Express = Express
