@@ -1,12 +1,14 @@
-fs = require 'fs'
-whiskers = require 'whiskers'
-
 DEV_DIRS = ['lib','test']
 COFFEE_PATHS = DEV_DIRS.concat ['index.coffee']
 JS_PATHS = DEV_DIRS.concat ['index.js']
 TEST_ENV = ['test/sync-test.coffee']
 
+fs = require 'fs'
+whiskers = require 'whiskers'
 u = require 'sv-cake-utils'
+async = require 'async'
+
+mappingBuilder = require "./doc/mapping-builder"
 
 task 'compile', 'Compile All coffee files', ->
   u.coffee.compile COFFEE_PATHS
@@ -32,6 +34,16 @@ task 'test:prepare:headless', 'install zombie', ->
 
 task 'test:headless', 'Run headless tests', ->
   u.mocha.test 'test/headless'
+
+task 'mapping:build', 'build JsonWire mappings', ->
+  async.series [
+    (done) -> mappingBuilder 'supported', done
+  ]
+
+task 'mapping:full:build', 'build JsonWire mappings', ->
+  async.series [
+    (done) -> mappingBuilder 'full', done
+  ]
 
 task 'grep:dirty', 'Lookup for debugger and console.log in code', ->
   u.grep.debug()
