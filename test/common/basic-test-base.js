@@ -6,7 +6,7 @@
 
   should = require('should');
 
-  TIMEOUT = 30000;
+  TIMEOUT = 45000;
 
   testWithBrowser = function(opt) {
     return describe("basic browsing", function() {
