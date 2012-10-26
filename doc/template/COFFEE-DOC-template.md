@@ -18,10 +18,10 @@ npm install wd-sync
 All the methods from [wd](http://github.com/admc/wd) are available. 
 
 The browser functions must to be run within a `sync` block. This 
-block holds the fiber environment. The 'sync' block context is set to the browser, 
-so that the browser methods may be accessed using '@'.
+block holds the fiber environment. The `sync` block context is set to the browser, 
+so that the browser methods may be accessed using `@`.
 
-The 'executeAsync' and 'safeExecuteAsync' methods may still be run asynchronously.
+The `executeAsync` and `safeExecuteAsync` methods may still be run asynchronously.
 
 ```coffeescript
 {1wdsimplecoffee}
@@ -40,7 +40,7 @@ Remote testing with [Sauce Labs](http://saucelabs.com) works.
 This uses the [wd-zombie](http://sebv/node-wd-zombie.git) module,
 which implements the wd interface using [Zombie](http://github.com/assaf/zombie). 
 
-IMPORTANT: A 'wd-zombie' dependency must be configured in package.json.
+IMPORTANT: A wd-zombie dependency must be configured in package.json.
 
 In this mode, no need to run the Selenium server.
 
@@ -57,11 +57,11 @@ notes regarding headless/zombie:
 `wrap` is a wrapper around `sync` within so it nicely integrates with
 test frameworks like Mocha. `wrap` manages the done callback for you.
  
-'pre' functionss may may be specified globally or within each tests.
+`pre` functionss may may be specified globally or for each test.
 They are called  called before the `wrap` block starts, in the original 
 context (In Mocha, it may be used to configure timeouts). 
 
-The example below is using the mocha test framework.
+The example below is using the Mocha test framework.
 
 ```coffeescript
 {4wrapmochacoffee}
@@ -70,7 +70,7 @@ The example below is using the mocha test framework.
 ## to retrieve the browser currently in use
 
 The current browser is automatically stored in the Fiber context.
-It can be retrieved with the wd.current() function. 
+It can be retrieved with the `wd.current()` function. 
 
 This is useful when writing test helpers.
 
@@ -125,7 +125,7 @@ cake test:sauce
 
 once:
 ```
-cake test:headless
+cake test:prepare:headless
 ```
 
 then:
@@ -146,7 +146,3 @@ To start the server:
 java -jar selenium-server-standalone-2.21.0.jar -Dwebdriver.chrome.driver=./chromedriver
 ```
 
-
-## per methods tests / code example
-
-check in [wd-by-method-test.coffee](https://github.com/sebv/node-wd-sync/blob/master/test/unit/wd-by-method-test.coffee)
