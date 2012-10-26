@@ -1631,7 +1631,7 @@ cake test:sauce
 
 once:
 ```
-cake test:headless
+cake test:prepare:headless
 ```
 
 then:
@@ -1639,7 +1639,4 @@ then:
 cake test:headless
 ```
 
-## todo
-
-doc + example for methods returning element instances 
 
