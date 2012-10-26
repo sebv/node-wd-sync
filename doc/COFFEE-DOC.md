@@ -204,7 +204,7 @@ wdSync = require 'wd-sync'
   
 # 5/ retrieving the current browser
 
-  {browser, sync} = wdSync.remote()
+{browser, sync} = wdSync.remote()
 
 myOwnGetTitle = ->
   wdSync.current().title()
