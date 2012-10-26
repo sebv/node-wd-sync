@@ -1,4 +1,4 @@
-{wd,Wd} = require '../../index'
+wdSync = require '../../index'
 should = require 'should'
 TIMEOUT = 45000
 
@@ -6,13 +6,13 @@ testWithBrowser = (opt) ->
   describe "basic browsing", ->
     it (if opt.desired?.browserName? then "using #{opt.desired?.browserName}" else "without passing browser"), (done) ->
       @timeout (opt.timeout or TIMEOUT) 
-      browser = null
+      {browser,sync} = {}
       switch opt.type
         when 'remote'
-          browser = wd.remote(opt.remoteConfig)
+          {browser,sync} = wdSync.remote(opt.remoteConfig)
         when 'headless'
-          browser = wd.headless()
-      Wd with:browser, ->
+          {browser,sync} = wdSync.headless()
+      sync ->
         should.exist @status()        
         if browserName? then @init browserName: "#{browserName}"
         else @init(opt.desired)
@@ -31,17 +31,17 @@ testCurrent = (opt) ->
   describe "wd.current()", ->
     it "browsing with using wd.current()", (done) ->
       @timeout (opt.timeout or TIMEOUT) 
-      browser = null
+      {browser,sync} = {}
       switch opt.type
         when 'remote'
-          browser = wd.remote(opt.remoteConfig)
+          {browser,sync} = wdSync.remote(opt.remoteConfig)
         when 'headless'
-          browser = wd.headless()
+          {browser,sync} = wdSync.headless()
       
       myOwnTitle = ->
-        wd.current().title()
+        wdSync.current().title()
         
-      Wd with:browser, ->        
+      sync ->        
         if browserName? then @init browserName: "#{browserName}"
         else @init(opt.desired)
 

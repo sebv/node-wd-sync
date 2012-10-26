@@ -1,13 +1,13 @@
 {testWithBrowser,testCurrent} = require '../common/basic-test-base'
 
 describe "wd-sync", -> 
-  describe "unit", ->
+  describe "local", ->
     for browserName in ['chrome']
       testWithBrowser 
         type: 'remote' 
         desired:
           browserName:browserName
-    
+             
     testCurrent    
       type: 'remote' 
       desired:

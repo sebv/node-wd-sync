@@ -1,4 +1,4 @@
-{wd,Wd, WdWrap} = require '../../index'
+wdSync = require '../../index'
 should = require 'should'
 CoffeeScript = require 'coffee-script'      
 async = require 'async'
@@ -6,52 +6,51 @@ express = require 'express'
 
 test = (type, browserName) ->
 
-  browser = null;
-  WdWrap = WdWrap with: (-> browser)
-  capabilities = null
+  describe "method tests using #{browserName}", ->
 
-  describe "local tests using #{browserName}", ->
+    {browser,sync} = {}
+    wrap = wdSync.wrap with: (-> browser)
+    capabilities = null
+
   
     it "wd.remote or wd.headless", (done) ->
       switch type
         when 'remote'
-          browser = wd.remote()
+          {browser,sync} = wdSync.remote()
           browser.on "status", (info) ->
             console.log "\u001b[36m%s\u001b[0m", info
           browser.on "command", (meth, path) ->
             console.log " > \u001b[33m%s\u001b[0m: %s", meth, path    
-          Wd = Wd with:browser
           done()
         when 'headless'
-          browser = wd.headless()
-          Wd = Wd with:browser
+          {browser,sync} = wdSync.headless()
           done()      
 
-    it "status", WdWrap ->
+    it "status", wrap ->
       should.exist @status()
 
-    it "init", WdWrap ->
+    it "init", wrap ->
       @init(
         browserName: browserName
         #debug: true
       )
   
-    it "sessionCapabilities", WdWrap ->
+    it "sessionCapabilities", wrap ->
       capabilities = @sessionCapabilities()
       should.exist capabilities
       should.exist capabilities.browserName
       should.exist capabilities.platform
   
-    it "get", WdWrap ->
+    it "get", wrap ->
       @get "http://127.0.0.1:8181/local-test-page.html"
     
-    it "eval", WdWrap ->
+    it "eval", wrap ->
       (@eval "1+2").should.equal 3
       (@eval "document.title").should.equal "TEST PAGE"
       (@eval "$('#eval').length").should.equal 1
       (@eval "$('#eval li').length").should.equal 2
             
-    it "execute (with args)", WdWrap ->
+    it "execute (with args)", wrap ->
       script = "window.wd_sync_execute_test = 'It worked! ' + (arguments[0] + arguments[1])"
       @execute script, [10, 5]
       (@eval "window.wd_sync_execute_test").should.equal 'It worked! 15'
@@ -67,7 +66,7 @@ test = (type, browserName) ->
         res.should.equal "OK"
         done()
 
-    it "executeAsync (sync mode, no args)", WdWrap ->
+    it "executeAsync (sync mode, no args)", wrap ->
       scriptAsCoffee =
         """
           [args...,done] = arguments
@@ -77,7 +76,7 @@ test = (type, browserName) ->
       res = @executeAsync scriptAsJs          
       res.should.equal "OK"
 
-    it "executeAsync (sync mode, with args)", WdWrap ->
+    it "executeAsync (sync mode, with args)", wrap ->
       scriptAsCoffee =
         """
           [args...,done] = arguments
@@ -87,7 +86,7 @@ test = (type, browserName) ->
       res = @executeAsync scriptAsJs, [10, 2]          
       res.should.equal "OK 12"
       
-    it "safeExecuteAsync (sync mode, with args)", WdWrap ->
+    it "safeExecuteAsync (sync mode, with args)", wrap ->
       scriptAsCoffee =
         """
           [args...,done] = arguments
@@ -102,20 +101,20 @@ test = (type, browserName) ->
         when 'headless'    
           (=> @safeExecuteAsync "!!!a wrong expr", [10, 2]).should.throw(/Execution failure/)
       
-    it "element", WdWrap ->
+    it "element", wrap ->
       should.exist @element "name", "elementByName"      
       (-> @element "name", "elementByName2").should.throw()
   
   
-    it "elementOrNull", WdWrap ->      
+    it "elementOrNull", wrap ->      
       should.exist @elementOrNull "name", "elementByName"
       #should.not.exist @elementOrNull "name", "elementByName2"
   
-    it "hasElement", WdWrap ->      
-      (@hasElement "name", "elementByName").should.be.true;
-      (@hasElement "name", "elementByName2").should.be.false;
+    it "hasElement", wrap ->      
+      (@hasElement "name", "elementByName").should.be.true
+      (@hasElement "name", "elementByName2").should.be.false
 
-    it "elements", WdWrap ->      
+    it "elements", wrap ->      
       (@elements "name", "elementsByName").should.have.length 3
       (@elements "name", "elementsByName2").should.eql []
 
@@ -129,32 +128,32 @@ test = (type, browserName) ->
         hasElementFuncName = 'hasElement' + funcSuffix
         elementsFuncName = 'elements' + funcSuffix
       
-        searchText = elementFuncName;
+        searchText = elementFuncName
         searchText = "click #{searchText}" if searchText.match /ByLinkText/
         searchText = ".#{searchText}" if searchText.match /ByCss/
         searchText = "//div[@id='elementByXPath']/input" if searchText.match /ByXPath/
         searchText = "span" if searchText.match /ByTagName/
           
-        searchText2 = searchText + '2';
+        searchText2 = searchText + '2'
         searchText2 = "//div[@id='elementByXPath2']/input" if searchText.match /ByXPath/
         searchText2 = "span2" if searchText.match /ByTagName/
         
         searchSeveralText = searchText.replace('element','elements') 
         searchSeveralText2 = searchText2.replace('element','elements') 
        
-        it elementFuncName, WdWrap ->  
+        it elementFuncName, wrap ->  
           should.exist @[elementFuncName] searchText
           (-> @[elementFuncName] searchText2).should.throw()
       
-        it elementFuncName + 'IfExists', WdWrap ->
+        it elementFuncName + 'IfExists', wrap ->
           should.exist @[elementFuncName + 'IfExists'] searchText
           should.not.exist @[elementFuncName + 'IfExists'] searchText2
 
-        it hasElementFuncName, WdWrap ->
+        it hasElementFuncName, wrap ->
           (@[hasElementFuncName] searchText).should.be.true
           (@[hasElementFuncName] searchText2).should.be.false
 
-        it elementsFuncName, WdWrap ->
+        it elementsFuncName, wrap ->
           res = @[elementsFuncName] searchSeveralText
           if(elementsFuncName.match /ById/)
             res.should.have.length 1
@@ -165,18 +164,18 @@ test = (type, browserName) ->
           res = @[elementsFuncName] searchSeveralText2
           res.should.eql []
   
-    it "getAttribute", WdWrap ->
+    it "getAttribute", wrap ->
       testDiv = @elementById "getAttribute"      
       should.exist testDiv
       (@getAttribute testDiv, "weather").should.equal "sunny"
       should.not.exist @getAttribute testDiv, "timezone"
 
-    it "getValue (input)", WdWrap ->
+    it "getValue (input)", wrap ->
       inputField = @elementByCss "#getValue input"       
       should.exist (inputField)
       (@getValue inputField).should.equal "Hello getValueTest!" 
 
-    it "click", WdWrap ->      
+    it "click", wrap ->      
       numOfClicksDiv = @elementByCss "#click .numOfClicks"
       buttonNumberDiv= @elementByCss "#click .buttonNumber"
       scriptAsCoffee = 
@@ -207,22 +206,22 @@ test = (type, browserName) ->
       # not testing right click, cause not sure how to dismiss the right 
       # click menu in chrome and firefox    
         
-    it "type", WdWrap ->
-      altKey = wd.SPECIAL_KEYS['Alt']
-      nullKey = wd.SPECIAL_KEYS['NULL']    
+    it "type", wrap ->
+      altKey = wdSync.SPECIAL_KEYS['Alt']
+      nullKey = wdSync.SPECIAL_KEYS['NULL']    
       inputField = @elementByCss "#type input"       
       should.exist (inputField)
       @type inputField, "Hello"
       (@getValue inputField).should.equal "Hello" 
       @type inputField, [altKey, nullKey, " World"]
       (@getValue inputField).should.equal "Hello World"       
-      @type inputField, [wd.SPECIAL_KEYS.Return] # no effect
+      @type inputField, [wdSync.SPECIAL_KEYS.Return] # no effect
       (@getValue inputField).should.equal "Hello World" 
 
   
-    it "keys", WdWrap ->
-      altKey = wd.SPECIAL_KEYS['Alt']
-      nullKey = wd.SPECIAL_KEYS['NULL']    
+    it "keys", wrap ->
+      altKey = wdSync.SPECIAL_KEYS['Alt']
+      nullKey = wdSync.SPECIAL_KEYS['NULL']    
       inputField = @elementByCss "#keys input"           
       should.exist (inputField)
       @clickElement inputField
@@ -230,16 +229,16 @@ test = (type, browserName) ->
       (@getValue inputField).should.equal "Hello" 
       @keys [altKey, nullKey, " World"]
       (@getValue inputField).should.equal "Hello World" 
-      @type inputField, [wd.SPECIAL_KEYS.Return] # no effect
+      @type inputField, [wdSync.SPECIAL_KEYS.Return] # no effect
       (@getValue inputField).should.equal "Hello World" 
                   
-    it "text (passing element)", WdWrap ->
+    it "text (passing element)", wrap ->
       textDiv = @elementByCss "#text"             
       should.exist (textDiv)
       (@text textDiv).should.include "text content" 
       (@text textDiv).should.not.include "div" 
        
-    it "acceptAlert", WdWrap ->
+    it "acceptAlert", wrap ->
       a = @elementByCss "#acceptAlert a"
       should.exist (a)
       scriptAsCoffee =
@@ -254,7 +253,7 @@ test = (type, browserName) ->
       @clickElement a
       @acceptAlert()
 
-    it "active", WdWrap ->
+    it "active", wrap ->
       i1 = @elementByCss "#active .i1" 
       i2 = @elementByCss "#active .i2" 
       i1.click()
@@ -262,12 +261,12 @@ test = (type, browserName) ->
       @clickElement i2
       @active().value.should.equal i2.value
 
-    it "url", WdWrap ->
+    it "url", wrap ->
       url = @url() 
       url.should.include "local-test-page.html"
       url.should.include "http://"
   
-    it "allCookies / setCookies / deleteAllCookies / deleteCookie", WdWrap ->
+    it "allCookies / setCookies / deleteAllCookies / deleteCookie", wrap ->
       @deleteAllCookies()
       @allCookies().should.eql []
       @setCookie \
@@ -302,7 +301,7 @@ test = (type, browserName) ->
         , secure: true
       @deleteAllCookies()
   
-    it "waitForCondition", WdWrap ->
+    it "waitForCondition", wrap ->
       scriptAsCoffee = 
         '''
           setTimeout ->
@@ -322,17 +321,17 @@ test = (type, browserName) ->
         when 'headless'    
           (=> @waitForCondition "sdsds ;;sdsd {}").should.throw(/Evaluation failure/)
 
-    it "element.text", WdWrap ->
+    it "element.text", wrap ->
       el =  @element "id", "el_text"
       el.text().should.include "I am some text"
 
-    it "element.getValue", WdWrap ->
+    it "element.getValue", wrap ->
       el =  @element "id", "el_getValue"
       el.should.have.property "getValue"
       el.getValue().should.equal "value"
 
-    it "err.inspect", WdWrap ->        
-      err = null;
+    it "err.inspect", wrap ->        
+      err = null
       try
         browser.safeExecute "invalid-code> here"
       catch _err
@@ -344,16 +343,16 @@ test = (type, browserName) ->
           err.inspect().should.include '"screen": "[hidden]"'
           err.inspect().should.include 'browser-error:'
 
-    it "close", WdWrap ->        
+    it "close", wrap ->        
       @close()
   
-    it "quit", WdWrap ->        
+    it "quit", wrap ->        
       @quit()
 
 class Express
   start: (done) ->
     @app = express()
-    @app.use(express.static(__dirname + '/assets'));
+    @app.use(express.static(__dirname + '/assets'))
     @server = @app.listen 8181
         
   stop: (done) ->

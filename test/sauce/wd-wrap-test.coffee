@@ -1,4 +1,4 @@
-{passingBrowser, withoutPassingBrowser} = require '../common/wd-wrap-test-base'
+{test} = require '../common/wd-wrap-test-base'
 should = require 'should'
 config = null
 try config = require './config' catch err 
@@ -17,7 +17,7 @@ describe "wd-sync", ->
           + 'in the file config.coffee.'
         done()
     
-    passingBrowser 
+    test 
       type: 'remote' 
       timeout: TIMEOUT 
       remoteConfig: config        
@@ -26,11 +26,3 @@ describe "wd-sync", ->
         platform: "LINUX"
         browserName:'chrome'
   
-    withoutPassingBrowser
-      type: 'remote' 
-      timeout: TIMEOUT 
-      remoteConfig: config
-      desired:
-        name: 'wd-wrap test without passing browser'
-        platform: "LINUX"
-        browserName:'chrome'

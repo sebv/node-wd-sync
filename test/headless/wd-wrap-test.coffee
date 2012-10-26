@@ -1,10 +1,8 @@
-{passingBrowser, withoutPassingBrowser} = require '../common/wd-wrap-test-base'
+{test} = require '../common/wd-wrap-test-base'
 
 describe "wd-sync", ->
   describe "headless", ->
   
-    passingBrowser 
+    test 
       type: 'headless' 
   
-    withoutPassingBrowser  
-      type: 'headless'

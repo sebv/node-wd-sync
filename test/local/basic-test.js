@@ -5,7 +5,7 @@
   _ref = require('../common/basic-test-base'), testWithBrowser = _ref.testWithBrowser, testCurrent = _ref.testCurrent;
 
   describe("wd-sync", function() {
-    return describe("unit", function() {
+    return describe("local", function() {
       var browserName, _i, _len, _ref1;
       _ref1 = ['chrome'];
       for (_i = 0, _len = _ref1.length; _i < _len; _i++) {

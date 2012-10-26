@@ -2,10 +2,10 @@
 (function() {
   var Express, test, _ref;
 
-  _ref = require('../common/local-test-base'), test = _ref.test, Express = _ref.Express;
+  _ref = require('../common/methods-test-base'), test = _ref.test, Express = _ref.Express;
 
   describe("wd-sync", function() {
-    return describe("unit", function() {
+    return describe("headless", function() {
       var express;
       express = new Express;
       before(function(done) {
@@ -16,7 +16,7 @@
         express.stop(done);
         return done(null);
       });
-      return test('remote', 'chrome');
+      return test('headless', 'zombie');
     });
   });
 

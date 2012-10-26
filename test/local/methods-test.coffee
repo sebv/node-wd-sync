@@ -1,7 +1,7 @@
-{test,Express} = require '../common/local-test-base'
+{test,Express} = require '../common/methods-test-base'
   
 describe "wd-sync", ->
-  describe "headless", ->
+  describe "local", ->
     express = new Express
     before (done) ->
       express.start(done)
@@ -11,5 +11,4 @@ describe "wd-sync", ->
       express.stop(done)
       done(null)
     
-    test 'headless', 'zombie'
-  
+    test 'remote', 'chrome'
