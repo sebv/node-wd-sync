@@ -1,43 +1,42 @@
 # Assumes that the selenium server is running
 # Use 'mocha --compilers coffee:coffee-script' to run (npm install -g mocha)
 
-{wd,WdWrap}={}
-try 
-  {wd,WdWrap} = require 'wd-sync' 
+wdSync = null
+try
+  wdSync = require 'wd-sync'
 catch err
-  {wd,WdWrap} = require '../../index' 
+  wdSync = require '../../index'
 
 should = require 'should'
 
-# 4/ simple WdWrap example
+# 4/ wrap example
 
 describe "WdWrap", ->
 
-  describe "passing browser", ->  
+  describe "wrap", ->
 
     browser = null
+    wrap = wdSync.wrap
+      with: -> browser
+      pre: -> #optional
+        @timeout 30000
 
     before (done) ->
-      browser = wd.remote()
+      {browser} = wdSync.remote()
       done()
 
-    it "should work", WdWrap 
-      with: -> 
-        browser
-      pre: ->
-        @timeout 30000 
-    , ->      
+    it "should work", wrap -> # may also pass a pre here
       @init()
 
       @get "http://google.com"
-      @title().toLowerCase().should.include 'google'          
+      @title().toLowerCase().should.include 'google'
 
       queryField = @elementByName 'q'
-      @type queryField, "Hello World"  
+      @type queryField, "Hello World"
       @type queryField, "\n"
 
-      @setWaitTimeout 3000      
+      @setWaitTimeout 3000
       @elementByCss '#ires' # waiting for new page to load
       @title().toLowerCase().should.include 'hello world'
 
-      @quit()  
+      @quit()

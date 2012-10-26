@@ -2,13 +2,11 @@
 var username = '<USERNAME>'
 , accessKey = '<ACCESS KEY>';
 
-var wd, Wd; 
+var wdSync; 
 try {
-  wd = require('wd-sync').wd;
-  Wd = require('wd-sync').Wd;  
+  wdSync = require('wd-sync');
 } catch (err) {
-  wd = require('../../index').wd;
-  Wd = require('../../index').Wd;  
+  wdSync = require('../../index');
 }
 
 // 2/ wd saucelabs example 
@@ -19,14 +17,15 @@ desired = {
   browserName: "firefox"
 };
 
-browser = wd.remote(
-  "ondemand.saucelabs.com", 
-  80, 
-  username, 
-  accessKey
-);
+var client = wdSync.remote(
+  "ondemand.saucelabs.com",
+    80,
+    username,
+    accessKey)
+  , browser = client.browser
+  , sync = client.sync;
 
-Wd( function() {
+sync( function() {
 
   console.log("server status:", browser.status());
   browser.init(desired);

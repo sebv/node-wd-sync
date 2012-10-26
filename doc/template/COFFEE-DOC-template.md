@@ -17,8 +17,8 @@ npm install wd-sync
 
 All the methods from [wd](http://github.com/admc/wd) are available. 
 
-The browser functions must to be run within a Wd block. This 
-block holds the fiber environment. The Wd block context is set to the browser, 
+The browser functions must to be run within a `sync` block. This 
+block holds the fiber environment. The 'sync' block context is set to the browser, 
 so that the browser methods may be accessed using '@'.
 
 The 'executeAsync' and 'safeExecuteAsync' methods may still be run asynchronously.
@@ -52,44 +52,20 @@ notes regarding headless/zombie:
 - only worth using for simple pages, not relying heavily on Javacripts.   
 - the headless functionality wont be maintained/improved, at least until Zombie 2 is stable. 
 
-## WdWrap
+## wrap
 
-WdWrap is a wrapper around Wd. It takes a function as argument and return a function like below:
-
-```coffeescript
-(done) ->
-  // execute function
-  done()
-```
-
-It's main use is within an asynchronous test framework, when only using this synchronous api is used, 
-It manages the done callback for you.
+`wrap` is a wrapper around `sync` within so it nicely integrates with
+test frameworks like Mocha. `wrap` manages the done callback for you.
  
-A 'pre' method may also be specified. It is called before the Wd block starts, in the original 
-context (In Mocha, it can be used to configure timeouts). 
+'pre' functionss may may be specified globally or within each tests.
+They are called  called before the `wrap` block starts, in the original 
+context (In Mocha, it may be used to configure timeouts). 
 
 The example below is using the mocha test framework.
 
 ```coffeescript
-{4wdwrapmochasimplecoffee}
+{4wrapmochacoffee}
 ```
-
-## a slightly leaner syntax
-
-When there is a browser parameter and no callback, Wd or WdWrap
-returns a version of itself with a browser default added.
-
-Wd sample below:
-
-```coffeescript
-{5wdleanercoffee}
-```
-
-WdWrap sample below, using the mocha test framework:
-```coffeescript
-{6wdwrapmochaleanercoffee}
-```
-
 
 ## to retrieve the browser currently in use
 
@@ -99,7 +75,7 @@ It can be retrieved with the wd.current() function.
 This is useful when writing test helpers.
 
 ```coffeescript
-{7wdcurrentbrowsercoffee}
+{5wdcurrentbrowsercoffee}
 ```
 
 ## supported methods

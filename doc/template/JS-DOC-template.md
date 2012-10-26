@@ -17,7 +17,7 @@ npm install wd-sync
 
 All the methods from [wd](http://github.com/admc/wd) are available. 
 
-The browser function must to be run within a Wd block. This 
+The browser functions must to be run within a `sync` block. This 
 block holds the fiber environment. 
 
 The 'executeAsync' and 'safeExecuteAsync' methods may still be run asynchronously.
@@ -54,40 +54,20 @@ notes regarding headless/zombie:
 - only worth using for simple pages, not relying heavily on Javacripts.   
 - the headless functionality wont be maintained/improved, at least until Zombie 2 is stable. 
 
-## WdWrap
+## wrap
 
-WdWrap is a wrapper around Wd. It takes a function as argument and return a function like below:
-
-```javascript
-(function(done) {
-  // execute function
-  return done();
-});
-```
-
-It's main use is within an asynchronous test framework, when only using this synchronous api is used, 
-It manages the done callback for you.
+`wrap` is a wrapper around `sync` within so it nicely integrates with
+test frameworks like Mocha. `wrap` manages the done callback for you.
  
-A 'pre' method may also be specified. It is called before the Wd block starts, in the original 
-context (In Mocha, it can be used to configure timeouts). 
+'pre' functionss may may be specified globally or within each tests.
+They are called  called before the `wrap` block starts, in the original 
+context (In Mocha, it may be used to configure timeouts). 
 
 The example below is using the mocha test framework.
 
 ```javascript
-{4wdwrapmochasimplejs}
+{4wrapmochajs}
 ```
-
-## a slightly leaner syntax (or the lack of it)
-
-Since JavaScript has no short equivalent for the '@' alias, most this section is not relevant in JavaScript.  
-
-Using the 'pre' option like in the mocha sample below may still be beneficial, althought not as good as the 
-CoffeeScript syntax.
-
-```javascript
-{5wdwrapmochaleanerjs}
-```
-
 
 ## to retrieve the browser currently in use
 
@@ -99,7 +79,7 @@ This is useful when writing test helpers.
 Don't forget to set the 'use' option in the block, or globably like in the sample below. 
 
 ```javascript
-{6wdcurrentbrowserjs}
+{5wdcurrentbrowserjs}
 ```
 
 ## supported methods

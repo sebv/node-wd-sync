@@ -17,8 +17,8 @@ npm install wd-sync
 
 All the methods from [wd](http://github.com/admc/wd) are available. 
 
-The browser functions must to be run within a Wd block. This 
-block holds the fiber environment. The Wd block context is set to the browser, 
+The browser functions must to be run within a `sync` block. This 
+block holds the fiber environment. The 'sync' block context is set to the browser, 
 so that the browser methods may be accessed using '@'.
 
 The 'executeAsync' and 'safeExecuteAsync' methods may still be run asynchronously.
@@ -26,13 +26,13 @@ The 'executeAsync' and 'safeExecuteAsync' methods may still be run asynchronousl
 ```coffeescript
 # assumes that selenium server is running
 
-{wd,Wd} = require 'wd-sync'
+wdSync = require 'wd-sync'
   
 # 1/ simple Wd example 
 
-browser = wd.remote()
+{browser, sync} = wdSync.remote()
 
-Wd with:browser, ->        
+sync ->        
   console.log "server status:", @status()
   @init browserName:'firefox'
   console.log "session capabilities:", @sessionCapabilities()
@@ -63,7 +63,7 @@ Remote testing with [Sauce Labs](http://saucelabs.com) works.
 username = '<USERNAME>'
 accessKey = '<ACCESS KEY>'
 
-{wd,Wd} = require 'wd-sync'
+wdSync = require 'wd-sync'
 
 # 2/ wd saucelabs example 
 
@@ -72,13 +72,13 @@ desired =
   name: "wd-sync demo"
   browserName: "firefox"
 
-browser = wd.remote \
+{browser, sync} = wdSync.remote \
   "ondemand.saucelabs.com",
   80,
   username,
   accessKey
 
-Wd with:browser, ->
+sync ->
   console.log "server status:", @status()          
   @init(desired)
   console.log "session capabilities:", @sessionCapabilities()
@@ -95,6 +95,7 @@ Wd with:browser, ->
   console.log @title()          
 
   @quit()
+
 ```
 
 ## Headless example
@@ -109,13 +110,13 @@ In this mode, no need to run the Selenium server.
 ```coffeescript
 # a dependency to 'wd-zombie' must be configured in package.json  
 
-{wd,Wd} = require 'wd-sync'
+wdSync = require 'wd-sync'
   
 # 3/ headless Wd example 
 
-browser = wd.headless()
+{browser, sync} = wdSync.headless()
 
-Wd with:browser, ->        
+sync ->        
   @init browserName:'firefox'
 
   @get "http://saucelabs.com/test/guinea-pig"
@@ -126,7 +127,7 @@ Wd with:browser, ->
 
   textField = @elementByName 'i_am_a_textbox'
   @type textField , "Hello World"  
-  @type textField , wd.SPECIAL_KEYS.Return
+  @type textField , wdSync.SPECIAL_KEYS.Return
 
   @quit()  
 
@@ -136,21 +137,14 @@ notes regarding headless/zombie:
 - only worth using for simple pages, not relying heavily on Javacripts.   
 - the headless functionality wont be maintained/improved, at least until Zombie 2 is stable. 
 
-## WdWrap
+## wrap
 
-WdWrap is a wrapper around Wd. It takes a function as argument and return a function like below:
-
-```coffeescript
-(done) ->
-  // execute function
-  done()
-```
-
-It's main use is within an asynchronous test framework, when only using this synchronous api is used, 
-It manages the done callback for you.
+`wrap` is a wrapper around `sync` within so it nicely integrates with
+test frameworks like Mocha. `wrap` manages the done callback for you.
  
-A 'pre' method may also be specified. It is called before the Wd block starts, in the original 
-context (In Mocha, it can be used to configure timeouts). 
+'pre' functionss may may be specified globally or within each tests.
+They are called  called before the `wrap` block starts, in the original 
+context (In Mocha, it may be used to configure timeouts). 
 
 The example below is using the mocha test framework.
 
@@ -158,128 +152,43 @@ The example below is using the mocha test framework.
 # Assumes that the selenium server is running
 # Use 'mocha --compilers coffee:coffee-script' to run (npm install -g mocha)
 
-{wd,WdWrap} = require 'wd-sync'
+wdSync = require 'wd-sync'
 
 should = require 'should'
 
-# 4/ simple WdWrap example
+# 4/ wrap example
 
 describe "WdWrap", ->
 
-  describe "passing browser", ->  
+  describe "wrap", ->
 
     browser = null
-
-    before (done) ->
-      browser = wd.remote()
-      done()
-
-    it "should work", WdWrap 
-      with: -> 
-        browser
-      pre: ->
-        @timeout 30000 
-    , ->      
-      @init()
-
-      @get "http://google.com"
-      @title().toLowerCase().should.include 'google'          
-
-      queryField = @elementByName 'q'
-      @type queryField, "Hello World"  
-      @type queryField, "\n"
-
-      @setWaitTimeout 3000      
-      @elementByCss '#ires' # waiting for new page to load
-      @title().toLowerCase().should.include 'hello world'
-
-      @quit()  
-
-```
-
-## a slightly leaner syntax
-
-When there is a browser parameter and no callback, Wd or WdWrap
-returns a version of itself with a browser default added.
-
-Wd sample below:
-
-```coffeescript
-# assumes that selenium server is running
-
-{wd,Wd} = require 'wd-sync'
-  
-# 5/ leaner Wd syntax
-
-browser = wd.remote()
-
-# do this only once
-Wd = Wd with:browser 
-
-Wd ->        
-  @init browserName:'firefox'
-
-  @get "http://google.com"
-  console.log @title()          
-  queryField = @elementByName 'q'
-
-  @type queryField, "Hello World"  
-  @type queryField, "\n"
-
-  @setWaitTimeout 3000      
-  @elementByCss '#ires' # waiting for new page to load
-  console.log @title()
-
-  @quit()
-
-```
-
-WdWrap sample below, using the mocha test framework:
-```coffeescript
-# Assumes that the selenium server is running
-# Use 'mocha --compilers coffee:coffee-script' to run (npm install -g mocha)
-
-{wd,WdWrap} = require 'wd-sync'
-
-should = require 'should'
-      
-# 6/ leaner WdWrap syntax
-
-describe "WdWrap", ->
-
-  describe "passing browser", ->  
-    browser = null
-    
-    # do this only once
-    WdWrap = WdWrap 
-      with: -> 
-        browser
-      pre: ->
+    wrap = wdSync.wrap
+      with: -> browser
+      pre: -> #optional
         @timeout 30000
 
     before (done) ->
-      browser = wd.remote()
+      {browser} = wdSync.remote()
       done()
 
-    it "should work", WdWrap ->      
+    it "should work", wrap -> # may also pass a pre here
       @init()
 
       @get "http://google.com"
-      @title().toLowerCase().should.include 'google'          
+      @title().toLowerCase().should.include 'google'
 
       queryField = @elementByName 'q'
-      @type queryField, "Hello World"  
+      @type queryField, "Hello World"
       @type queryField, "\n"
 
-      @setWaitTimeout 3000      
+      @setWaitTimeout 3000
       @elementByCss '#ires' # waiting for new page to load
       @title().toLowerCase().should.include 'hello world'
 
-      @quit()  
-
+      @quit()
 
 ```
-
 
 ## to retrieve the browser currently in use
 
@@ -291,20 +200,20 @@ This is useful when writing test helpers.
 ```coffeescript
 # assumes that selenium server is running
 
-{wd,Wd} = require 'wd-sync'
+wdSync = require 'wd-sync'
   
-# 7/ retrieving the current browser
+# 5/ retrieving the current browser
 
-browser = wd.remote()
+  {browser, sync} = wdSync.remote()
 
-myOwnGetTitle = ->    
-  wd.current().title()
+myOwnGetTitle = ->
+  wdSync.current().title()
 
-Wd with:browser, ->        
+sync ->
   @init browserName:'firefox'
 
   @get "http://google.com"
-  console.log myOwnGetTitle()          
+  console.log myOwnGetTitle()
 
   @quit()
 

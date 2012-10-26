@@ -1,50 +1,50 @@
 // Assumes that the selenium server is running
 // Use 'mocha' to run (npm install -g mocha)
 
-var wd, WdWrap; 
+var wdSync; 
 try {
-  wd = require('wd-sync').wd;
-  WdWrap = require('wd-sync').WdWrap;  
+  wdSync = require('wd-sync');
 } catch (err) {
-  wd = require('../../index').wd;
-  WdWrap = require('../../index').WdWrap;  
+  wdSync = require('../../index');
 }
 
 var should = require('should');
 
-// 5/ leaner WdWrap syntax
+// 4/ wrap example
 
 describe("WdWrap", function() {
-  describe("passing browser", function() {
-    var browser;
+
+  describe("passing browser", function() {    
+    var browser
+        , wrap = wdSync.wrap({
+          with: function() {return browser}
+          , pre: function() { this.timeout(30000); } //optional
+        });
+
     
-    // do this only once
-    WdWrap = WdWrap({
-      pre: function() { this.timeout(30000); }
-    });
-    
-    before( function(done) {
-      browser = wd.remote();
+    before(function(done) {
+      var client = wdSync.remote();
+      browser = client.browser;
       done();
     });
     
-    it("should work", WdWrap(function() {
-      
+    it("should work", wrap(function() { // may also pass a pre here
+
       browser.init();
-      
+
       browser.get("http://google.com");
       browser.title().toLowerCase().should.include('google');
-      
-      var queryField = browser.elementByName('q');
+
+      var  queryField = browser.elementByName('q');
       browser.type(queryField, "Hello World");
       browser.type(queryField, "\n");
-      
+
       browser.setWaitTimeout(3000);
       browser.elementByCss('#ires'); // waiting for new page to load
       browser.title().toLowerCase().should.include('hello world');
-      
+
       browser.quit();
-      
+
     }));
   });
 });

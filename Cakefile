@@ -51,12 +51,9 @@ task 'grep:dirty', 'Lookup for debugger and console.log in code', ->
 
 # remove local import in examples
 fixRequire = (s) ->
-  s = s.replace /\{wd,Wd}.*\ntry.*\n.*\ncatch.*\n.*\n/m, "{wd,Wd} = require 'wd-sync'\n"
-  s = s.replace /\{wd,WdWrap}.*\ntry.*\n.*\ncatch.*\n.*\n/m, "{wd,WdWrap} = require 'wd-sync'\n"
-  s = s.replace /var.*Wd;.*\ntry.*\n.*\n.*\n.*catch.*\n.*\n.*\n\}.*\n/ , \
-    "var wd = require('wd-sync').wd\n, Wd = require('wd-sync').Wd;\n" 
-  s = s.replace /var.*WdWrap;.*\ntry.*\n.*\n.*\n.*catch.*\n.*\n.*\n\}.*\n/ , \
-    "var wd = require('wd-sync').wd\n, WdWrap = require('wd-sync').WdWrap;\n" 
+  s = s.replace /\wdSync.*\ntry.*\n.*\ncatch.*\n.*\n/m, "wdSync = require 'wd-sync'\n"
+  s = s.replace /var.*wdSync;.*\ntry.*\n.*\n.*catch.*\n.*\n\}.*\n/ , \
+    "var wdSync = require('wd-sync').wd;\n" 
   s
     
 # buid the dynamic doc files

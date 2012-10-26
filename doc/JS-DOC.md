@@ -17,7 +17,7 @@ npm install wd-sync
 
 All the methods from [wd](http://github.com/admc/wd) are available. 
 
-The browser function must to be run within a Wd block. This 
+The browser functions must to be run within a `sync` block. This 
 block holds the fiber environment. 
 
 The 'executeAsync' and 'safeExecuteAsync' methods may still be run asynchronously.
@@ -25,14 +25,15 @@ The 'executeAsync' and 'safeExecuteAsync' methods may still be run asynchronousl
 ```javascript
 // assumes that selenium server is running
 
-var wd = require('wd-sync').wd
-, Wd = require('wd-sync').Wd;
+var wdSync = require('wd-sync').wd;
 
 // 1/ simple Wd example 
 
-browser = wd.remote();
+var client = wdSync.remote()
+    , browser = client.browser
+    , sync = client.sync;
 
-Wd( function() {
+sync( function() {
   
   console.log("server status:", browser.status());
   browser.init( { browserName: 'firefox'} );
@@ -68,8 +69,7 @@ Remote testing with [Sauce Labs](http://saucelabs.com) works.
 var username = '<USERNAME>'
 , accessKey = '<ACCESS KEY>';
 
-var wd = require('wd-sync').wd
-, Wd = require('wd-sync').Wd;
+var wdSync = require('wd-sync').wd;
 
 // 2/ wd saucelabs example 
 
@@ -79,14 +79,15 @@ desired = {
   browserName: "firefox"
 };
 
-browser = wd.remote(
-  "ondemand.saucelabs.com", 
-  80, 
-  username, 
-  accessKey
-);
+var client = wdSync.remote(
+  "ondemand.saucelabs.com",
+    80,
+    username,
+    accessKey)
+  , browser = client.browser
+  , sync = client.sync;
 
-Wd( function() {
+sync( function() {
 
   console.log("server status:", browser.status());
   browser.init(desired);
@@ -123,14 +124,15 @@ In this mode, no need to run the Selenium server.
 ```coffeescript
 // a dependency to 'wd-zombie' must be configured in package.json  
 
-var wd = require('wd-sync').wd
-, Wd = require('wd-sync').Wd;
+var wdSync = require('wd-sync').wd;
 
 // 3/ headless Wd example 
 
-browser = wd.headless();
+var client = wdSync.headless()
+    , browser = client.browser
+    , sync = client.sync;
 
-Wd( function() {
+sync( function() {
   
   browser.init();
   
@@ -142,7 +144,7 @@ Wd( function() {
   
   var textField = browser.elementById('i_am_a_textbox');
   browser.type(textField, "Hello World");
-  browser.type(textField, wd.SPECIAL_KEYS.Return);
+  browser.type(textField, wdSync.SPECIAL_KEYS.Return);
     
   browser.quit();
 
@@ -154,22 +156,14 @@ notes regarding headless/zombie:
 - only worth using for simple pages, not relying heavily on Javacripts.   
 - the headless functionality wont be maintained/improved, at least until Zombie 2 is stable. 
 
-## WdWrap
+## wrap
 
-WdWrap is a wrapper around Wd. It takes a function as argument and return a function like below:
-
-```javascript
-(function(done) {
-  // execute function
-  return done();
-});
-```
-
-It's main use is within an asynchronous test framework, when only using this synchronous api is used, 
-It manages the done callback for you.
+`wrap` is a wrapper around `sync` within so it nicely integrates with
+test frameworks like Mocha. `wrap` manages the done callback for you.
  
-A 'pre' method may also be specified. It is called before the Wd block starts, in the original 
-context (In Mocha, it can be used to configure timeouts). 
+'pre' functionss may may be specified globally or within each tests.
+They are called  called before the `wrap` block starts, in the original 
+context (In Mocha, it may be used to configure timeouts). 
 
 The example below is using the mocha test framework.
 
@@ -177,26 +171,29 @@ The example below is using the mocha test framework.
 // Assumes that the selenium server is running
 // Use 'mocha' to run (npm install -g mocha)
 
-var wd = require('wd-sync').wd
-, WdWrap = require('wd-sync').WdWrap;
+var wdSync = require('wd-sync').wd;
 
 var should = require('should');
 
-// 4/ simple WdWrap example
+// 4/ wrap example
 
 describe("WdWrap", function() {
 
   describe("passing browser", function() {    
-    var browser;
+    var browser
+        , wrap = wdSync.wrap({
+          with: function() {return browser}
+          , pre: function() { this.timeout(30000); } //optional
+        });
+
     
     before(function(done) {
-      browser = wd.remote();
+      var client = wdSync.remote();
+      browser = client.browser;
       done();
     });
     
-    it("should work", WdWrap({
-      pre: function() { this.timeout(30000); }
-    }, function() {
+    it("should work", wrap(function() { // may also pass a pre here
 
       browser.init();
 
@@ -219,62 +216,6 @@ describe("WdWrap", function() {
 
 ```
 
-## a slightly leaner syntax (or the lack of it)
-
-Since JavaScript has no short equivalent for the '@' alias, most this section is not relevant in JavaScript.  
-
-Using the 'pre' option like in the mocha sample below may still be beneficial, althought not as good as the 
-CoffeeScript syntax.
-
-```javascript
-// Assumes that the selenium server is running
-// Use 'mocha' to run (npm install -g mocha)
-
-var wd = require('wd-sync').wd
-, WdWrap = require('wd-sync').WdWrap;
-
-var should = require('should');
-
-// 5/ leaner WdWrap syntax
-
-describe("WdWrap", function() {
-  describe("passing browser", function() {
-    var browser;
-    
-    // do this only once
-    WdWrap = WdWrap({
-      pre: function() { this.timeout(30000); }
-    });
-    
-    before( function(done) {
-      browser = wd.remote();
-      done();
-    });
-    
-    it("should work", WdWrap(function() {
-      
-      browser.init();
-      
-      browser.get("http://google.com");
-      browser.title().toLowerCase().should.include('google');
-      
-      var queryField = browser.elementByName('q');
-      browser.type(queryField, "Hello World");
-      browser.type(queryField, "\n");
-      
-      browser.setWaitTimeout(3000);
-      browser.elementByCss('#ires'); // waiting for new page to load
-      browser.title().toLowerCase().should.include('hello world');
-      
-      browser.quit();
-      
-    }));
-  });
-});
-
-```
-
-
 ## to retrieve the browser currently in use
 
 The current browser is automatically stored in the Fiber context.
@@ -287,21 +228,19 @@ Don't forget to set the 'use' option in the block, or globably like in the sampl
 ```javascript
 // assumes that selenium server is running
 
-var wd = require('wd-sync').wd
-, Wd = require('wd-sync').Wd;
+var wdSync = require('wd-sync').wd;
 
-// 6/ retrieving the current browser
+// 5/ retrieving the current browser
 
-var browser = wd.remote();
-
-// do this once
-Wd = Wd( {with: browser} );
+var client = wdSync.remote()
+    , browser = client.browser
+    , sync = client.sync;
 
 var myOwnGetTitle = function() {
-  return wd.current().title();
+  return wdSync.current().title();
 };
 
-Wd( function() {
+sync( function() {
   
   browser.init( {browserName: 'firefox'} );
   

@@ -1,19 +1,19 @@
 // a dependency to 'wd-zombie' must be configured in package.json  
 
-var wd, Wd; 
+var wdSync; 
 try {
-  wd = require('wd-sync').wd;
-  Wd = require('wd-sync').Wd;  
+  wdSync = require('wd-sync');
 } catch (err) {
-  wd = require('../../index').wd;
-  Wd = require('../../index').Wd;  
+  wdSync = require('../../index');
 }
 
 // 3/ headless Wd example 
 
-browser = wd.headless();
+var client = wdSync.headless()
+    , browser = client.browser
+    , sync = client.sync;
 
-Wd( function() {
+sync( function() {
   
   browser.init();
   
@@ -25,7 +25,7 @@ Wd( function() {
   
   var textField = browser.elementById('i_am_a_textbox');
   browser.type(textField, "Hello World");
-  browser.type(textField, wd.SPECIAL_KEYS.Return);
+  browser.type(textField, wdSync.SPECIAL_KEYS.Return);
     
   browser.quit();
 

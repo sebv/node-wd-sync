@@ -1,16 +1,16 @@
 # assumes that selenium server is running
 
-{wd,Wd}={}
+wdSync = null
 try 
-  {wd,Wd} = require 'wd-sync' 
+  wdSync = require 'wd-sync' 
 catch err
-  {wd,Wd} = require '../../index' 
+  wdSync = require '../../index' 
   
 # 1/ simple Wd example 
 
-browser = wd.remote()
+{browser, sync} = wdSync.remote()
 
-Wd with:browser, ->        
+sync ->        
   console.log "server status:", @status()
   @init browserName:'firefox'
   console.log "session capabilities:", @sessionCapabilities()

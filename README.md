@@ -19,13 +19,13 @@ npm install wd-sync
 ```coffeescript
 # assumes that selenium server is running
 
-{wd,Wd} = require 'wd-sync'
+wdSync = require 'wd-sync'
   
 # 1/ simple Wd example 
 
-browser = wd.remote()
+{browser, sync} = wdSync.remote()
 
-Wd with:browser, ->        
+sync ->        
   console.log "server status:", @status()
   @init browserName:'firefox'
   console.log "session capabilities:", @sessionCapabilities()
@@ -52,14 +52,15 @@ Wd with:browser, ->
 ```javascript
 // assumes that selenium server is running
 
-var wd = require('wd-sync').wd
-, Wd = require('wd-sync').Wd;
+var wdSync = require('wd-sync').wd;
 
 // 1/ simple Wd example 
 
-browser = wd.remote();
+var client = wdSync.remote()
+    , browser = client.browser
+    , sync = client.sync;
 
-Wd( function() {
+sync( function() {
   
   console.log("server status:", browser.status());
   browser.init( { browserName: 'firefox'} );

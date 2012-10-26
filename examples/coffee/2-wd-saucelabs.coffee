@@ -2,11 +2,11 @@
 username = '<USERNAME>'
 accessKey = '<ACCESS KEY>'
 
-{wd,Wd}={}
+wdSync = null
 try 
-  {wd,Wd} = require 'wd-sync' 
+  wdSync = require 'wd-sync' 
 catch err
-  {wd,Wd} = require '../../index' 
+  wdSync = require '../../index' 
 
 # 2/ wd saucelabs example 
 
@@ -15,13 +15,13 @@ desired =
   name: "wd-sync demo"
   browserName: "firefox"
 
-browser = wd.remote \
+{browser, sync} = wdSync.remote \
   "ondemand.saucelabs.com",
   80,
   username,
   accessKey
 
-Wd with:browser, ->
+sync ->
   console.log "server status:", @status()          
   @init(desired)
   console.log "session capabilities:", @sessionCapabilities()

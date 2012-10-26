@@ -1,16 +1,16 @@
 # a dependency to 'wd-zombie' must be configured in package.json  
 
-{wd,Wd}={}
+wdSync = null
 try 
-  {wd,Wd} = require 'wd-sync' 
+  wdSync = require 'wd-sync' 
 catch err
-  {wd,Wd} = require '../../index' 
+  wdSync = require '../../index' 
   
 # 3/ headless Wd example 
 
-browser = wd.headless()
+{browser, sync} = wdSync.headless()
 
-Wd with:browser, ->        
+sync ->        
   @init browserName:'firefox'
 
   @get "http://saucelabs.com/test/guinea-pig"
@@ -21,6 +21,6 @@ Wd with:browser, ->
 
   textField = @elementByName 'i_am_a_textbox'
   @type textField , "Hello World"  
-  @type textField , wd.SPECIAL_KEYS.Return
+  @type textField , wdSync.SPECIAL_KEYS.Return
 
   @quit()  

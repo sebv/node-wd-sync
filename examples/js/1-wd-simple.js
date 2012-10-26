@@ -1,19 +1,19 @@
 // assumes that selenium server is running
 
-var wd, Wd; 
+var wdSync; 
 try {
-  wd = require('wd-sync').wd;
-  Wd = require('wd-sync').Wd;  
+  wdSync = require('wd-sync');
 } catch (err) {
-  wd = require('../../index').wd;
-  Wd = require('../../index').Wd;  
+  wdSync = require('../../index');
 }
 
 // 1/ simple Wd example 
 
-browser = wd.remote();
+var client = wdSync.remote()
+    , browser = client.browser
+    , sync = client.sync;
 
-Wd( function() {
+sync( function() {
   
   console.log("server status:", browser.status());
   browser.init( { browserName: 'firefox'} );
