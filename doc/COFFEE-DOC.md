@@ -238,7 +238,7 @@ Doc modifications must be done in the doc/template directory, then run `cake doc
 
 1/ starts the selenium server with chromedriver:
 ```  
-java -jar selenium-server-standalone-2.21.0.jar -Dwebdriver.chrome.driver=<PATH>/chromedriver
+java -jar selenium-server-standalone-2.25.0.jar -Dwebdriver.chrome.driver=<PATH>/chromedriver
 ```
 
 2a/ run tests
