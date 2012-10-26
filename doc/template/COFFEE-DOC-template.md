@@ -57,7 +57,7 @@ notes regarding headless/zombie:
 `wrap` is a wrapper around `sync` within so it nicely integrates with
 test frameworks like Mocha. `wrap` manages the done callback for you.
  
-`pre` functionss may may be specified globally or for each test.
+`pre` functions may be specified globally or for each test.
 They are called  called before the `wrap` block starts, in the original 
 context (In Mocha, it may be used to configure timeouts). 
 
@@ -89,7 +89,7 @@ This is useful when writing test helpers.
 * [JavaScript](http://github.com/sebv/node-wd-sync/blob/master/doc/JS-DOC.md)
 * [JsonWireProtocol official doc](http://code.google.com/p/selenium/wiki/JsonWireProtocol)
 
-Doc modifications must be done in the doc/template directory, then run 'cake doc:build'.
+Doc modifications must be done in the doc/template directory, then run `cake doc:build`.
 
 ## tests
 
