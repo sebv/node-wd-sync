@@ -53,7 +53,7 @@ task 'grep:dirty', 'Lookup for debugger and console.log in code', ->
 fixRequire = (s) ->
   s = s.replace /\wdSync.*\ntry.*\n.*\ncatch.*\n.*\n/m, "wdSync = require 'wd-sync'\n"
   s = s.replace /var.*wdSync;.*\ntry.*\n.*\n.*catch.*\n.*\n\}.*\n/ , \
-    "var wdSync = require('wd-sync').wd;\n" 
+    "var wdSync = require('wd-sync');\n" 
   s
     
 # buid the dynamic doc files

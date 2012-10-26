@@ -25,7 +25,7 @@ The 'executeAsync' and 'safeExecuteAsync' methods may still be run asynchronousl
 ```javascript
 // assumes that selenium server is running
 
-var wdSync = require('wd-sync').wd;
+var wdSync = require('wd-sync');
 
 // 1/ simple Wd example 
 
@@ -69,7 +69,7 @@ Remote testing with [Sauce Labs](http://saucelabs.com) works.
 var username = '<USERNAME>'
 , accessKey = '<ACCESS KEY>';
 
-var wdSync = require('wd-sync').wd;
+var wdSync = require('wd-sync');
 
 // 2/ wd saucelabs example 
 
@@ -124,7 +124,7 @@ In this mode, no need to run the Selenium server.
 ```coffeescript
 // a dependency to 'wd-zombie' must be configured in package.json  
 
-var wdSync = require('wd-sync').wd;
+var wdSync = require('wd-sync');
 
 // 3/ headless Wd example 
 
@@ -171,7 +171,7 @@ The example below is using the mocha test framework.
 // Assumes that the selenium server is running
 // Use 'mocha' to run (npm install -g mocha)
 
-var wdSync = require('wd-sync').wd;
+var wdSync = require('wd-sync');
 
 var should = require('should');
 
@@ -228,7 +228,7 @@ Don't forget to set the 'use' option in the block, or globably like in the sampl
 ```javascript
 // assumes that selenium server is running
 
-var wdSync = require('wd-sync').wd;
+var wdSync = require('wd-sync');
 
 // 5/ retrieving the current browser
 

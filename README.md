@@ -52,7 +52,7 @@ sync ->
 ```javascript
 // assumes that selenium server is running
 
-var wdSync = require('wd-sync').wd;
+var wdSync = require('wd-sync');
 
 // 1/ simple Wd example 
 
