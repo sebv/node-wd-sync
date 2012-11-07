@@ -20,20 +20,25 @@ task 'clean', 'Remove all js files', ->
   u.js.clean JS_PATHS 
 
 task 'test', 'Run local tests (uninstall zombie first)', ->
-  u.exec 'npm uninstall wd-zombie', (err) ->    
-    u.mocha.test 'test/local' unless err
+  u.exec 'npm uninstall wd-zombie', (err) ->
+    if error then process.exit 1
+    u.mocha.test 'test/local', (status) ->
+      process.exit status unless status is 0
 
 task 'test:local', 'Run local tests', ->
-  u.mocha.test 'test/local'
+  u.mocha.test 'test/local', (status) ->
+    process.exit status unless status is 0
 
 task 'test:sauce', 'Run Sauce Labs integration tests', ->
-  u.mocha.test 'test/sauce'
+  u.mocha.test 'test/sauce', (status) ->
+    process.exit status unless status is 0
 
 task 'test:prepare:headless', 'install zombie', ->
   u.exec 'npm install wd-zombie@0.0.x'
 
 task 'test:headless', 'Run headless tests', ->
-  u.mocha.test 'test/headless'
+  u.mocha.test 'test/headless', (status) ->
+    process.exit status unless status is 0
 
 task 'mapping:build', 'build JsonWire mappings', ->
   async.series [
