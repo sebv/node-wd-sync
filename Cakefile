@@ -21,7 +21,7 @@ task 'clean', 'Remove all js files', ->
 
 task 'test', 'Run local tests (uninstall zombie first)', ->
   u.exec 'npm uninstall wd-zombie', (err) ->
-    if error then process.exit 1
+    if err then process.exit 1
     u.mocha.test 'test/local', (status) ->
       process.exit status unless status is 0
 
