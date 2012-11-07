@@ -3,3 +3,5 @@ node_modules
 test/sauce/config.coffee
 test/sauce/config.js
 npm-debug.log
+temp
+

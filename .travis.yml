@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - 0.8
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - "./node_modules/.bin/kill_selenium"
+  - "./node_modules/.bin/install_selenium"
+  - "./node_modules/.bin/start_selenium &"
+  - "sleep 10"
+script: "npm test"
+
