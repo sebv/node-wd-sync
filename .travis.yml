@@ -6,7 +6,7 @@ before_script:
   - "sh -e /etc/init.d/xvfb start"
   - "./node_modules/.bin/install_selenium"
   - "./node_modules/.bin/start_selenium &"
-  - "sleep 15"
+  - "sleep 10"
 script: "npm test"
 after_script:
   - "./node_modules/.bin/kill_selenium"
