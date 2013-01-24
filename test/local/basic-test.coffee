@@ -11,5 +11,5 @@ describe "wd-sync", ->
     testCurrent    
       type: 'remote' 
       desired:
-        browserName:'chrome'
+        browserName:'firefox'
   
