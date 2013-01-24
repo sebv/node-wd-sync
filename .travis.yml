@@ -5,7 +5,8 @@ before_script:
   - "export DISPLAY=:99.0" 
   - "sh -e /etc/init.d/xvfb start"
   - "./node_modules/.bin/install_selenium"
-  - "./node_modules/.bin/start_selenium &"
+  - "./node_modules/.bin/install_chromedriver"
+  - "./node_modules/.bin/start_selenium_with_chromedriver &"
   - "sleep 10"
 script: "npm test"
 after_script:
