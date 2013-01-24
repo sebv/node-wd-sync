@@ -7,7 +7,7 @@ before_script:
   - "./node_modules/.bin/install_selenium"
   - "./node_modules/.bin/install_chromedriver"
   - "./node_modules/.bin/start_selenium_with_chromedriver &"
-  - "sleep 10"
+  - "sleep 15"
 script: "npm test"
 after_script:
   - "./node_modules/.bin/kill_selenium"
