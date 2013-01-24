@@ -1,6 +1,6 @@
 wd = require("wd")
 
-{makeSync,sync} = require 'make-sync'
+{makeSync,sync,current} = require 'make-sync'
 {EventEmitter} = require 'events'
 
 # we force mixed mode on executeAsync, cause sort of make sense
@@ -56,7 +56,7 @@ patch = (browser) ->
   _sync = (cb) ->
     if cb?
       sync ->
-        Fiber.current.wd_sync_browser = browser
+        current().wd_sync_browser = browser
         cb.apply browser, []
   {
     browser: browser
@@ -78,10 +78,10 @@ wdSync =
         
   # retrieve the browser currently in use
   # useful when writting helpers  
-  current: -> Fiber.current.wd_sync_browser
+  current: -> current().wd_sync_browser
 
   sleep: (ms) ->
-    fiber = Fiber.current
+    fiber = current()
     setTimeout ->
       fiber.run()
     , ms
@@ -96,7 +96,7 @@ wdSync =
         globalOptions.pre.apply @, [] if globalOptions?.pre?
         options.pre.apply @, [] if options?.pre?
         sync ->
-          Fiber.current.wd_sync_browser = globalOptions?.with?()
+          current().wd_sync_browser = globalOptions?.with?()
           cb.apply globalOptions?.with?(), [] 
           done() if done?
 

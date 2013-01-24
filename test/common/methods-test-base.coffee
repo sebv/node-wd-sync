@@ -338,14 +338,8 @@ test = (type, browserName) ->
         err = _err
       should.exist err    
       (err instanceof Error).should.be.true
-      switch type
-        when 'remote'
-          err.inspect().should.include '"screen": "[hidden]"'
-          err.inspect().should.include 'browser-error:'
+      (err.inspect().length <= 510).should.be.true
 
-    it "close", wrap ->        
-      @close()
-  
     it "quit", wrap ->        
       @quit()
 

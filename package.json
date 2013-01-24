@@ -15,14 +15,14 @@
     "make-sync": "0.1.x"
   }
   , "devDependencies" : {
-    "coffee-script" : "1.3.x"
-    , "sv-cake-utils" : "0.1.x"
-    , "mocha": "1.6.x"
-    ,"should": "1.2.x"
-    , "express" : "3.0.x"
-    , "whiskers" : "0.2.x"
-    , "async" : "0.1.x"
-    , "underscore" : "1.4.x"
-    , "sv-selenium": "0.1.x"
+    "coffee-script" : "latest"
+    , "sv-cake-utils" : "latest"
+    , "mocha": "latest"
+    ,"should": "latest"
+    , "express" : "latest"
+    , "whiskers" : "latest"
+    , "async" : "latest"
+    , "underscore" : "latest"
+    , "sv-selenium": "latest"
   }
 }
