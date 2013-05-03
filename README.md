@@ -17,7 +17,7 @@ npm install wd-sync
 
 ## upgrade to V1
 
-The main changes are the folowing:
+The main changes are the following:
 
 ### CoffeeScript
 
