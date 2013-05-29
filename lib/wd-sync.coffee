@@ -96,8 +96,11 @@ wdSync =
         globalOptions.pre.apply @, [] if globalOptions?.pre?
         options.pre.apply @, [] if options?.pre?
         sync ->
-          current().wd_sync_browser = globalOptions?.with?()
-          cb.apply globalOptions?.with?(), [] 
-          done() if done?
+          try
+            current().wd_sync_browser = globalOptions?.with?()
+            cb.apply globalOptions?.with?(), []
+            done?()
+          catch e
+            done?(e)
 
 module.exports = wdSync
