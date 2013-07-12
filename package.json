@@ -1,28 +1,38 @@
 {
-    "name": "wd-sync"
-  , "version": "1.0.1"
-  , "description": "sync version of wd using fibers."
-  , "keywords": ["selenium","webdriver","test","fibers", "sync"]
-  , "author": "Seb Vincent <seb.vincent@gmail.com>"
-  , "repository": { "type": "git", "url": "git://github.com/sebv/node-wd-sync.git" }
-  , "main": "./index"
-  , "engine": "node >= 0.6.1"
-  , "scripts": {
+  "name": "wd-sync",
+  "version": "1.0.1",
+  "description": "sync version of wd using fibers.",
+  "keywords": [
+    "selenium",
+    "webdriver",
+    "test",
+    "fibers",
+    "sync"
+  ],
+  "author": "Seb Vincent <seb.vincent@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/sebv/node-wd-sync.git"
+  },
+  "main": "./index",
+  "engine": "node >= 0.6.1",
+  "scripts": {
     "test": "cake test"
-  }
-  , "dependencies": {
+  },
+  "dependencies": {
     "wd": "git://github.com/admc/wd.git",
-    "make-sync": "0.1.x"
-  }
-  , "devDependencies" : {
-    "coffee-script" : "latest"
-    , "sv-cake-utils" : "latest"
-    , "mocha": "latest"
-    ,"should": "latest"
-    , "express" : "latest"
-    , "whiskers" : "latest"
-    , "async" : "latest"
-    , "underscore" : "latest"
-    , "sv-selenium": "latest"
+    "make-sync": "0.1.x",
+    "fibers": "1.0.x"
+  },
+  "devDependencies": {
+    "coffee-script": "latest",
+    "sv-cake-utils": "latest",
+    "mocha": "latest",
+    "should": "latest",
+    "express": "latest",
+    "whiskers": "latest",
+    "async": "latest",
+    "underscore": "latest",
+    "sv-selenium": "latest"
   }
 }

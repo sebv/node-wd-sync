@@ -1,4 +1,5 @@
-wd = require("wd")
+Fiber = require('fibers')        
+wd = require('wd')
 
 {makeSync,sync,current} = require 'make-sync'
 {EventEmitter} = require 'events'

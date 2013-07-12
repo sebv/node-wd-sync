@@ -1,4 +1,4 @@
-{testWithBrowser,testCurrent} = require '../common/basic-test-base'
+{testWithBrowser,testCurrent,testSleep} = require '../common/basic-test-base'
 
 describe "wd-sync", -> 
   describe "local", ->
@@ -13,3 +13,7 @@ describe "wd-sync", ->
       desired:
         browserName:'firefox'
   
+    testSleep    
+      type: 'remote' 
+      desired:
+        browserName:'firefox'

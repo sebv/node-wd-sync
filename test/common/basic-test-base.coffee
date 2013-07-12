@@ -50,7 +50,22 @@ testCurrent = (opt) ->
 
         @quit()
         done()
-  
+
+testSleep = (opt) ->
+  describe "wdSync.sleep()", ->
+    it "should sleep", (done) ->
+      @timeout (opt.timeout or TIMEOUT) 
+      {browser,sync} = {}
+      switch opt.type
+        when 'remote'
+          {browser,sync} = wdSync.remote(opt.remoteConfig)
+        when 'headless'
+          {browser,sync} = wdSync.headless()
+      
+      sync ->        
+        wdSync.sleep 50
+        done()
+
 exports.testWithBrowser = testWithBrowser
 exports.testCurrent = testCurrent
-
+exports.testSleep = testSleep
