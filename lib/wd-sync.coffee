@@ -85,7 +85,7 @@ wdSync =
     setTimeout ->
       fiber.run()
     , ms
-    Fiber.yield()
+    fiber.constructor.yield()
 
   # wrapper around Wd. 
   # a function returning the browser is passed in the 'with' option.
