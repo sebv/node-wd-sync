@@ -20,7 +20,7 @@
     "test": "cake test"
   },
   "dependencies": {
-    "wd": "latest",
+    "wd": "https://github.com/admc/wd/tarball/master",
     "make-sync": "0.1.x",
     "fibers": "1.0.x"
   },
