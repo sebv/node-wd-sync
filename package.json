@@ -12,7 +12,7 @@
   "author": "Seb Vincent <seb.vincent@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/sebv/node-wd-sync.git"
+    "url": "https://github.com/sebv/node-wd-sync.git"
   },
   "main": "./index",
   "engine": "node >= 0.6.1",
@@ -20,7 +20,7 @@
     "test": "cake test"
   },
   "dependencies": {
-    "wd": "git://github.com/admc/wd.git",
+    "wd": "https://github.com/admc/wd/tarball/master",
     "make-sync": "0.1.x",
     "fibers": "1.0.x"
   },
