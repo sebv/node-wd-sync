@@ -1,6 +1,6 @@
 {
   "name": "wd-sync",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "sync version of wd using fibers.",
   "keywords": [
     "selenium",
@@ -20,9 +20,9 @@
     "test": "cake test"
   },
   "dependencies": {
-    "wd": "https://github.com/admc/wd/tarball/master",
     "make-sync": "0.1.x",
-    "fibers": "1.0.x"
+    "fibers": "1.0.x",
+    "wd": "0.0.x"
   },
   "devDependencies": {
     "coffee-script": "latest",
