@@ -43,9 +43,11 @@
         return should.exist(this.status());
       }));
       it("init", wrap(function() {
-        return this.init({
+        var desired;
+        desired = {
           browserName: browserName
-        });
+        };
+        return this.init(desired);
       }));
       it("sessionCapabilities", wrap(function() {
         capabilities = this.sessionCapabilities();
@@ -70,7 +72,7 @@
       }));
       it("executeAsync (async mode, no args)", function(done) {
         var scriptAsCoffee, scriptAsJs;
-        scriptAsCoffee = "[args...,done] = arguments\ndone \"OK\"              ";
+        scriptAsCoffee = "[args...,done] = arguments\ndone \"OK\"";
         scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
           bare: 'on'
         });
@@ -81,7 +83,7 @@
       });
       it("executeAsync (sync mode, no args)", wrap(function() {
         var res, scriptAsCoffee, scriptAsJs;
-        scriptAsCoffee = "[args...,done] = arguments\ndone \"OK\"              ";
+        scriptAsCoffee = "[args...,done] = arguments\ndone \"OK\"";
         scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
           bare: 'on'
         });
@@ -90,7 +92,7 @@
       }));
       it("executeAsync (sync mode, with args)", wrap(function() {
         var res, scriptAsCoffee, scriptAsJs;
-        scriptAsCoffee = "[args...,done] = arguments\ndone(\"OK \" + (args[0] + args[1]))              ";
+        scriptAsCoffee = "[args...,done] = arguments\ndone(\"OK \" + (args[0] + args[1]))";
         scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
           bare: 'on'
         });
@@ -100,7 +102,7 @@
       it("safeExecuteAsync (sync mode, with args)", wrap(function() {
         var res, scriptAsCoffee, scriptAsJs,
           _this = this;
-        scriptAsCoffee = "[args...,done] = arguments\ndone(\"OK \" + (args[0] + args[1]))              ";
+        scriptAsCoffee = "[args...,done] = arguments\ndone(\"OK \" + (args[0] + args[1]))";
         scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
           bare: 'on'
         });
@@ -211,7 +213,7 @@
         var buttonNumberDiv, numOfClicksDiv, scriptAsCoffee, scriptAsJs;
         numOfClicksDiv = this.elementByCss("#click .numOfClicks");
         buttonNumberDiv = this.elementByCss("#click .buttonNumber");
-        scriptAsCoffee = 'jQuery ->\n  window.numOfClick = 0\n  numOfClicksDiv = $(\'#click .numOfClicks\')\n  buttonNumberDiv = $(\'#click .buttonNumber\')\n  numOfClicksDiv.mousedown (eventObj) ->\n    button = eventObj.button\n    button = \'default\' unless button?\n    window.numOfClick = window.numOfClick + 1\n    numOfClicksDiv.html "clicked #{window.numOfClick}"\n    buttonNumberDiv.html "#{button}"    \n    false                                         ';
+        scriptAsCoffee = 'jQuery ->\n  window.numOfClick = 0\n  numOfClicksDiv = $(\'#click .numOfClicks\')\n  buttonNumberDiv = $(\'#click .buttonNumber\')\n  numOfClicksDiv.mousedown (eventObj) ->\n    button = eventObj.button\n    button = \'default\' unless button?\n    window.numOfClick = window.numOfClick + 1\n    numOfClicksDiv.html "clicked #{window.numOfClick}"\n    buttonNumberDiv.html "#{button}"\n    false';
         scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
           bare: 'on'
         });
@@ -327,6 +329,12 @@
           secure: true
         });
         return this.deleteAllCookies();
+      }));
+      it("uploadFile", wrap(function() {
+        var filepath;
+        filepath = this.uploadFile("test/mocha.opts");
+        should.exist(filepath);
+        return filepath.should.include('mocha.opts');
       }));
       it("waitForCondition", wrap(function() {
         var exprCond, scriptAsCoffee, scriptAsJs,

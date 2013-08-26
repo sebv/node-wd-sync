@@ -1,6 +1,6 @@
 {
   "name": "wd-sync",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "sync version of wd using fibers.",
   "keywords": [
     "selenium",
@@ -22,7 +22,7 @@
   "dependencies": {
     "make-sync": "0.1.x",
     "fibers": "1.0.x",
-    "wd": "0.0.x"
+    "wd": "0.1.x"
   },
   "devDependencies": {
     "coffee-script": "latest",

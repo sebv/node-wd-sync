@@ -5,7 +5,7 @@ TIMEOUT = 45000
 testWithBrowser = (opt) ->
   describe "basic browsing", ->
     it (if opt.desired?.browserName? then "using #{opt.desired?.browserName}" else "without passing browser"), (done) ->
-      @timeout (opt.timeout or TIMEOUT) 
+      @timeout (opt.timeout or TIMEOUT)
       {browser,sync} = {}
       switch opt.type
         when 'remote'
@@ -13,16 +13,16 @@ testWithBrowser = (opt) ->
         when 'headless'
           {browser,sync} = wdSync.headless()
       sync ->
-        should.exist @status()        
+        should.exist @status()
         if browserName? then @init browserName: "#{browserName}"
         else @init(opt.desired)
         caps = @sessionCapabilities()
         should.exist caps
-        should.exist caps.browserName if browserName?       
-        @get "http://saucelabs.com/test/guinea-pig"      
-        @title().toLowerCase().should.include 'sauce labs'          
+        should.exist caps.browserName if browserName?
+        @get "http://saucelabs.com/test/guinea-pig"
+        @title().toLowerCase().should.include 'sauce labs'
         queryField = @elementById 'i_am_a_textbox'
-        @type queryField, "Hello World"  
+        @type queryField, "Hello World"
         @type queryField, "\n"
         @quit()
         done()
@@ -30,23 +30,23 @@ testWithBrowser = (opt) ->
 testCurrent = (opt) ->
   describe "wd.current()", ->
     it "browsing with using wd.current()", (done) ->
-      @timeout (opt.timeout or TIMEOUT) 
+      @timeout (opt.timeout or TIMEOUT)
       {browser,sync} = {}
       switch opt.type
         when 'remote'
           {browser,sync} = wdSync.remote(opt.remoteConfig)
         when 'headless'
           {browser,sync} = wdSync.headless()
-      
+
       myOwnTitle = ->
         wdSync.current().title()
-        
-      sync ->        
+
+      sync ->
         if browserName? then @init browserName: "#{browserName}"
         else @init(opt.desired)
 
         @get "http://saucelabs.com/test/guinea-pig"
-        myOwnTitle().toLowerCase().should.include 'sauce labs'          
+        myOwnTitle().toLowerCase().should.include 'sauce labs'
 
         @quit()
         done()
@@ -54,15 +54,15 @@ testCurrent = (opt) ->
 testSleep = (opt) ->
   describe "wdSync.sleep()", ->
     it "should sleep", (done) ->
-      @timeout (opt.timeout or TIMEOUT) 
+      @timeout (opt.timeout or TIMEOUT)
       {browser,sync} = {}
       switch opt.type
         when 'remote'
           {browser,sync} = wdSync.remote(opt.remoteConfig)
         when 'headless'
           {browser,sync} = wdSync.headless()
-      
-      sync ->        
+
+      sync ->
         wdSync.sleep 50
         done()
 
