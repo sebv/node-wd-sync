@@ -16,7 +16,7 @@
         express.stop(done);
         return done(null);
       });
-      return test('remote', 'chrome');
+      return test('remote', 'firefox');
     });
   });
 

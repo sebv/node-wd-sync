@@ -11,4 +11,4 @@ describe "wd-sync", ->
       express.stop(done)
       done(null)
 
-    test 'remote', 'chrome'
+    test 'remote', 'firefox'
