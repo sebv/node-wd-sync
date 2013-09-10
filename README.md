@@ -14,27 +14,6 @@ Remote testing with [Sauce Labs](http://saucelabs.com) also works.
 npm install wd-sync
 ```
 
-## upgrade to V1
-
-The main changes are the folowing:
-
-### CoffeeScript
-
-- 1/ require: `wdSync = require 'wd-sync'`
-- 2/ `Wd` becomes `sync`
-- 3/ `WdWrap` becomes `wrap`
-- 4/ to retrieve browser + sync: `{browser, sync} = wdSync.remote()`
-- 5/ to create a `wrap`: `wrap = wdSync.wrap ...`  
-
-### JavaScript
-
-- 1/ require: `var wdSync = require('wd-sync');`
-- 2/ `Wd` becomes `sync`
-- 3/ `WdWrap` becomes `wrap`
-- 4/ to retrieve browser + sync: `var client = wdSync.remote(), browser=
-client.browser, sync = client.sync;`
-- 5/ to create a `wrap`: `var wrap = wdSync.wrap(...`  
-
 ## code samples
 
 ### CoffeeScript
