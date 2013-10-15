@@ -16,6 +16,8 @@ testWithBrowser = (opt) ->
         should.exist @status()
         if browserName? then @init browserName: "#{browserName}"
         else @init(opt.desired)
+        sessionId = @getSessionId()
+        should.exist sessionId
         caps = @sessionCapabilities()
         should.exist caps
         should.exist caps.browserName if browserName?

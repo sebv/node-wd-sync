@@ -1,14 +1,14 @@
 # configure saucelabs username/access key here
-username = '<USERNAME>'
-accessKey = '<ACCESS KEY>'
+username = process.env.SAUCE_USERNAME or '<USERNAME>'
+accessKey = process.env.SAUCE_KEY or '<ACCESS KEY>'
 
 wdSync = null
-try 
-  wdSync = require 'wd-sync' 
+try
+  wdSync = require 'wd-sync'
 catch err
-  wdSync = require '../../index' 
+  wdSync = require '../../index'
 
-# 2/ wd saucelabs example 
+# 2/ wd saucelabs example
 
 desired =
   platform: "LINUX"
@@ -22,19 +22,20 @@ desired =
   accessKey
 
 sync ->
-  console.log "server status:", @status()          
+  console.log "server status:", @status()
   @init(desired)
+  console.log "session id:", @getSessionId()
   console.log "session capabilities:", @sessionCapabilities()
 
   @get "http://google.com"
-  console.log @title()          
+  console.log @title()
 
   queryField = @elementByName 'q'
-  @type queryField, "Hello World"  
+  @type queryField, "Hello World"
   @type queryField, "\n"
 
-  @setWaitTimeout 3000      
+  @setWaitTimeout 3000
   @elementByCss '#ires' # waiting for new page to load
-  console.log @title()          
+  console.log @title()
 
   @quit()

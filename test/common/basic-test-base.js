@@ -23,7 +23,7 @@
             _ref4 = wdSync.headless(), browser = _ref4.browser, sync = _ref4.sync;
         }
         return sync(function() {
-          var caps, queryField;
+          var caps, queryField, sessionId;
           should.exist(this.status());
           if (typeof browserName !== "undefined" && browserName !== null) {
             this.init({
@@ -32,6 +32,8 @@
           } else {
             this.init(opt.desired);
           }
+          sessionId = this.getSessionId();
+          should.exist(sessionId);
           caps = this.sessionCapabilities();
           should.exist(caps);
           if (typeof browserName !== "undefined" && browserName !== null) {

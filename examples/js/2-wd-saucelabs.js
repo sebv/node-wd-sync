@@ -1,15 +1,15 @@
 // configure saucelabs username/access key here
-var username = '<USERNAME>'
-, accessKey = '<ACCESS KEY>';
+var username = process.env.SAUCE_USERNAME || '<USERNAME>'
+, accessKey = process.env.SAUCE_KEY || '<ACCESS KEY>';
 
-var wdSync; 
+var wdSync;
 try {
   wdSync = require('wd-sync');
 } catch (err) {
   wdSync = require('../../index');
 }
 
-// 2/ wd saucelabs example 
+// 2/ wd saucelabs example
 
 desired = {
   platform: "LINUX",
@@ -29,6 +29,7 @@ sync( function() {
 
   console.log("server status:", browser.status());
   browser.init(desired);
+  console.log("session id:", browser.getSessionId());
   console.log("session capabilities:", browser.sessionCapabilities());
 
   browser.get("http://google.com");
