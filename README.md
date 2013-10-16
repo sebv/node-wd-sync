@@ -29,6 +29,7 @@ wdSync = require 'wd-sync'
 
 sync ->        
   console.log "server status:", @status()
+  console.log "session id:", @getSessionId()
   @init browserName:'firefox'
   console.log "session capabilities:", @sessionCapabilities()
 
@@ -65,6 +66,7 @@ var client = wdSync.remote()
 sync( function() {
   
   console.log("server status:", browser.status());
+  console.log("session id:", browser.getSessionId());
   browser.init( { browserName: 'firefox'} );
   console.log("session capabilities:", browser.sessionCapabilities());
   
