@@ -8,6 +8,9 @@ client for node.js, built using  [node-fibers](http://github.com/laverdet/node-f
 
 Remote testing with [Sauce Labs](http://saucelabs.com) also works.
 
+[![Build Status](https://travis-ci.org/[sebv]/[node-wd-sync].png)](https://travis-ci.org/[sebv]/[node-wd-sync])
+
+
 ## install
 
 ```
