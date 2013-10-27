@@ -63,7 +63,8 @@ if env.SAUCE
   env.DESIRED.build = env.SAUCE_JOB_ID
   env.DESIRED["record-video"] = env.SAUCE_RECORD_VIDEO
   env.DESIRED.tags = env.DESIRED.tags || []
-  env.DESIRED.tags.push('wd-sync');
+  env.DESIRED.tags.push('wd-sync')
+  env.DESIRED.tags.push('travis') if(env.TRAVIS_JOB_NUMBER)
 
 env.TEST_ENV_DESC = \
   "(" + (if env.SAUCE then 'sauce' else 'local') +  ", browser: " +

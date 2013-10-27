@@ -31,7 +31,7 @@
     "express": "~3.4.3",
     "whiskers": "~0.3.1",
     "async": "~0.2.9",
-    "sv-selenium": "~0.2.0",
+    "sv-selenium": "~0.2.1",
     "chai": "~1.8.1",
     "hbs": "~2.4.0",
     "request": "~2.27.0",

@@ -1,12 +1,14 @@
 language: node_js
 node_js:
-  - 0.8
+  - "0.10"
+env:
+  - [
+      {secure: ""},
+      {secure: ""}
+    ]
 before_script:
-  - "export DISPLAY=:99.0" 
-  - "sh -e /etc/init.d/xvfb start"
-  - "./node_modules/.bin/install_selenium"
-  - "./node_modules/.bin/start_selenium&"
-  - "sleep 10"
-script: "npm test"
-after_script:
-  - "./node_modules/.bin/kill_selenium"
+  - "./node_modules/.bin/install_sauce_connect"
+  - "./node_modules/.bin/travis_start_sauce_connect"
+script:
+  - "make test_midway_sauce_connect"
+  - "make test_e2e_sauce"
