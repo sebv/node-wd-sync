@@ -89,6 +89,11 @@
     if (env.TRAVIS_JOB_NUMBER) {
       env.DESIRED.tags.push('travis');
     }
+    if (BROWSER === 'explorer') {
+      env.DESIRED.browserName = 'internet explorer';
+      env.DESIRED.platform = 'Windows 7';
+      env.DESIRED.version = '10';
+    }
   }
 
   env.TEST_ENV_DESC = "(" + (env.SAUCE ? 'sauce' : 'local') + ", browser: " + (env.DESIRED.browserName || "default") + ")";

@@ -69,8 +69,14 @@ if env.SAUCE
   env.DESIRED.tags = env.DESIRED.tags || []
   env.DESIRED.tags.push('wd-sync')
   env.DESIRED.tags.push('travis') if(env.TRAVIS_JOB_NUMBER)
+  #special case for explorer
+  if BROWSER is 'explorer'
+    env.DESIRED.browserName = 'internet explorer'
+    env.DESIRED.platform = 'Windows 7'
+    env.DESIRED.version = '10'
 
 env.TEST_ENV_DESC = \
   "(" + (if env.SAUCE then 'sauce' else 'local') +  ", browser: " +
   (env.DESIRED.browserName || "default") + ")"
+
 
