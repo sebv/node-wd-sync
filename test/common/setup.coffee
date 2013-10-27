@@ -12,6 +12,7 @@ GLOBAL.env = {}
 env.REMOTE_CONFIG = process.env.REMOTE_CONFIG
 
 env.TIMEOUT = process.env.TIMEOUT || 45000
+env.TIMEOUT = parseInt env.TIMEOUT, 10
 env.BROWSER = process.env.BROWSER || 'chrome'
 env.DESIRED = process.env.DESIRED || \
   if env.BROWSER then browserName: env.BROWSER else undefined

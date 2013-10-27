@@ -20,6 +20,8 @@
 
   env.TIMEOUT = process.env.TIMEOUT || 45000;
 
+  env.TIMEOUT = parseInt(env.TIMEOUT, 10);
+
   env.BROWSER = process.env.BROWSER || 'chrome';
 
   env.DESIRED = process.env.DESIRED || (env.BROWSER ? {

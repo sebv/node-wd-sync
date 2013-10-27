@@ -4,6 +4,7 @@ node_js:
   - "0.9"
 env:
   global:
+  - TIMEOUT=300000
   - secure: NFhu8qMaCi/yG7ZHKtCgdjvEfdAXTW7YLd3BmBYJu/GSXOqszkSB4Dx35+sOcIgV0FVFKxvK0Yme8w7enoNHTx4SKdhFmYcm2pN/65eTvOBT8jzMgWh3caHLiKfwM3y0wMdUOV+isVQUHvq1Tlt9vAunjM/0o3QfrlTA/4+pH+M=
   - secure: bsyjbbhrv8SEMPaPIZBgCbl1vMotF+Ha34P6KiHM8eDTFJ/4lY8e88re6JK/coGzm9qRrkX8g6sBzikEsbHJquiBSmoo8rHhp+PzPGkb7x7X/p/OqArP9Dep6uhFn9uLoyVJylfLhkKEfbh2Cs8FFtwE7v0aZMt9yLH1qgnJ+vU=
   matrix:
