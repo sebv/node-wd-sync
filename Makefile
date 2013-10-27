@@ -27,16 +27,14 @@ test:
 	make test_e2e
 
 test_e2e:
-	BROWSER='chrome' ./node_modules/.bin/mocha test/e2e
-	BROWSER='firefox' ./node_modules/.bin/mocha test/e2e
+	./node_modules/.bin/mocha test/e2e
 
 test_e2e_sauce:
 	SAUCE_JOB_ID=`git rev-parse --short HEAD` \
 	SAUCE=1 make test_e2e
 
 test_midway:
-	BROWSER='chrome' ./node_modules/.bin/mocha test/midway
-	BROWSER='firefox' ./node_modules/.bin/mocha test/midway
+	./node_modules/.bin/mocha test/midway
 
 test_midway_sauce_connect:
 	SAUCE_JOB_ID=`git rev-parse --short HEAD` \
