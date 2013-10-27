@@ -42,7 +42,7 @@ if env.TRAVIS_JOB_ID
 
 if env.SAUCE
   env.SAUCE_JOB_ID = \
-    env.TRAVIS_JOB_NUMBER ||
+    env.TRAVIS_JOB_ID ||
     process.env.SAUCE_JOB_ID ||
     Math.round(new Date().getTime() / (1000*60));
   env.SAUCE_USERNAME = process.env.SAUCE_USERNAME

@@ -1,17 +1,15 @@
 # wd-sync
 
-NOTE: API change in 1.0.0, see section below.
-
-[![Build Status](https://travis-ci.org/sebv/node-wd-sync.png)](https://travis-ci.org/sebv/node-wd-sync)
-
-
 A synchronous version with a nice api of [wd](http://github.com/admc/wd), 
 the lightweight  [WebDriver / Selenium2](http://seleniumhq.org/projects/webdriver/) 
 client for node.js, built using  [node-fibers](http://github.com/laverdet/node-fibers).
 
 Remote testing with [Sauce Labs](http://saucelabs.com) also works.
 
+[![Build Status](https://travis-ci.org/sebv/node-wd-sync.png)](https://travis-ci.org/sebv/node-wd-sync)
+[![Selenium Test Status](https://saucelabs.com/buildstatus/node_wd_sync)](https://saucelabs.com/u/node_wd_sync)
 
+[![Selenium Test Status](https://saucelabs.com/browser-matrix/node_wd_sync.svg)](https://saucelabs.com/u/node_wd_sync)
 
 ## install
 
