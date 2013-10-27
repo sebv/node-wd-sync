@@ -35,23 +35,6 @@ Remote testing with [Sauce Labs](http://saucelabs.com) works.
 {2wdsaucelabscoffee}
 ```
 
-## Headless example
-
-This uses the [wd-zombie](http://sebv/node-wd-zombie.git) module,
-which implements the wd interface using [Zombie](http://github.com/assaf/zombie). 
-
-IMPORTANT: A wd-zombie dependency must be configured in package.json.
-
-In this mode, no need to run the Selenium server.
-
-```coffeescript
-{3wdheadlesscoffee}
-```
-
-notes regarding headless/zombie:
-- only worth using for simple pages, not relying heavily on Javacripts.   
-- the headless functionality wont be maintained/improved, at least until Zombie 2 is stable. 
-
 ## wrap
 
 `wrap` is a wrapper around `sync` within so it nicely integrates with
@@ -100,14 +83,9 @@ Doc modifications must be done in the doc/template directory, then run `cake doc
 java -jar selenium-server-standalone-2.25.0.jar -Dwebdriver.chrome.driver=<PATH>/chromedriver
 ```
 
-2a/ run tests
+2/ run tests
 ```
-cake test:local 
-```
-
-2b/ run clean test (making sure wd-zombie is not installed first)
-```
-cake test
+cake test 
 ```
 
 ### remote / Sauce Labs 
@@ -120,19 +98,6 @@ configure your username and access key.
 ```
 cake test:sauce
 ```
-
-### headless 
-
-once:
-```
-cake test:prepare:headless
-```
-
-then:
-```
-cake test:headless
-```
-
 
 ## selenium server
 

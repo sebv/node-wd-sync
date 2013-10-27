@@ -13,7 +13,7 @@ test = (type, browserName) ->
     capabilities = null
 
 
-    it "wd.remote or wd.headless", (done) ->
+    it "wd.remote", (done) ->
       switch type
         when 'remote'
           {browser,sync} = wdSync.remote()
@@ -21,9 +21,6 @@ test = (type, browserName) ->
             console.log "\u001b[36m%s\u001b[0m", info
           browser.on "command", (meth, path) ->
             console.log " > \u001b[33m%s\u001b[0m: %s", meth, path
-          done()
-        when 'headless'
-          {browser,sync} = wdSync.headless()
           done()
 
     it "status", wrap ->
@@ -97,8 +94,6 @@ test = (type, browserName) ->
       switch type
         when 'remote'
           (=> @safeExecuteAsync "!!!a wrong expr", [10, 2]).should.throw(/Error response status/)
-        when 'headless'
-          (=> @safeExecuteAsync "!!!a wrong expr", [10, 2]).should.throw(/Execution failure/)
 
     it "element", wrap ->
       should.exist @element "name", "elementByName"
@@ -322,8 +317,6 @@ test = (type, browserName) ->
       switch type
         when 'remote'
           (=> @waitForCondition "sdsds ;;sdsd {}").should.throw(/Error response status/)
-        when 'headless'
-          (=> @waitForCondition "sdsds ;;sdsd {}").should.throw(/Evaluation failure/)
 
     it "element.text", wrap ->
       el =  @element "id", "el_text"

@@ -32,7 +32,6 @@
     "express": "~3.4.3",
     "whiskers": "~0.3.1",
     "async": "~0.2.9",
-    "underscore": "~1.5.2",
     "sv-selenium": "~0.1.7"
   }
 }

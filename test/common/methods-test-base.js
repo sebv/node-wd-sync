@@ -22,8 +22,8 @@
         })
       });
       capabilities = null;
-      it("wd.remote or wd.headless", function(done) {
-        var _ref1, _ref2;
+      it("wd.remote", function(done) {
+        var _ref1;
         switch (type) {
           case 'remote':
             _ref1 = wdSync.remote(), browser = _ref1.browser, sync = _ref1.sync;
@@ -33,9 +33,6 @@
             browser.on("command", function(meth, path) {
               return console.log(" > \u001b[33m%s\u001b[0m: %s", meth, path);
             });
-            return done();
-          case 'headless':
-            _ref2 = wdSync.headless(), browser = _ref2.browser, sync = _ref2.sync;
             return done();
         }
       });
@@ -113,10 +110,6 @@
             return (function() {
               return _this.safeExecuteAsync("!!!a wrong expr", [10, 2]);
             }).should["throw"](/Error response status/);
-          case 'headless':
-            return (function() {
-              return _this.safeExecuteAsync("!!!a wrong expr", [10, 2]);
-            }).should["throw"](/Execution failure/);
         }
       }));
       it("element", wrap(function() {
@@ -354,10 +347,6 @@
             return (function() {
               return _this.waitForCondition("sdsds ;;sdsd {}");
             }).should["throw"](/Error response status/);
-          case 'headless':
-            return (function() {
-              return _this.waitForCondition("sdsds ;;sdsd {}");
-            }).should["throw"](/Evaluation failure/);
         }
       }));
       it("element.text", wrap(function() {

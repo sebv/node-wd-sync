@@ -1127,14 +1127,6 @@ local [WebDriver / Selenium2](http://seleniumhq.org/projects/webdriver/) server
 
 Remote testing with [Sauce Labs](http://saucelabs.com).
 
-### Headless
-
-Headless testing using [Zombie](http://github.com/assaf/zombie).
-
-notes regarding headless/zombie:
-- only worth using for simple pages, not relying heavily on Javacripts.   
-- the headless functionality wont be maintained/improved, at least until Zombie 2 is stable. 
-
 ## tests
 
 ### local / selenium server: 
@@ -1144,14 +1136,9 @@ notes regarding headless/zombie:
 java -jar selenium-server-standalone-2.25.0.jar -Dwebdriver.chrome.driver=<PATH>/chromedriver
 ```
 
-2a/ run tests
+2/ run tests
 ```
-cake test:local 
-```
-
-2b/ run clean test (making sure wd-zombie is not installed first)
-```
-cake test
+cake test 
 ```
 
 ### remote / Sauce Labs 
@@ -1164,17 +1151,4 @@ configure your username and access key.
 ```
 cake test:sauce
 ```
-
-### headless 
-
-once:
-```
-cake test:prepare:headless
-```
-
-then:
-```
-cake test:headless
-```
-
 

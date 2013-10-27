@@ -10,8 +10,7 @@ testWithBrowser = (opt) ->
       switch opt.type
         when 'remote'
           {browser,sync} = wdSync.remote(opt.remoteConfig)
-        when 'headless'
-          {browser,sync} = wdSync.headless()
+
       sync ->
         should.exist @status()
         if browserName? then @init browserName: "#{browserName}"
@@ -37,8 +36,6 @@ testCurrent = (opt) ->
       switch opt.type
         when 'remote'
           {browser,sync} = wdSync.remote(opt.remoteConfig)
-        when 'headless'
-          {browser,sync} = wdSync.headless()
 
       myOwnTitle = ->
         wdSync.current().title()
@@ -61,8 +58,6 @@ testSleep = (opt) ->
       switch opt.type
         when 'remote'
           {browser,sync} = wdSync.remote(opt.remoteConfig)
-        when 'headless'
-          {browser,sync} = wdSync.headless()
 
       sync ->
         wdSync.sleep 50

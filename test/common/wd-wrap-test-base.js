@@ -28,9 +28,6 @@
           switch (opt.type) {
             case 'remote':
               browser = wdSync.remote(opt.remoteConfig).browser;
-              break;
-            case 'headless':
-              browser = wdSync.headless().browser;
           }
           return done();
         });
@@ -62,9 +59,6 @@
           switch (opt.type) {
             case 'remote':
               browser = wdSync.remote(opt.remoteConfig).browser;
-              break;
-            case 'headless':
-              browser = wdSync.headless().browser;
           }
           return done();
         });

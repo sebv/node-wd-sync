@@ -12,15 +12,12 @@
     return describe("basic browsing", function() {
       var _ref, _ref1;
       return it((((_ref = opt.desired) != null ? _ref.browserName : void 0) != null ? "using " + ((_ref1 = opt.desired) != null ? _ref1.browserName : void 0) : "without passing browser"), function(done) {
-        var browser, sync, _ref2, _ref3, _ref4;
+        var browser, sync, _ref2, _ref3;
         this.timeout(opt.timeout || TIMEOUT);
         _ref2 = {}, browser = _ref2.browser, sync = _ref2.sync;
         switch (opt.type) {
           case 'remote':
             _ref3 = wdSync.remote(opt.remoteConfig), browser = _ref3.browser, sync = _ref3.sync;
-            break;
-          case 'headless':
-            _ref4 = wdSync.headless(), browser = _ref4.browser, sync = _ref4.sync;
         }
         return sync(function() {
           var caps, queryField, sessionId;
@@ -54,15 +51,12 @@
   testCurrent = function(opt) {
     return describe("wd.current()", function() {
       return it("browsing with using wd.current()", function(done) {
-        var browser, myOwnTitle, sync, _ref, _ref1, _ref2;
+        var browser, myOwnTitle, sync, _ref, _ref1;
         this.timeout(opt.timeout || TIMEOUT);
         _ref = {}, browser = _ref.browser, sync = _ref.sync;
         switch (opt.type) {
           case 'remote':
             _ref1 = wdSync.remote(opt.remoteConfig), browser = _ref1.browser, sync = _ref1.sync;
-            break;
-          case 'headless':
-            _ref2 = wdSync.headless(), browser = _ref2.browser, sync = _ref2.sync;
         }
         myOwnTitle = function() {
           return wdSync.current().title();
@@ -87,15 +81,12 @@
   testSleep = function(opt) {
     return describe("wdSync.sleep()", function() {
       return it("should sleep", function(done) {
-        var browser, sync, _ref, _ref1, _ref2;
+        var browser, sync, _ref, _ref1;
         this.timeout(opt.timeout || TIMEOUT);
         _ref = {}, browser = _ref.browser, sync = _ref.sync;
         switch (opt.type) {
           case 'remote':
             _ref1 = wdSync.remote(opt.remoteConfig), browser = _ref1.browser, sync = _ref1.sync;
-            break;
-          case 'headless':
-            _ref2 = wdSync.headless(), browser = _ref2.browser, sync = _ref2.sync;
         }
         return sync(function() {
           wdSync.sleep(50);
