@@ -89,7 +89,7 @@
     if (env.TRAVIS_JOB_NUMBER) {
       env.DESIRED.tags.push('travis');
     }
-    if (BROWSER === 'explorer') {
+    if (env.BROWSER === 'explorer') {
       env.DESIRED.browserName = 'internet explorer';
       env.DESIRED.platform = 'Windows 7';
       env.DESIRED.version = '10';
