@@ -10,6 +10,16 @@ async = require 'async'
 
 mappingBuilder = require "./doc/mapping-builder"
 
+runSequentially = (currentTask, otherTasks...) ->
+  if typeof currentTask is 'function'
+    do currentTask
+    if otherTasks.length
+      runSequentially otherTasks...
+  else
+    invoke currentTask, ->
+      if otherTasks.length
+        runSequentially otherTasks...
+
 task 'compile', 'Compile All coffee files', ->
   u.coffee.compile COFFEE_PATHS
 
@@ -20,7 +30,21 @@ task 'clean', 'Remove all js files', ->
   u.js.clean JS_PATHS
 
 task 'test', 'Run local tests', ->
-  u.mocha.test 'test/local', (status) ->
+  runSequentially(
+    # -> process.env.BROWSER = 'chrome'
+    # 'test:midway'
+    'test:e2e'
+    # -> process.env.BROWSER = 'firefox'
+    # 'test:midway'
+    'test:e2e'
+  )
+
+task 'test:midway', 'Run Sauce Labs integration tests', ->
+  u.mocha.test 'test/midway', (status) ->
+    process.exit status unless status is 0
+
+task 'test:e2e', 'Run Sauce Labs integration tests', ->
+  u.mocha.test 'test/e2e', (status) ->
     process.exit status unless status is 0
 
 task 'test:sauce', 'Run Sauce Labs integration tests', ->

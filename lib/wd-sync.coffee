@@ -78,12 +78,6 @@ wdSync =
     browser = wd.remote args...
     patch browser
 
-  # return headless zombie
-  headless: (args...) ->
-    wdZombie = require("wd-zombie")
-    browser = wdZombie.remote args...
-    patch browser
-
   # retrieve the browser currently in use
   # useful when writting helpers
   current: -> current().wd_sync_browser

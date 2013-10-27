@@ -28,10 +28,13 @@
     "coffee-script": "~1.6.3",
     "sv-cake-utils": "~0.1.8",
     "mocha": "~1.13.0",
-    "should": "~2.0.2",
     "express": "~3.4.3",
     "whiskers": "~0.3.1",
     "async": "~0.2.9",
-    "sv-selenium": "~0.1.7"
+    "sv-selenium": "~0.2.0",
+    "chai": "~1.8.1",
+    "hbs": "~2.4.0",
+    "request": "~2.27.0",
+    "lodash": "~2.2.1"
   }
 }
