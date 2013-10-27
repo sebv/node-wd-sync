@@ -1,16 +1,16 @@
-script: 
-- make test_midway_sauce_connect
-- make test_e2e_sauce
 language: node_js
-before_script: 
-- ./node_modules/.bin/install_sauce_connect
-- ./node_modules/.bin/travis_start_sauce_connect
-env: 
-  global: 
+node_js:
+  - "0.10"
+ # - "0.9"
+env:
+  global:
   - secure: XJRGyYFmTQYhgOosuwwLrNdKnzwfbhflourv2emad6qdYmg0e/KLpDtUEUrNYfzxenrjlxlnF/fRd98YSPYaIa2PpnXMA9lZgfX980IXirSFPCiSMEyaC7BDn1xaCRXo+ftRy4QKJO2amUqY+ByjBJfDZPGF8yxjBsn4IMOlNdU=
   - secure: KZOkN/a9Lgu6ZIB7doka/t8pp6RYs6jbcF5ZpT1e3K3UU/NHRU3rwmhIWaEDeC8N9Ds6YqatUi2+FK0kB9fgSKFBsX8pHix/r05DTUsbNgHOzbZrP20wK5ITEu5WbSRv11IgK0NyXfZvGSsfArpzmkpHObbleiML+knJtLLF8Ac=
-  matrix: 
-  - - secure: ""
+  matrix:
     - secure: ""
-node_js: 
-- "0.10"
+before_script:
+- ./node_modules/.bin/install_sauce_connect
+- ./node_modules/.bin/travis_start_sauce_connect
+script:
+- make test_midway_sauce_connect
+- make test_e2e_sauce
