@@ -23,6 +23,8 @@ GLOBAL.desiredWithTestInfo = (testInfo) ->
   desired = _.clone env.DESIRED
   if env.SAUCE
     desired.name = testInfo.name if testInfo?.name
+    if env.TRAVIS_JOB_NUMBER
+      desired.name = env.TRAVIS_JOB_NUMBER + " " + desired.name
     desired.tags = _.union(desired.tags, testInfo.tags) if testInfo?.tags
   desired['tunnel-identifier'] = env.TRAVIS_JOB_NUMBER if env.TRAVIS_JOB_NUMBER
   desired

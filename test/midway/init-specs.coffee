@@ -1,6 +1,6 @@
 testInfo =
-  name: 'api'
-  tags: ['init']
+  name: 'init'
+  tags: ['midway']
 
 require "../common/setup"
 
@@ -29,7 +29,7 @@ describe "init specs " + env.TEST_ENV_DESC, ->
 
   describe "init", ->
     before wrap ->
-      @init env.DESIRED
+      @init desiredWithTestInfo(testInfo)
 
     it "browser.sessionCapabilities", wrap ->
       capabilities = @sessionCapabilities()
