@@ -1,6 +1,6 @@
 // assumes that selenium server is running
 
-var wdSync; 
+var wdSync;
 try {
   wdSync = require('wd-sync');
 } catch (err) {
@@ -18,12 +18,12 @@ var myOwnGetTitle = function() {
 };
 
 sync( function() {
-  
+
   browser.init( {browserName: 'firefox'} );
-  
+
   browser.get("http://google.com");
   console.log(myOwnGetTitle());
-  
+
   browser.quit();
-  
+
 });

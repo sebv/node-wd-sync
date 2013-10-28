@@ -43,6 +43,10 @@ Remote testing with [Sauce Labs](http://saucelabs.com) works.
 {2wdsaucelabsjs}
 ```
 
+## browser initialization
+
+Please refer to [wd doc](https://github.com/admc/wd#browser-initialization).
+
 ## wrap
 
 `wrap` is a wrapper around `sync` within so it nicely integrates with
@@ -55,7 +59,7 @@ context (In Mocha, it may be used to configure timeouts).
 The example below is using the mocha test framework.
 
 ```javascript
-{4wrapmochajs}
+{3wrapmochajs}
 ```
 
 ## to retrieve the browser currently in use
@@ -66,7 +70,7 @@ It can be retrieved with the `wd.current()` function.
 This is useful when writing test helpers.
 
 ```javascript
-{5wdcurrentbrowserjs}
+{4wdcurrentbrowserjs}
 ```
 
 ## api
@@ -79,6 +83,7 @@ This is useful when writing test helpers.
 
 * [CoffeeScript](http://github.com/sebv/node-wd-sync/blob/master/doc/COFFEE-DOC.md)
 * [JavaScript](http://github.com/sebv/node-wd-sync/blob/master/doc/JS-DOC.md)
+* [wd doc](https://github.com/admc/wd/blob/master/README.md)
 * [JsonWireProtocol official doc](http://code.google.com/p/selenium/wiki/JsonWireProtocol)
 
 Doc modifications must be done in the doc/template directory.

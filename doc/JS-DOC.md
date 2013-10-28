@@ -120,6 +120,10 @@ sync( function() {
 
 ```
 
+## browser initialization
+
+Please refer to [wd doc](https://github.com/admc/wd#browser-initialization).
+
 ## wrap
 
 `wrap` is a wrapper around `sync` within so it nicely integrates with
@@ -137,26 +141,27 @@ The example below is using the mocha test framework.
 
 var wdSync = require('wd-sync');
 
-var should = require('should');
+var chai = require('chai');
+chai.should();
 
 // 4/ wrap example
 
 describe("WdWrap", function() {
 
-  describe("passing browser", function() {    
+  describe("passing browser", function() {
     var browser
         , wrap = wdSync.wrap({
           with: function() {return browser}
           , pre: function() { this.timeout(30000); } //optional
         });
 
-    
+
     before(function(done) {
       var client = wdSync.remote();
       browser = client.browser;
       done();
     });
-    
+
     it("should work", wrap(function() { // may also pass a pre here
 
       browser.init();
@@ -203,14 +208,14 @@ var myOwnGetTitle = function() {
 };
 
 sync( function() {
-  
+
   browser.init( {browserName: 'firefox'} );
-  
+
   browser.get("http://google.com");
   console.log(myOwnGetTitle());
-  
+
   browser.quit();
-  
+
 });
 
 ```
@@ -225,6 +230,7 @@ sync( function() {
 
 * [CoffeeScript](http://github.com/sebv/node-wd-sync/blob/master/doc/COFFEE-DOC.md)
 * [JavaScript](http://github.com/sebv/node-wd-sync/blob/master/doc/JS-DOC.md)
+* [wd doc](https://github.com/admc/wd/blob/master/README.md)
 * [JsonWireProtocol official doc](http://code.google.com/p/selenium/wiki/JsonWireProtocol)
 
 Doc modifications must be done in the doc/template directory.

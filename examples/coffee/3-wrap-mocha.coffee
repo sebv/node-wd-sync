@@ -7,7 +7,8 @@ try
 catch err
   wdSync = require '../../index'
 
-should = require 'should'
+chai = require 'chai'
+chai.should()
 
 # 4/ wrap example
 

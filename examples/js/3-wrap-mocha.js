@@ -1,33 +1,34 @@
 // Assumes that the selenium server is running
 // Use 'mocha' to run (npm install -g mocha)
 
-var wdSync; 
+var wdSync;
 try {
   wdSync = require('wd-sync');
 } catch (err) {
   wdSync = require('../../index');
 }
 
-var should = require('should');
+var chai = require('chai');
+chai.should();
 
 // 4/ wrap example
 
 describe("WdWrap", function() {
 
-  describe("passing browser", function() {    
+  describe("passing browser", function() {
     var browser
         , wrap = wdSync.wrap({
           with: function() {return browser}
           , pre: function() { this.timeout(30000); } //optional
         });
 
-    
+
     before(function(done) {
       var client = wdSync.remote();
       browser = client.browser;
       done();
     });
-    
+
     it("should work", wrap(function() { // may also pass a pre here
 
       browser.init();
