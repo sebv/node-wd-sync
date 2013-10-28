@@ -23,7 +23,7 @@ POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/sess
 Create a new session.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-init(desired) -&gt; sessionID<br>
+init(desired) -&gt; sessionID, capabilities<br>
 Initialize the browser.<br>
 </td>
 </tr>
@@ -37,7 +37,7 @@ Returns a list of the currently active sessions.
 sessions() -&gt; sessions<br>
 </p>
 <p>
-## Alternate strategy to get session capabilities from server session list<br>
+Alternate strategy to get session capabilities from server session list:<br>
 altSessionCapabilities() -&gt; capabilities<br>
 </p>
 </td>
@@ -165,7 +165,7 @@ execute(code) -&gt; result<br>
 args: script argument array (optional)<br>
 </p>
 <p>
-Execute script using eval(code):<br>
+Safely execute script within an eval block, always returning:<br>
 safeExecute(code, args) -&gt; result<br>
 safeExecute(code) -&gt; result<br>
 args: script argument array (optional)<br>
@@ -175,7 +175,7 @@ Evaluate expression (using execute):<br>
 eval(code) -&gt; value<br>
 </p>
 <p>
-Evaluate expression (using safeExecute):<br>
+Safely evaluate expression, always returning  (using safeExecute):<br>
 safeEval(code) -&gt; value<br>
 </p>
 </td>
@@ -192,7 +192,7 @@ executeAsync(code) -&gt; result<br>
 args: script argument array (optional)<br>
 </p>
 <p>
-Execute async script using eval(code):<br>
+Safely execute async script within an eval block, always returning:<br>
 safeExecuteAsync(code, args) -&gt; result<br>
 safeExecuteAsync(code) -&gt; result<br>
 args: script argument array (optional)<br>
@@ -315,7 +315,7 @@ Set a cookie.
 setCookie(cookie)<br>
 cookie example:<br>
 {name:'fruit', value:'apple'}<br>
-## Optional cookie fields<br>
+Optional cookie fields:<br>
 path, domain, secure, expiry<br>
 </td>
 </tr>
@@ -398,7 +398,7 @@ elementsByXPath(value) -&gt; elements<br>
 elementsByCss(value) -&gt; elements<br>
 </p>
 <p>
-## Retrieve an element avoiding not found exception and returning null instead<br>
+Retrieve an element avoiding not found exception and returning null instead:<br>
 elementOrNull(using, value) -&gt; element<br>
 </p>
 <p>
@@ -413,7 +413,7 @@ elementByXPathOrNull(value) -&gt; element<br>
 elementByCssOrNull(value) -&gt; element<br>
 </p>
 <p>
-## Retrieve an element avoiding not found exception and returning undefined instead<br>
+Retrieve an element avoiding not found exception and returning undefined instead:<br>
 elementIfExists(using, value) -&gt; element<br>
 </p>
 <p>
@@ -428,7 +428,7 @@ elementByXPathIfExists(value) -&gt; element<br>
 elementByCssIfExists(value) -&gt; element<br>
 </p>
 <p>
-## Check if element exists<br>
+Check if element exists:<br>
 hasElement(using, value) -&gt; boolean<br>
 </p>
 <p>
@@ -517,8 +517,13 @@ POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/sess
 Submit a FORM element.
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
+<p>
 submit(element)<br>
 Submit a `FORM` element.<br>
+</p>
+<p>
+element.submit()<br>
+</p>
 </td>
 </tr>
 <tr>
@@ -535,7 +540,7 @@ element: specific element, 'body', or undefined<br>
 element.text() -&gt; text<br>
 </p>
 <p>
-## Check if text is present<br>
+Check if text is present:<br>
 textPresent(searchText, element) -&gt; boolean<br>
 element: specific element, 'body', or undefined<br>
 </p>
@@ -688,6 +693,18 @@ getLocation(element) -&gt; location<br>
 <p>
 element.getLocation() -&gt; location<br>
 </p>
+<p>
+element.getLocationInView() -&gt; location<br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/element/:id/location_in_view">/session/:sessionId/element/:id/location_in_view</a><br>
+Determine an element's location on the screen once it has been scrolled into view.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+getLocationInView(element) -&gt; location<br>
 </td>
 </tr>
 <tr>
@@ -802,7 +819,10 @@ POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/sess
 Click and hold the left mouse button (at the coordinates set by the last moveto command).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-buttonDown()<br>
+buttonDown(button )<br>
+button is optional.<br>
+{LEFT = 0, MIDDLE = 1 , RIGHT = 2}.<br>
+LEFT if not specified.<br>
 </td>
 </tr>
 <tr>
@@ -811,7 +831,10 @@ POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/sess
 Releases the mouse button previously held (where the mouse is currently at).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
-buttonUp()<br>
+buttonUp(button)<br>
+button is optional.<br>
+{LEFT = 0, MIDDLE = 1 , RIGHT = 2}.<br>
+LEFT if not specified.<br>
 </td>
 </tr>
 <tr>
@@ -820,7 +843,27 @@ POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/sess
 Double-clicks at the current mouse coordinates (set by moveto).
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
+<p>
 doubleclick()<br>
+</p>
+<p>
+element.doubleClick()<br>
+</p>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/touch/click">/session/:sessionId/touch/click</a><br>
+Single tap on the touch enabled device.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+<p>
+tap()<br>
+Taps element<br>
+</p>
+<p>
+element.tap()<br>
+</p>
 </td>
 </tr>
 <tr>
@@ -882,6 +925,24 @@ removeLocalStorageKey(key)<br>
 </tr>
 <tr>
 <td style="border: 1px solid #ccc; padding: 5px;">
+POST <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#POST_/session/:sessionId/log">/session/:sessionId/log</a><br>
+Get the log for a given log type.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+log(logType) -&gt; arrayOfLogs<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+GET <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#GET_/session/:sessionId/log/types">/session/:sessionId/log/types</a><br>
+Get available log types.
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+logTypes() -&gt; arrayOfLogTypes<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
 EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
@@ -899,6 +960,15 @@ EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
 windowName() -&gt; name<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+EXTRA
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+setHTTPInactivityTimeout(ms)<br>
+ms: how many milliseconds to wait for any communication with the WebDriver server (i.e. any command to complete) before the connection is considered lost<br>
 </td>
 </tr>
 <tr>
@@ -972,6 +1042,16 @@ getPageIndex(element) -&gt; pageIndex<br>
 EXTRA
 </td>
 <td style="border: 1px solid #ccc; padding: 5px;">
+Uploads a local file using undocumented<br>
+POST /session/:sessionId/file<br>
+uploadFile(filepath) -&gt; filepath<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+EXTRA
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
 Waits for JavaScript condition to be true (polling within wd client):<br>
 waitForCondition(conditionExpr, timeout, pollFreq) -&gt; boolean<br>
 waitForCondition(conditionExpr, timeout) -&gt; boolean<br>
@@ -995,6 +1075,16 @@ conditionExpr: condition expression, should return a boolean<br>
 timeout: timeout (optional, default: 1000)<br>
 pollFreq: pooling frequency (optional, default: 100)<br>
 return true if condition satisfied, error otherwise.<br>
+</td>
+</tr>
+<tr>
+<td style="border: 1px solid #ccc; padding: 5px;">
+EXTRA
+</td>
+<td style="border: 1px solid #ccc; padding: 5px;">
+Equivalent to the python sendKeys binding. Upload file if<br>
+a local file is detected, otherwise behaves like type.<br>
+element.sendKeys(keys)<br>
 </td>
 </tr>
 <tr>

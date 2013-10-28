@@ -6,12 +6,20 @@ client for node.js, built using  [node-fibers](http://github.com/laverdet/node-f
 
 Remote testing with [Sauce Labs](http://saucelabs.com) also works.
 
+Note: headless zombie was removed in 1.1.0
+
+## status
+
+[![Build Status](https://travis-ci.org/sebv/node-wd-sync.png)](https://travis-ci.org/sebv/node-wd-sync)
+[![Selenium Test Status](https://saucelabs.com/buildstatus/node_wd_sync)](https://saucelabs.com/u/node_wd_sync)
+
+[![Selenium Test Status](https://saucelabs.com/browser-matrix/node_wd_sync.svg)](https://saucelabs.com/u/node_wd_sync)
+
 ## install
 
 ```
 npm install wd-sync
 ```
-
 
 ## usage
 
@@ -58,7 +66,6 @@ sync( function() {
 });
 
 ```
-
 
 ## Sauce Labs example
 
@@ -208,9 +215,9 @@ sync( function() {
 
 ```
 
-## supported methods
+## api
 
-* [supported JsonWireProtocol mapping](http://github.com/sebv/node-wd-sync/blob/master/doc/jsonwire-mapping.md)
+* [supported](http://github.com/sebv/node-wd-sync/blob/master/doc/jsonwire-mapping.md)
 * [full JsonWireProtocol mapping](http://github.com/sebv/node-wd-sync/blob/master/doc/jsonwire-full-mapping.md)
 
 
@@ -220,43 +227,52 @@ sync( function() {
 * [JavaScript](http://github.com/sebv/node-wd-sync/blob/master/doc/JS-DOC.md)
 * [JsonWireProtocol official doc](http://code.google.com/p/selenium/wiki/JsonWireProtocol)
 
-Doc modifications must be done in the doc/template directory, then run `cake doc:build`.
+Doc modifications must be done in the doc/template directory.
 
-
-## tests
+## running tests
 
 ### local / selenium server: 
 
-1/ starts the selenium server with chromedriver:
-```  
-java -jar selenium-server-standalone-2.21.0.jar -Dwebdriver.chrome.driver=<PATH>/chromedriver
+1/ Install and start Selenium server
+
+```
+./node_modules/.bin/install_selenium
+./node_modules/.bin/install_chromedriver
+./node_modules/.bin/start_selenium_with_chromedriver
 ```
 
-2a/ run tests
+2/ run tests
 ```
-cake test 
+make test 
 ```
 
 ### remote / Sauce Labs 
 
-1/ follow the instructions [here](http://github.com/sebv/node-wd-sync/blob/master/test/sauce/README.md) to
-configure your username and access key.
- 
+1/ configure sauce environment
+```
+export SAUCE_USERNAME=<SAUCE_USERNAME>
+export SAUCE_ACCESS_KEY=<SAUCE_ACCESS_KEY>
+# if using sauce connect
+./node_modules/.bin/install_sauce_connect
+./node_modules/.bin/start_sauce_connect
+```
 
 2/ run tests
 ```
-cake test:sauce
+make test_e2e_sauce
+make test_midway_sauce_connect
 ```
 
-## selenium server
+## building doc/mapping
 
-Download the Selenium server [here](http://seleniumhq.org/download/).
+### README + doc
 
-Download the Chromedriver [here](http://code.google.com/p/chromedriver/downloads/list).
+1/ Update the templates
 
-To start the server:
+2/ run `make build_doc`
 
-```
-java -jar selenium-server-standalone-2.25.0.jar -Dwebdriver.chrome.driver=./chromedriver
-```
+### mappings
 
+1/ Upgrade wd
+
+2/ run `make build_mapping`

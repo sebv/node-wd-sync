@@ -41,8 +41,8 @@ test_midway_sauce_connect:
 	SAUCE_CONNECT=1 make test_midway
 
 build_mapping:
-	coffee doc/doc-builder.coffee 'mapping' 'supported'
-	coffee doc/doc-builder.coffee 'mapping' 'full'
+	coffee doc/doc-builder.coffee 'mapping' 'supported' > doc/jsonwire-mapping.md
+	coffee doc/doc-builder.coffee 'mapping' 'full' > doc/jsonwire-full-mapping.md
 
 build_doc:
 	coffee doc/doc-builder.coffee 'doc'

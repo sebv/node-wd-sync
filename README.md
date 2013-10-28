@@ -101,7 +101,7 @@ sync( function() {
 * [CoffeeScript](http://github.com/sebv/node-wd-sync/blob/master/doc/COFFEE-DOC.md)
 * [JavaScript](http://github.com/sebv/node-wd-sync/blob/master/doc/JS-DOC.md)
 
-Note: Doc and README modifications must be done in the doc/template directory, see section below'.
+Note: Doc and README modifications must be done in the doc/template directory.
 
 ## examples
 
@@ -171,14 +171,3 @@ make test_midway_sauce_connect
 1/ Upgrade wd
 
 2/ run `make build_mapping`
-
-
-
-
-
-
-
-
-
-
-Doc and README modifications must be done in the doc/template directory, then run 'make build_doc'.
