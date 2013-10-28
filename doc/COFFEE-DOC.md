@@ -256,3 +256,12 @@ make test_midway_sauce_connect
 1/ Upgrade wd
 
 2/ run `make build_mapping`
+
+## publishing
+
+```
+npm version [patch|minor|major]
+git commit --tags
+npm publish
+```
+
