@@ -56,13 +56,6 @@
       this.quit();
       return jobStatus(allPassed, this.getSessionId());
     }));
-    express.partials['browser.eval'] = '<div id="theDiv"><ul><li>line 1</li><li>line 2</li></ul></div>';
-    it("browser.eval", wrap(function() {
-      (this["eval"]("1+2")).should.equal(3);
-      (this["eval"]("document.title")).should.equal("WD Sync Tests");
-      (this["eval"]("$('#theDiv').length")).should.equal(1);
-      return (this["eval"]("$('#theDiv li').length")).should.equal(2);
-    }));
     express.partials['browser.element'] = '<div id="theDiv"><div name="meme">Hello World!</div></div>';
     it("browser.element", wrap(function() {
       should.exist(this.element("name", "meme"));

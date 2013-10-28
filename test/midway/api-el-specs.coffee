@@ -39,14 +39,6 @@ describe "api el specs " + env.TEST_ENV_DESC, ->
     @quit()
     jobStatus allPassed, @getSessionId()
 
-  express.partials['browser.eval'] =
-    '<div id="theDiv"><ul><li>line 1</li><li>line 2</li></ul></div>'
-  it "browser.eval", wrap ->
-    (@eval "1+2").should.equal 3
-    (@eval "document.title").should.equal "WD Sync Tests"
-    (@eval "$('#theDiv').length").should.equal 1
-    (@eval "$('#theDiv li').length").should.equal 2
-
   express.partials['browser.element'] =
     '<div id="theDiv"><div name="meme">Hello World!</div></div>'
   it "browser.element", wrap ->
