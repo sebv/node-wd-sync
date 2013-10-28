@@ -27,30 +27,31 @@ The `executeAsync` and `safeExecuteAsync` methods may still be run asynchronousl
 # assumes that selenium server is running
 
 wdSync = require 'wd-sync'
-  
-# 1/ simple Wd example 
+
+# 1/ simple Wd example
 
 {browser, sync} = wdSync.remote()
 
-sync ->        
+sync ->
   console.log "server status:", @status()
   @init browserName:'firefox'
+  console.log "session id:", @getSessionId()
   console.log "session capabilities:", @sessionCapabilities()
 
   @get "http://google.com"
-  console.log @title()          
+  console.log @title()
 
   queryField = @elementByName 'q'
-  @type queryField, "Hello World"  
+  @type queryField, "Hello World"
   @type queryField, "\n"
 
-  @setWaitTimeout 3000      
+  @setWaitTimeout 3000
   @elementByCss '#ires' # waiting for new page to load
   console.log @title()
 
   console.log @elementByNameIfExists 'not_exists' # undefined
 
-  @quit()  
+  @quit()
 
 ```
 
@@ -60,12 +61,12 @@ Remote testing with [Sauce Labs](http://saucelabs.com) works.
 
 ```coffeescript
 # configure saucelabs username/access key here
-username = '<USERNAME>'
-accessKey = '<ACCESS KEY>'
+username = process.env.SAUCE_USERNAME or '<USERNAME>'
+accessKey = process.env.SAUCE_KEY or '<ACCESS KEY>'
 
 wdSync = require 'wd-sync'
 
-# 2/ wd saucelabs example 
+# 2/ wd saucelabs example
 
 desired =
   platform: "LINUX"
@@ -79,63 +80,25 @@ desired =
   accessKey
 
 sync ->
-  console.log "server status:", @status()          
+  console.log "server status:", @status()
   @init(desired)
+  console.log "session id:", @getSessionId()
   console.log "session capabilities:", @sessionCapabilities()
 
   @get "http://google.com"
-  console.log @title()          
+  console.log @title()
 
   queryField = @elementByName 'q'
-  @type queryField, "Hello World"  
+  @type queryField, "Hello World"
   @type queryField, "\n"
 
-  @setWaitTimeout 3000      
+  @setWaitTimeout 3000
   @elementByCss '#ires' # waiting for new page to load
-  console.log @title()          
+  console.log @title()
 
   @quit()
 
 ```
-
-## Headless example
-
-This uses the [wd-zombie](http://sebv/node-wd-zombie.git) module,
-which implements the wd interface using [Zombie](http://github.com/assaf/zombie). 
-
-IMPORTANT: A wd-zombie dependency must be configured in package.json.
-
-In this mode, no need to run the Selenium server.
-
-```coffeescript
-# a dependency to 'wd-zombie' must be configured in package.json  
-
-wdSync = require 'wd-sync'
-  
-# 3/ headless Wd example 
-
-{browser, sync} = wdSync.headless()
-
-sync ->        
-  @init browserName:'firefox'
-
-  @get "http://saucelabs.com/test/guinea-pig"
-  console.log @title()          
-
-  divEl = @elementByCss '#i_am_an_id'
-  console.log @text divEl
-
-  textField = @elementByName 'i_am_a_textbox'
-  @type textField , "Hello World"  
-  @type textField , wdSync.SPECIAL_KEYS.Return
-
-  @quit()  
-
-```
-
-notes regarding headless/zombie:
-- only worth using for simple pages, not relying heavily on Javacripts.   
-- the headless functionality wont be maintained/improved, at least until Zombie 2 is stable. 
 
 ## wrap
 
@@ -241,14 +204,9 @@ Doc modifications must be done in the doc/template directory, then run `cake doc
 java -jar selenium-server-standalone-2.25.0.jar -Dwebdriver.chrome.driver=<PATH>/chromedriver
 ```
 
-2a/ run tests
+2/ run tests
 ```
-cake test:local 
-```
-
-2b/ run clean test (making sure wd-zombie is not installed first)
-```
-cake test
+cake test 
 ```
 
 ### remote / Sauce Labs 
@@ -261,19 +219,6 @@ configure your username and access key.
 ```
 cake test:sauce
 ```
-
-### headless 
-
-once:
-```
-cake test:prepare:headless
-```
-
-then:
-```
-cake test:headless
-```
-
 
 ## selenium server
 

@@ -27,31 +27,32 @@ The `executeAsync` and `safeExecuteAsync` methods may still be run asynchronousl
 
 var wdSync = require('wd-sync');
 
-// 1/ simple Wd example 
+// 1/ simple Wd example
 
 var client = wdSync.remote()
     , browser = client.browser
     , sync = client.sync;
 
 sync( function() {
-  
+
   console.log("server status:", browser.status());
   browser.init( { browserName: 'firefox'} );
+  console.log("session id:", browser.getSessionId());
   console.log("session capabilities:", browser.sessionCapabilities());
-  
+
   browser.get("http://google.com");
   console.log(browser.title());
-  
+
   var queryField = browser.elementByName('q');
   browser.type(queryField, "Hello World");
   browser.type(queryField, "\n");
-  
+
   browser.setWaitTimeout(3000);
   browser.elementByCss('#ires'); // waiting for new page to load
   console.log(browser.title());
-  
+
   console.log(browser.elementByNameIfExists('not_exists')); // undefined
-  
+
   browser.quit();
 
 });
@@ -66,12 +67,12 @@ Remote testing with [Sauce Labs](http://saucelabs.com) works.
 
 ```javascript
 // configure saucelabs username/access key here
-var username = '<USERNAME>'
-, accessKey = '<ACCESS KEY>';
+var username = process.env.SAUCE_USERNAME || '<USERNAME>'
+, accessKey = process.env.SAUCE_KEY || '<ACCESS KEY>';
 
 var wdSync = require('wd-sync');
 
-// 2/ wd saucelabs example 
+// 2/ wd saucelabs example
 
 desired = {
   platform: "LINUX",
@@ -91,6 +92,7 @@ sync( function() {
 
   console.log("server status:", browser.status());
   browser.init(desired);
+  console.log("session id:", browser.getSessionId());
   console.log("session capabilities:", browser.sessionCapabilities());
 
   browser.get("http://google.com");
@@ -110,51 +112,6 @@ sync( function() {
 
 
 ```
-
-
-## Headless example
-
-This uses the [wd-zombie](http://sebv/node-wd-zombie.git) module,
-which implements the wd interface using [Zombie](http://github.com/assaf/zombie). 
-
-IMPORTANT: A wd-zombie dependency must be configured in package.json.
-
-In this mode, no need to run the Selenium server.
-
-```coffeescript
-// a dependency to 'wd-zombie' must be configured in package.json  
-
-var wdSync = require('wd-sync');
-
-// 3/ headless Wd example 
-
-var client = wdSync.headless()
-    , browser = client.browser
-    , sync = client.sync;
-
-sync( function() {
-  
-  browser.init();
-  
-  browser.get("http://saucelabs.com/test/guinea-pig");
-  console.log(browser.title());
-  
-  divEl = browser.elementByCss('#i_am_an_id');
-  console.log(browser.text(divEl));
-  
-  var textField = browser.elementById('i_am_a_textbox');
-  browser.type(textField, "Hello World");
-  browser.type(textField, wdSync.SPECIAL_KEYS.Return);
-    
-  browser.quit();
-
-});
-
-```
-
-notes regarding headless/zombie:
-- only worth using for simple pages, not relying heavily on Javacripts.   
-- the headless functionality wont be maintained/improved, at least until Zombie 2 is stable. 
 
 ## wrap
 
@@ -277,12 +234,7 @@ java -jar selenium-server-standalone-2.21.0.jar -Dwebdriver.chrome.driver=<PATH>
 
 2a/ run tests
 ```
-cake test:local 
-```
-
-2b/ run clean test (making sure wd-zombie is not installed first)
-```
-cake test
+cake test 
 ```
 
 ### remote / Sauce Labs 
@@ -294,18 +246,6 @@ configure your username and access key.
 2/ run tests
 ```
 cake test:sauce
-```
-
-### headless 
-
-once:
-```
-cake test:prepare:headless
-```
-
-then:
-```
-cake test:headless
 ```
 
 ## selenium server

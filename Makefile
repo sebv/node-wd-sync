@@ -40,6 +40,13 @@ test_midway_sauce_connect:
 	SAUCE_JOB_ID=`git rev-parse --short HEAD` \
 	SAUCE_CONNECT=1 make test_midway
 
+build_mapping:
+	coffee doc/doc-builder.coffee 'mapping' 'supported'
+	coffee doc/doc-builder.coffee 'mapping' 'full'
+
+build_doc:
+	coffee doc/doc-builder.coffee 'doc'
+
 .PHONY: \
 	DEFAULT \
 	test \
