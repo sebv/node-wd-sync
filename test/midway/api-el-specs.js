@@ -13,7 +13,7 @@
 
   CoffeeScript = require('coffee-script');
 
-  describe("api specs " + env.TEST_ENV_DESC, function() {
+  describe("api el specs " + env.TEST_ENV_DESC, function() {
     var allPassed, browser, express, funcSuffix, sync, wrap, _fn, _i, _len, _ref, _ref1;
     this.timeout(env.TIMEOUT);
     _ref = {}, browser = _ref.browser, sync = _ref.sync;

@@ -7,7 +7,7 @@ require "../common/setup"
 
 CoffeeScript = require 'coffee-script'
 
-describe "api specs " + env.TEST_ENV_DESC, ->
+describe "api el specs " + env.TEST_ENV_DESC, ->
   @timeout env.TIMEOUT
   {browser,sync} = {}
   wrap = wdSync.wrap with: (-> browser)
