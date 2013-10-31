@@ -1,13 +1,6 @@
 Fiber = require('fibers')
 wd = require('wd')
 
-# todo: move this to wd
-wd.webdriver.prototype.getSessionId = (cb) ->
-  if cb
-    cb(null, @sessionID)
-  else
-    return @sessionID
-
 {makeSync,sync,current} = require 'make-sync'
 {EventEmitter} = require 'events'
 
