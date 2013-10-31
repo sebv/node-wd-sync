@@ -39,7 +39,7 @@ wrapSync = (target) ->
   # async wrapping for safety
   target = wrapAsync target
 
-  # making target method synchronous
+  # making target methods synchronous
   makeSync target, syncOptions
   for k in mixedArgsMethods # methods forced to mixed-args mode
     do ->
