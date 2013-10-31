@@ -12,6 +12,7 @@ describe "basic browsing " + env.TEST_ENV_DESC, (done) ->
   before (done) ->
     {browser,sync} = wdSync.remote env.REMOTE_CONFIG
     sync ->
+      # @configureHttp(env.HTTP_CONFIG)
       @init desiredWithTestInfo(testInfo)
       done()
 

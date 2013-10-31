@@ -18,6 +18,7 @@ describe "wd wrap tests " + env.TEST_ENV_DESC, ->
       {browser} = wdSync.remote env.REMOTE_CONFIG
 
     before wrap ->
+      #@configureHttp(env.HTTP_CONFIG)
       @init desiredWithTestInfo(testInfo)
 
     afterEach ->
@@ -58,6 +59,7 @@ describe "wd wrap tests " + env.TEST_ENV_DESC, ->
       {browser} = wdSync.remote env.REMOTE_CONFIG
 
     before wrap ->
+      # @configureHttp(env.HTTP_CONFIG)
       @init desiredWithTestInfo(testInfo)
 
     afterEach ->

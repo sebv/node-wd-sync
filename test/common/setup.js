@@ -24,6 +24,22 @@
     browserName: env.BROWSER
   } : void 0);
 
+  env.HTTP_CONFIG = {};
+
+  if (process.env.HTTP_TIMEOUT != null) {
+    env.HTTP_CONFIG.timeout = parseInt(process.env.HTTP_TIMEOUT, 10);
+  }
+
+  if (process.env.HTTP_RETRIES != null) {
+    env.HTTP_CONFIG.retries = parseInt(process.env.HTTP_RETRIES, 10);
+  }
+
+  if (process.env.HTTP_RETRY_DELAY) {
+    env.HTTP_CONFIG.retryDelay = parseInt(process.env.HTTP_RETRY_DELAY, 10);
+  }
+
+  env.DEBUG_CONNECTION = process.env.DEBUG_CONNECTION;
+
   env.EXPRESS_PORT = process.env.EXPRESS_PORT || 3000;
 
   env.MIDWAY_ROOT_URL = "http://127.0.0.1:" + env.EXPRESS_PORT;
