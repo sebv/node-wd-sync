@@ -34,7 +34,6 @@ sync ->
   console.log "server status:", @status()
   @init browserName:'chrome'
   console.log "session id:", @getSessionId()
-  console.log "session capabilities:", @sessionCapabilities()
 
   @get "http://saucelabs.com/test/guinea-pig"
 
