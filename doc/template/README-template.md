@@ -1,10 +1,10 @@
 # wd-sync
 
-A synchronous version with a nice api of [wd](http://github.com/admc/wd), 
+***A synchronous version with a nice api of [wd](http://github.com/admc/wd), 
 the lightweight  [WebDriver / Selenium2](http://seleniumhq.org/projects/webdriver/) 
-client for node.js, built using  [node-fibers](http://github.com/laverdet/node-fibers).
+client for node.js, built using  [node-fibers](http://github.com/laverdet/node-fibers).***
 
-Remote testing with [Sauce Labs](http://saucelabs.com) also works.
+[Site](http://sebv.github.io/node-wd-sync/)
 
 Note: headless zombie was removed in 1.1.0
 
