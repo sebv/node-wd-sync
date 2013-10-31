@@ -37,7 +37,7 @@ describe "api specs " + env.TEST_ENV_DESC, ->
   after wrap ->
     express.stop()
     @quit()
-    jobStatus allPassed, @getSessionId()
+    @sauceJobStatus allPassed if env.SAUCE
 
   express.partials['browser.eval'] =
     '<div id="theDiv"><ul><li>line 1</li><li>line 2</li></ul></div>'

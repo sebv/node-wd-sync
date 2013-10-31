@@ -54,7 +54,9 @@
     after(wrap(function() {
       express.stop();
       this.quit();
-      return jobStatus(allPassed, this.getSessionId());
+      if (env.SAUCE) {
+        return this.sauceJobStatus(allPassed);
+      }
     }));
     express.partials['browser.element'] = '<div id="theDiv"><div name="meme">Hello World!</div></div>';
     it("browser.element", wrap(function() {

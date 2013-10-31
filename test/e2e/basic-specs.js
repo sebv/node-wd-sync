@@ -28,7 +28,9 @@
     after(function(done) {
       return sync(function() {
         this.quit();
-        jobStatus(allPassed, this.getSessionId());
+        if (env.SAUCE) {
+          this.sauceJobStatus(allPassed);
+        }
         return done();
       });
     });

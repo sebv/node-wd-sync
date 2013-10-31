@@ -25,7 +25,7 @@ describe "wd wrap tests " + env.TEST_ENV_DESC, ->
 
     after wrap ->
       @quit()
-      jobStatus allPassed, @getSessionId()
+      @sauceJobStatus allPassed if env.SAUCE
 
     describe "browsing page", ->
       beforeEach wrap ->
@@ -65,7 +65,7 @@ describe "wd wrap tests " + env.TEST_ENV_DESC, ->
 
     after wrap ->
       @quit()
-      jobStatus allPassed, @getSessionId()
+      @sauceJobStatus allPassed if env.SAUCE
 
     it "should have run pre", wrap ->
       someText.should.equal 'Test2'

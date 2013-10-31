@@ -37,7 +37,7 @@ describe "api el specs " + env.TEST_ENV_DESC, ->
   after wrap ->
     express.stop()
     @quit()
-    jobStatus allPassed, @getSessionId()
+    @sauceJobStatus allPassed if env.SAUCE
 
   express.partials['browser.element'] =
     '<div id="theDiv"><div name="meme">Hello World!</div></div>'

@@ -22,7 +22,7 @@ describe "init specs " + env.TEST_ENV_DESC, ->
 
   after wrap ->
     @quit()
-    jobStatus allPassed, @getSessionId()
+    @sauceJobStatus allPassed if env.SAUCE
 
   it "browser.status", wrap ->
     @status().should.exist

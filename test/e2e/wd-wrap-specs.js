@@ -30,7 +30,9 @@
       });
       after(wrap(function() {
         this.quit();
-        return jobStatus(allPassed, this.getSessionId());
+        if (env.SAUCE) {
+          return this.sauceJobStatus(allPassed);
+        }
       }));
       return describe("browsing page", function() {
         beforeEach(wrap(function() {
@@ -77,7 +79,9 @@
       });
       after(wrap(function() {
         this.quit();
-        return jobStatus(allPassed, this.getSessionId());
+        if (env.SAUCE) {
+          return this.sauceJobStatus(allPassed);
+        }
       }));
       it("should have run pre", wrap(function() {
         return someText.should.equal('Test2');

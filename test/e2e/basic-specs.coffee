@@ -21,7 +21,7 @@ describe "basic browsing " + env.TEST_ENV_DESC, (done) ->
   after (done) ->
     sync ->
       @quit()
-      jobStatus allPassed, @getSessionId()
+      @sauceJobStatus allPassed if env.SAUCE
       done()
 
   describe "precheck", ->

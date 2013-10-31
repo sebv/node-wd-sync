@@ -4,9 +4,6 @@ GLOBAL.should = chai.should()
 
 _ = require 'lodash'
 
-{jobStatus,jobUpdate} = require './sauce-helper';
-[GLOBAL.jobStatus, GLOBAL.jobUpdate] = [jobStatus, jobUpdate]
-
 GLOBAL.env = {}
 
 env.REMOTE_CONFIG = process.env.REMOTE_CONFIG

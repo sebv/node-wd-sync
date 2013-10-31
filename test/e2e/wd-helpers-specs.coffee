@@ -26,7 +26,7 @@ describe "wd.current() " + env.TEST_ENV_DESC, ->
   after (done) ->
     sync ->
       @quit()
-      jobStatus allPassed, @getSessionId()
+      @sauceJobStatus allPassed if env.SAUCE
       done()
 
   describe "wd.current()", ->

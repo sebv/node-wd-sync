@@ -34,7 +34,9 @@
     });
     after(wrap(function() {
       this.quit();
-      return jobStatus(allPassed, this.getSessionId());
+      if (env.SAUCE) {
+        return this.sauceJobStatus(allPassed);
+      }
     }));
     it("browser.status", wrap(function() {
       return this.status().should.exist;

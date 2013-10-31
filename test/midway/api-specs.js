@@ -54,7 +54,9 @@
     after(wrap(function() {
       express.stop();
       this.quit();
-      return jobStatus(allPassed, this.getSessionId());
+      if (env.SAUCE) {
+        return this.sauceJobStatus(allPassed);
+      }
     }));
     express.partials['browser.eval'] = '<div id="theDiv"><ul><li>line 1</li><li>line 2</li></ul></div>';
     it("browser.eval", wrap(function() {
