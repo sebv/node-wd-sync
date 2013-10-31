@@ -1,8 +1,8 @@
 # wd-sync
 
-***A synchronous version with a nice api of [wd](http://github.com/admc/wd), 
+**A synchronous version with a nice api of [wd](http://github.com/admc/wd), 
 the lightweight  [WebDriver / Selenium2](http://seleniumhq.org/projects/webdriver/) 
-client for node.js, built using  [node-fibers](http://github.com/laverdet/node-fibers).***
+client for node.js, built using  [node-fibers](http://github.com/laverdet/node-fibers).**
 
 [Site](http://sebv.github.io/node-wd-sync/)
 
