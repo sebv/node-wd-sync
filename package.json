@@ -22,7 +22,8 @@
   "dependencies": {
     "make-sync": "~0.2.0",
     "fibers": "~1.0.1",
-    "wd": "~0.2.2"
+    "wd": "~0.2.2",
+    "lodash": "~2.2.1"
   },
   "devDependencies": {
     "coffee-script": "~1.6.3",
@@ -34,7 +35,6 @@
     "sv-selenium": "~0.2.2",
     "chai": "~1.8.1",
     "hbs": "~2.4.0",
-    "request": "~2.27.0",
-    "lodash": "~2.2.1"
+    "request": "~2.27.0"
   }
 }

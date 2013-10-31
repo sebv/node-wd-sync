@@ -201,9 +201,9 @@ describe "api specs " + env.TEST_ENV_DESC, ->
     i1 = @elementByCss "#theDiv .i1"
     i2 = @elementByCss "#theDiv .i2"
     i1.click()
-    @active().value.should.equal i1.value
+    @active().getValue().should.equal("input 1");
     @clickElement i2
-    @active().value.should.equal i2.value
+    @active().getValue().should.equal("input 2");
 
   it "browser.url", wrap ->
     url = @url()

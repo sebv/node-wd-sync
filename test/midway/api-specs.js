@@ -193,9 +193,9 @@
       i1 = this.elementByCss("#theDiv .i1");
       i2 = this.elementByCss("#theDiv .i2");
       i1.click();
-      this.active().value.should.equal(i1.value);
+      this.active().getValue().should.equal("input 1");
       this.clickElement(i2);
-      return this.active().value.should.equal(i2.value);
+      return this.active().getValue().should.equal("input 2");
     }));
     it("browser.url", wrap(function() {
       var url;

@@ -154,13 +154,30 @@
       return should.not.exist(this.getAttribute(testDiv, "timezone"));
     }));
     express.partials['browser.getValue'] = '<div id="theDiv">\n  <input class="input-text" type="text" value="Hello getValueTest!">\n  <textarea>Hello getValueTest2!</textarea>\n</div>';
-    return it("browser.getValue", wrap(function() {
+    it("browser.getValue", wrap(function() {
       var inputField, textareaField;
       inputField = this.elementByCss("#theDiv input");
       (this.getValue(inputField)).should.equal("Hello getValueTest!");
       inputField.getValue().should.equal("Hello getValueTest!");
       textareaField = this.elementByCss("#theDiv textarea");
       return (this.getValue(textareaField)).should.equal("Hello getValueTest2!");
+    }));
+    express.partials['element(s) within element(s)'] = '<div id="theDiv">\n  <div class="subDiv">\n    <textarea>Hello!</textarea>\n  </div>\n  <div class="subDiv2">\n    <textarea>Hello2!</textarea>\n  </div>\n</div>';
+    return it("element(s) within element(s)", wrap(function() {
+      var subDiv, textareas, theDiv;
+      theDiv = this.elementById("theDiv");
+      theDiv.text().should.include("Hello");
+      subDiv = theDiv.elementByCss(".subDiv");
+      subDiv.text().should.include("Hello");
+      textareas = subDiv.elementsByTagName('textarea');
+      textareas.should.have.length(1);
+      textareas[0].getValue().should.equal('Hello!');
+      theDiv = (this.elementsByCss("#theDiv"))[0];
+      theDiv.should.exist;
+      theDiv.getComputedCss('color').should.include('rgb');
+      textareas = theDiv.elementsByTagName('textarea');
+      textareas.should.have.length(2);
+      return textareas[1].getValue().should.equal('Hello2!');
     }));
   });
 

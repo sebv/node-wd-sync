@@ -1,5 +1,6 @@
-Fiber = require('fibers')
-wd = require('wd')
+Fiber = require 'fibers'
+wd = require 'wd'
+_ = require "lodash"
 
 {makeSync,sync,current} = require 'make-sync'
 {EventEmitter} = require 'events'
@@ -22,37 +23,46 @@ syncOptions =
 
 # async wrapper used to hide implementation, avoiding
 # async interface calling itself
-wrapAsyncObject = (obj) ->
+wrapAsync = (target) ->
   res = {}
-  for k,v of obj when (typeof v) is 'function'
+  for k,v of target when (typeof v) is 'function'
     do ->
       _v = v
       res[k] = (args...) ->
-        _v.apply obj, args
+        _v.apply target, args
   res
 
-wrapSyncObject = (obj) ->
-  res = {}
-  for k,v of obj when (typeof v) is 'function'
-    do ->
-      _v = v
-      res[k] = (args...) ->
-        _res = _v.apply obj, args
-        if _res?.browser?
-          # element returned
-          makeSync _res, syncOptions
-        _res
-  res
+isElement = (obj) ->
+  obj?.browser?
 
-patch = (browser) ->
-  browser = wrapAsyncObject browser
+wrapSync = (target) ->
+  # async wrapping for safety
+  target = wrapAsync target
 
-  # making methods synchronous
-  makeSync browser, syncOptions
+  # making target method synchronous
+  makeSync target, syncOptions
   for k in mixedArgsMethods # methods forced to mixed-args mode
     do ->
-      browser[k] = makeSync browser[k], mode:['mixed', 'args']
-  browser = wrapSyncObject browser
+      target[k] = makeSync target[k], mode:['mixed', 'args']
+
+  # wrapping methods to make returned elements synchronous
+  wrappedTarget = {}
+  for k,v of target when (typeof v) is 'function'
+    do ->
+      _v = v
+      wrappedTarget[k] = (args...) ->
+        res = _v.apply target, args
+        # single element returned
+        res = wrapSync res if isElement res
+        # array element returned
+        if _(res).isArray()
+          res = _.map res, (val) ->
+            if isElement val then wrapSync val else val
+        res
+  wrappedTarget
+
+patch = (browser) ->
+  browser = wrapSync browser
   # starts sync block.
   _sync = (cb) ->
     if cb?

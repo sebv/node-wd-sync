@@ -165,3 +165,29 @@ describe "api el specs " + env.TEST_ENV_DESC, ->
     textareaField = @elementByCss "#theDiv textarea"
     (@getValue textareaField).should.equal "Hello getValueTest2!"
 
+
+  express.partials['element(s) within element(s)'] =
+    '''
+    <div id="theDiv">
+      <div class="subDiv">
+        <textarea>Hello!</textarea>
+      </div>
+      <div class="subDiv2">
+        <textarea>Hello2!</textarea>
+      </div>
+    </div>
+    '''
+  it "element(s) within element(s)", wrap ->
+    theDiv = @elementById "theDiv"
+    theDiv.text().should.include "Hello"
+    subDiv = theDiv.elementByCss ".subDiv"
+    subDiv.text().should.include "Hello"
+    textareas = subDiv.elementsByTagName 'textarea'
+    textareas.should.have.length(1)
+    textareas[0].getValue().should.equal('Hello!')
+    theDiv = (@elementsByCss "#theDiv")[0]
+    theDiv.should.exist
+    theDiv.getComputedCss('color').should.include 'rgb'
+    textareas = theDiv.elementsByTagName 'textarea'
+    textareas.should.have.length(2)
+    textareas[1].getValue().should.equal('Hello2!')
