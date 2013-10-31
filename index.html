@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>Node-wd-sync by sebv</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Node-wd-sync</h1>
+        <h2>sync version of wd</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/sebv/node-wd-sync/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/sebv/node-wd-sync/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/sebv/node-wd-sync" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>
+<a name="wd-sync" class="anchor" href="#wd-sync"><span class="octicon octicon-link"></span></a>wd-sync</h1>
+
+<p>A synchronous version with a nice api of <a href="http://github.com/admc/wd">wd</a>, 
+the lightweight  <a href="http://seleniumhq.org/projects/webdriver/">WebDriver / Selenium2</a> 
+client for node.js, built using  <a href="http://github.com/laverdet/node-fibers">node-fibers</a>.</p>
+
+<p>Remote testing with <a href="http://saucelabs.com">Sauce Labs</a> also works.</p>
+
+<p>Note: headless zombie was removed in 1.1.0</p>
+
+<h2>
+<a name="status" class="anchor" href="#status"><span class="octicon octicon-link"></span></a>status</h2>
+
+<p><a href="https://travis-ci.org/sebv/node-wd-sync"><img src="https://travis-ci.org/sebv/node-wd-sync.png" alt="Build Status"></a>
+<a href="https://saucelabs.com/u/node_wd_sync"><img src="https://saucelabs.com/buildstatus/node_wd_sync" alt="Selenium Test Status"></a></p>
+
+<p><a href="https://saucelabs.com/u/node_wd_sync"><img src="https://saucelabs.com/browser-matrix/node_wd_sync.svg" alt="Selenium Test Status"></a></p>
+
+<h2>
+<a name="install" class="anchor" href="#install"><span class="octicon octicon-link"></span></a>install</h2>
+
+<pre><code>npm install wd-sync
+</code></pre>
+
+<h2>
+<a name="code-samples" class="anchor" href="#code-samples"><span class="octicon octicon-link"></span></a>code samples</h2>
+
+<h3>
+<a name="coffeescript" class="anchor" href="#coffeescript"><span class="octicon octicon-link"></span></a>CoffeeScript</h3>
+
+<div class="highlight highlight-coffeescript"><pre><span class="c1"># assumes that selenium server is running</span>
+
+<span class="nv">wdSync = </span><span class="nx">require</span> <span class="s">'wd-sync'</span>
+
+<span class="c1"># 1/ simple Wd example</span>
+
+<span class="p">{</span><span class="nx">browser</span><span class="p">,</span> <span class="nx">sync</span><span class="p">}</span> <span class="o">=</span> <span class="nx">wdSync</span><span class="p">.</span><span class="nx">remote</span><span class="p">()</span>
+
+<span class="nx">sync</span> <span class="nf">-&gt;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">"server status:"</span><span class="p">,</span> <span class="nx">@status</span><span class="p">()</span>
+  <span class="nx">@init</span> <span class="nx">browserName</span><span class="o">:</span><span class="s">'firefox'</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">"session id:"</span><span class="p">,</span> <span class="nx">@getSessionId</span><span class="p">()</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">"session capabilities:"</span><span class="p">,</span> <span class="nx">@sessionCapabilities</span><span class="p">()</span>
+
+  <span class="nx">@get</span> <span class="s">"http://google.com"</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="nx">@title</span><span class="p">()</span>
+
+  <span class="nv">queryField = </span><span class="nx">@elementByName</span> <span class="s">'q'</span>
+  <span class="nx">@type</span> <span class="nx">queryField</span><span class="p">,</span> <span class="s">"Hello World"</span>
+  <span class="nx">@type</span> <span class="nx">queryField</span><span class="p">,</span> <span class="s">"\n"</span>
+
+  <span class="nx">@setWaitTimeout</span> <span class="mi">3000</span>
+  <span class="nx">@elementByCss</span> <span class="s">'#ires'</span> <span class="c1"># waiting for new page to load</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="nx">@title</span><span class="p">()</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="nx">@elementByNameIfExists</span> <span class="s">'not_exists'</span> <span class="c1"># undefined</span>
+
+  <span class="nx">@quit</span><span class="p">()</span>
+
+</pre></div>
+
+<h3>
+<a name="javascript" class="anchor" href="#javascript"><span class="octicon octicon-link"></span></a>JavaScript</h3>
+
+<div class="highlight highlight-javascript"><pre><span class="c1">// assumes that selenium server is running</span>
+
+<span class="kd">var</span> <span class="nx">wdSync</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'wd-sync'</span><span class="p">);</span>
+
+<span class="c1">// 1/ simple Wd example</span>
+
+<span class="kd">var</span> <span class="nx">client</span> <span class="o">=</span> <span class="nx">wdSync</span><span class="p">.</span><span class="nx">remote</span><span class="p">()</span>
+    <span class="p">,</span> <span class="nx">browser</span> <span class="o">=</span> <span class="nx">client</span><span class="p">.</span><span class="nx">browser</span>
+    <span class="p">,</span> <span class="nx">sync</span> <span class="o">=</span> <span class="nx">client</span><span class="p">.</span><span class="nx">sync</span><span class="p">;</span>
+
+<span class="nx">sync</span><span class="p">(</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"server status:"</span><span class="p">,</span> <span class="nx">browser</span><span class="p">.</span><span class="nx">status</span><span class="p">());</span>
+  <span class="nx">browser</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span> <span class="p">{</span> <span class="nx">browserName</span><span class="o">:</span> <span class="s1">'firefox'</span><span class="p">}</span> <span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"session id:"</span><span class="p">,</span> <span class="nx">browser</span><span class="p">.</span><span class="nx">getSessionId</span><span class="p">());</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"session capabilities:"</span><span class="p">,</span> <span class="nx">browser</span><span class="p">.</span><span class="nx">sessionCapabilities</span><span class="p">());</span>
+
+  <span class="nx">browser</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"http://google.com"</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">browser</span><span class="p">.</span><span class="nx">title</span><span class="p">());</span>
+
+  <span class="kd">var</span> <span class="nx">queryField</span> <span class="o">=</span> <span class="nx">browser</span><span class="p">.</span><span class="nx">elementByName</span><span class="p">(</span><span class="s1">'q'</span><span class="p">);</span>
+  <span class="nx">browser</span><span class="p">.</span><span class="nx">type</span><span class="p">(</span><span class="nx">queryField</span><span class="p">,</span> <span class="s2">"Hello World"</span><span class="p">);</span>
+  <span class="nx">browser</span><span class="p">.</span><span class="nx">type</span><span class="p">(</span><span class="nx">queryField</span><span class="p">,</span> <span class="s2">"\n"</span><span class="p">);</span>
+
+  <span class="nx">browser</span><span class="p">.</span><span class="nx">setWaitTimeout</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
+  <span class="nx">browser</span><span class="p">.</span><span class="nx">elementByCss</span><span class="p">(</span><span class="s1">'#ires'</span><span class="p">);</span> <span class="c1">// waiting for new page to load</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">browser</span><span class="p">.</span><span class="nx">title</span><span class="p">());</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">browser</span><span class="p">.</span><span class="nx">elementByNameIfExists</span><span class="p">(</span><span class="s1">'not_exists'</span><span class="p">));</span> <span class="c1">// undefined</span>
+
+  <span class="nx">browser</span><span class="p">.</span><span class="nx">quit</span><span class="p">();</span>
+
+<span class="p">});</span>
+
+</pre></div>
+
+<h2>
+<a name="doc" class="anchor" href="#doc"><span class="octicon octicon-link"></span></a>doc</h2>
+
+<ul>
+<li><a href="http://github.com/sebv/node-wd-sync/blob/master/doc/COFFEE-DOC.md">CoffeeScript</a></li>
+<li><a href="http://github.com/sebv/node-wd-sync/blob/master/doc/JS-DOC.md">JavaScript</a></li>
+<li><a href="https://github.com/admc/wd/blob/master/README.md">wd doc</a></li>
+<li><a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol">JsonWireProtocol official doc</a></li>
+</ul><p>Note: Doc and README modifications must be done in the doc/template directory.</p>
+
+<h2>
+<a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>examples</h2>
+
+<ul>
+<li><a href="http://github.com/sebv/node-wd-sync/tree/master/examples/coffee">CoffeeScript</a></li>
+<li><a href="http://github.com/sebv/node-wd-sync/tree/master/examples/js">JavaScript</a></li>
+</ul><h2>
+<a name="api" class="anchor" href="#api"><span class="octicon octicon-link"></span></a>api</h2>
+
+<p><a href="http://github.com/sebv/node-wd-sync/blob/master/doc/jsonwire-mapping.md">supported</a></p>
+
+<p><a href="http://github.com/sebv/node-wd-sync/blob/master/doc/jsonwire-full-mapping.md">full JsonWireProtocol mapping</a></p>
+
+<h2>
+<a name="available-environments" class="anchor" href="#available-environments"><span class="octicon octicon-link"></span></a>available environments</h2>
+
+<h3>
+<a name="webdriver" class="anchor" href="#webdriver"><span class="octicon octicon-link"></span></a>WebDriver</h3>
+
+<p>local <a href="http://seleniumhq.org/projects/webdriver/">WebDriver / Selenium2</a> server</p>
+
+<h3>
+<a name="sauce-labs" class="anchor" href="#sauce-labs"><span class="octicon octicon-link"></span></a>Sauce Labs</h3>
+
+<p>Remote testing with <a href="http://saucelabs.com">Sauce Labs</a>.</p>
+
+<h2>
+<a name="running-tests" class="anchor" href="#running-tests"><span class="octicon octicon-link"></span></a>running tests</h2>
+
+<h3>
+<a name="local--selenium-server" class="anchor" href="#local--selenium-server"><span class="octicon octicon-link"></span></a>local / selenium server:</h3>
+
+<p>1/ Install and start Selenium server</p>
+
+<pre><code>./node_modules/.bin/install_selenium
+./node_modules/.bin/install_chromedriver
+./node_modules/.bin/start_selenium_with_chromedriver
+</code></pre>
+
+<p>2/ run tests</p>
+
+<pre><code>make test 
+</code></pre>
+
+<h3>
+<a name="remote--sauce-labs" class="anchor" href="#remote--sauce-labs"><span class="octicon octicon-link"></span></a>remote / Sauce Labs</h3>
+
+<p>1/ configure sauce environment</p>
+
+<pre><code>export SAUCE_USERNAME=&lt;SAUCE_USERNAME&gt;
+export SAUCE_ACCESS_KEY=&lt;SAUCE_ACCESS_KEY&gt;
+# if using sauce connect
+./node_modules/.bin/install_sauce_connect
+./node_modules/.bin/start_sauce_connect
+</code></pre>
+
+<p>2/ run tests</p>
+
+<pre><code>make test_e2e_sauce
+make test_midway_sauce_connect
+</code></pre>
+
+<h2>
+<a name="building-docmapping" class="anchor" href="#building-docmapping"><span class="octicon octicon-link"></span></a>building doc/mapping</h2>
+
+<h3>
+<a name="readme--doc" class="anchor" href="#readme--doc"><span class="octicon octicon-link"></span></a>README + doc</h3>
+
+<p>1/ Update the templates</p>
+
+<p>2/ run <code>make build_doc</code></p>
+
+<h3>
+<a name="mappings" class="anchor" href="#mappings"><span class="octicon octicon-link"></span></a>mappings</h3>
+
+<p>1/ Upgrade wd</p>
+
+<p>2/ run <code>make build_mapping</code></p>
+
+<h2>
+<a name="publishing" class="anchor" href="#publishing"><span class="octicon octicon-link"></span></a>publishing</h2>
+
+<pre><code>npm version [patch|minor|major]
+git push --tags
+npm publish
+</code></pre>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
