@@ -22,13 +22,13 @@
   "dependencies": {
     "make-sync": "~0.2.0",
     "fibers": "~1.0.1",
-    "wd": "~0.2.0"
+    "wd": "~0.2.2"
   },
   "devDependencies": {
     "coffee-script": "~1.6.3",
     "sv-cake-utils": "~0.1.8",
     "mocha": "~1.13.0",
-    "express": "~3.4.3",
+    "express": "~3.4.4",
     "whiskers": "~0.3.1",
     "async": "~0.2.9",
     "sv-selenium": "~0.2.2",
