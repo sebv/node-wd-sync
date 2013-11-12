@@ -178,7 +178,7 @@ make test_midway_sauce_connect
 
 ```
 npm version [patch|minor|major]
-git push --tags
+git push --tags origin master
 npm publish
 ```
 

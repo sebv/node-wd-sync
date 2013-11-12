@@ -22,7 +22,7 @@
   "dependencies": {
     "make-sync": "~0.2.0",
     "fibers": "~1.0.1",
-    "wd": "~0.2.2",
+    "wd": "~0.2.3",
     "lodash": "~2.2.1"
   },
   "devDependencies": {

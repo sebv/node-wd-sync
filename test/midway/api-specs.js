@@ -261,9 +261,9 @@
       this.execute(scriptAsJs);
       should.not.exist(this.elementByCssIfExists("#theDiv .child"));
       exprCond = "$('#theDiv .child').length > 0";
-      (this.waitForCondition(exprCond, 2000, 200)).should.be["true"];
-      (this.waitForCondition(exprCond, 2000)).should.be["true"];
-      (this.waitForCondition(exprCond)).should.be["true"];
+      (this.waitForJsCondition(exprCond, 2000, 200)).should.be["true"];
+      (this.waitForJsCondition(exprCond, 2000)).should.be["true"];
+      (this.waitForJsCondition(exprCond)).should.be["true"];
       return (function() {
         return _this.waitForCondition("sdsds ;;sdsd {}");
       }).should["throw"](/Error response status/);

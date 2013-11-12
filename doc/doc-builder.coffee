@@ -8,7 +8,7 @@ rootDir = "#{__dirname}/.."
 wdDir = "#{__dirname}/../node_modules/wd"
 
 mappingFiles =
-  'supported': 'jsonwire-mapping.md'
+  'supported': 'api.md'
   'full': 'jsonwire-full-mapping.md'
 
 # remove local import in examples
@@ -83,7 +83,7 @@ buildMapping = (type , done) ->
           line = line.replace asyncCall, syncCall
         else
           # checking for mistakes
-          if line.match /gt;/
+          if line.match /gt;/            
             hasErrors = true
             console.log  "!!!! #{line}"
         console.log line

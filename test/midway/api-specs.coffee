@@ -264,9 +264,9 @@ describe "api specs " + env.TEST_ENV_DESC, ->
     @execute scriptAsJs
     should.not.exist @elementByCssIfExists "#theDiv .child"
     exprCond = "$('#theDiv .child').length > 0"
-    (@waitForCondition exprCond, 2000, 200).should.be.true
-    (@waitForCondition exprCond, 2000).should.be.true
-    (@waitForCondition exprCond).should.be.true
+    (@waitForJsCondition exprCond, 2000, 200).should.be.true
+    (@waitForJsCondition exprCond, 2000).should.be.true
+    (@waitForJsCondition exprCond).should.be.true
     (=> @waitForCondition "sdsds ;;sdsd {}").should.throw(/Error response status/)
 
   it "err.inspect", wrap ->
