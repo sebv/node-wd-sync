@@ -76,6 +76,9 @@ patch = (browser) ->
 
 wdSync =
   SPECIAL_KEYS: wd.SPECIAL_KEYS
+
+  asserters: wd.asserters
+
   # similar to wd
   remote: (args...) ->
     browser = wd.remote args...
