@@ -280,7 +280,7 @@ describe "api specs " + env.TEST_ENV_DESC, ->
       '''
     scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
     @execute scriptAsJs
-    el = @waitForElementByCss("#theDiv .child", asserters.textInclude('a child') ,2 * env.BASE_TIME_UNIT)
+    el = @waitForElementByCss("#theDiv .child", asserters.textInclude('a child') ,2000, 200)
     el.text().should.equal('a child');
 
   it "err.inspect", wrap ->
