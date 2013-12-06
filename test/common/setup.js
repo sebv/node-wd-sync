@@ -14,6 +14,8 @@
 
   env.REMOTE_CONFIG = process.env.REMOTE_CONFIG;
 
+  env.VERBOSE = process.env.VERBOSE;
+
   env.TIMEOUT = process.env.TIMEOUT || 45000;
 
   env.TIMEOUT = parseInt(env.TIMEOUT, 10);

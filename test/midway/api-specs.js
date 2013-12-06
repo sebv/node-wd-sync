@@ -14,7 +14,7 @@
   CoffeeScript = require('coffee-script');
 
   describe("api specs " + env.TEST_ENV_DESC, function() {
-    var allPassed, browser, express, sync, wrap, _ref;
+    var allPassed, asserters, browser, express, sync, wrap, _ref;
     this.timeout(env.TIMEOUT);
     _ref = {}, browser = _ref.browser, sync = _ref.sync;
     wrap = wdSync.wrap({
@@ -22,6 +22,7 @@
         return browser;
       })
     });
+    asserters = wdSync.asserters;
     allPassed = true;
     express = new Express(__dirname + '/assets');
     before(function() {
@@ -250,8 +251,8 @@
       should.exist(filepath);
       return filepath.should.include('mocha.opts');
     }));
-    express.partials['browser.waitForCondition'] = '<div id="theDiv"></div>';
-    it("browser.waitForCondition", wrap(function() {
+    express.partials['asserters.jsCondition'] = '<div id="theDiv"></div>';
+    it("asserters.jsCondition", wrap(function() {
       var exprCond, scriptAsCoffee, scriptAsJs,
         _this = this;
       scriptAsCoffee = 'setTimeout ->\n  $(\'#theDiv\').html \'<div class="child">a waitForCondition child</div>\'\n, 1500';
@@ -261,12 +262,23 @@
       this.execute(scriptAsJs);
       should.not.exist(this.elementByCssIfExists("#theDiv .child"));
       exprCond = "$('#theDiv .child').length > 0";
-      (this.waitForJsCondition(exprCond, 2000, 200)).should.be["true"];
-      (this.waitForJsCondition(exprCond, 2000)).should.be["true"];
-      (this.waitForJsCondition(exprCond)).should.be["true"];
+      (this.waitFor(asserters.jsCondition(exprCond), 2000, 200)).should.be["true"];
+      (this.waitFor(asserters.jsCondition(exprCond, 2000))).should.be["true"];
+      (this.waitFor(asserters.jsCondition(exprCond))).should.be["true"];
       return (function() {
-        return _this.waitForCondition("sdsds ;;sdsd {}");
+        return _this.waitFor(asserters.jsCondition("sdsds ;;sdsd {}", true));
       }).should["throw"](/Error response status/);
+    }));
+    express.partials['asserters.textInclude'] = '<div id="theDiv"></div>';
+    it("asserters.textInclude", wrap(function() {
+      var el, scriptAsCoffee, scriptAsJs;
+      scriptAsCoffee = 'setTimeout ->\n  $(\'#theDiv\').html \'<div class="child">a child</div>\'\n, 1500';
+      scriptAsJs = CoffeeScript.compile(scriptAsCoffee, {
+        bare: 'on'
+      });
+      this.execute(scriptAsJs);
+      el = this.waitForElementByCss("#theDiv .child", asserters.textInclude('a child'), 2 * env.BASE_TIME_UNIT);
+      return el.text().should.equal('a child');
     }));
     return it("err.inspect", wrap(function() {
       var err, _err;

@@ -11,6 +11,7 @@ describe "api specs " + env.TEST_ENV_DESC, ->
   @timeout env.TIMEOUT
   {browser,sync} = {}
   wrap = wdSync.wrap with: (-> browser)
+  asserters = wdSync.asserters
   allPassed = true
   express = new Express(__dirname + '/assets')
   before ->
@@ -251,9 +252,9 @@ describe "api specs " + env.TEST_ENV_DESC, ->
     filepath.should.include 'mocha.opts'
 
 
-  express.partials['browser.waitForCondition'] =
+  express.partials['asserters.jsCondition'] =
     '<div id="theDiv"></div>'
-  it "browser.waitForCondition", wrap ->
+  it "asserters.jsCondition", wrap ->
     scriptAsCoffee =
       '''
         setTimeout ->
@@ -264,10 +265,23 @@ describe "api specs " + env.TEST_ENV_DESC, ->
     @execute scriptAsJs
     should.not.exist @elementByCssIfExists "#theDiv .child"
     exprCond = "$('#theDiv .child').length > 0"
-    (@waitForJsCondition exprCond, 2000, 200).should.be.true
-    (@waitForJsCondition exprCond, 2000).should.be.true
-    (@waitForJsCondition exprCond).should.be.true
-    (=> @waitForCondition "sdsds ;;sdsd {}").should.throw(/Error response status/)
+    (@waitFor asserters.jsCondition(exprCond), 2000, 200).should.be.true
+    (@waitFor asserters.jsCondition exprCond, 2000).should.be.true
+    (@waitFor asserters.jsCondition exprCond).should.be.true
+    (=> @waitFor asserters.jsCondition "sdsds ;;sdsd {}", true).should.throw(/Error response status/)
+
+  express.partials['asserters.textInclude'] = '<div id="theDiv"></div>';
+  it "asserters.textInclude", wrap ->
+    scriptAsCoffee =
+      '''
+        setTimeout ->
+          $('#theDiv').html '<div class="child">a child</div>'
+        , 1500
+      '''
+    scriptAsJs = CoffeeScript.compile scriptAsCoffee, bare:'on'
+    @execute scriptAsJs
+    el = @waitForElementByCss("#theDiv .child", asserters.textInclude('a child') ,2 * env.BASE_TIME_UNIT)
+    el.text().should.equal('a child');
 
   it "err.inspect", wrap ->
     err = null
