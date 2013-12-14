@@ -277,7 +277,7 @@
         bare: 'on'
       });
       this.execute(scriptAsJs);
-      el = this.waitForElementByCss("#theDiv .child", asserters.textInclude('a child'), 2 * env.BASE_TIME_UNIT);
+      el = this.waitForElementByCss("#theDiv .child", asserters.textInclude('a child'), 2000, 200);
       return el.text().should.equal('a child');
     }));
     return it("err.inspect", wrap(function() {
