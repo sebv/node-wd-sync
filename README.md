@@ -182,3 +182,7 @@ git push --tags origin master
 npm publish
 ```
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/sebv/node-wd-sync/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
