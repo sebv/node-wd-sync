@@ -8,6 +8,13 @@ client for node.js, built using  [node-fibers](http://github.com/laverdet/node-f
 
 Note: headless zombie was removed in 1.1.0
 
+Note: Elements returned from synchronized methods are wrapped in synchronization code as well. If you need to access the original, untouched element, you can reference it via the `.rawElement` property. E.g.:
+
+```
+var element = browser.elementByCssSelector('#myElement');
+browser.execute('arguments[0].className += " hidden"', [element.rawElement]);
+```
+
 ## status
 
 [![Build Status](https://travis-ci.org/sebv/node-wd-sync.png)](https://travis-ci.org/sebv/node-wd-sync)
