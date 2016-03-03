@@ -45,7 +45,7 @@ wrapSync = (target) ->
     do ->
       target[k] = makeSync target[k], mode:['mixed', 'args']
 
-  # wrapping methods to make returned elements synchronous
+  # wrapping methods to make returned elements synchronous while keeping a reference to the raw element
   wrappedTarget = {}
   for k,v of target when (typeof v) is 'function'
     do ->
@@ -53,11 +53,18 @@ wrapSync = (target) ->
       wrappedTarget[k] = (args...) ->
         res = _v.apply target, args
         # single element returned
-        res = wrapSync res if isElement res
+        if isElement res
+          raw = res
+          res = wrapSync res
+          res.rawElement = raw
         # array element returned
         if _(res).isArray()
           res = _.map res, (val) ->
-            if isElement val then wrapSync val else val
+            if isElement val
+              raw = val
+              val = wrapSync val
+              val.rawElement = raw
+            val
         res
   wrappedTarget
 
