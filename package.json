@@ -1,7 +1,7 @@
 {
-  "name": "wd-sync",
+  "name": "wd-sync-raw",
   "version": "1.2.5",
-  "description": "sync version of wd using fibers.",
+  "description": "sync version of wd using fibers with .rawElement work-around for compatibility with .execute methods.",
   "keywords": [
     "selenium",
     "webdriver",
@@ -9,10 +9,10 @@
     "fibers",
     "sync"
   ],
-  "author": "Seb Vincent <seb.vincent@gmail.com>",
+  "author": "Daniel Smedegaard Buus <danielbuus@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sebv/node-wd-sync.git"
+    "url": "git+https://github.com/DanielSmedegaardBuus/node-wd-sync.git"
   },
   "main": "./index",
   "engine": "node >= 0.6.1",
@@ -36,5 +36,15 @@
     "chai": "~1.8.1",
     "hbs": "~2.4.0",
     "request": "~2.27.0"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/DanielSmedegaardBuus/node-wd-sync/issues"
+  },
+  "homepage": "https://github.com/DanielSmedegaardBuus/node-wd-sync#readme",
+  "directories": {
+    "doc": "doc",
+    "example": "examples",
+    "test": "test"
+  },
+  "license": "ISC"
 }
