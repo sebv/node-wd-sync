@@ -1,14 +1,14 @@
 # wd-sync
 
-**A synchronous version with a nice api of [wd](http://github.com/admc/wd), 
-the lightweight  [WebDriver / Selenium2](http://seleniumhq.org/projects/webdriver/) 
+**A synchronous version with a nice api of [wd](http://github.com/admc/wd),
+the lightweight  [WebDriver / Selenium2](http://seleniumhq.org/projects/webdriver/)
 client for node.js, built using  [node-fibers](http://github.com/laverdet/node-fibers).**
 
 [Site](http://sebv.github.io/node-wd-sync/)
 
 Note: headless zombie was removed in 1.1.0
 
-Note: Elements returned from synchronized methods are wrapped in synchronization code as well. If you need to access the original, untouched element, you can reference it via the `.rawElement` property. E.g.:
+"Raw" fork: This version is a drop-in replacement for the official [node-wd-sync](https://travis-ci.org/sebv/node-wd-sync) with one additional feature: In node-wd-sync, elements returned from synchronized methods are wrapped in synchronization code as well. This fork provides access to the original, untouched element, which you can reference via the `.rawElement` property in cases where you need to access the unmodified element. E.g.:
 
 ```
 var element = browser.elementByCssSelector('#myElement');
@@ -62,7 +62,7 @@ sync ->
 
   @quit()
 
-```        
+```
 
 ### JavaScript
 
@@ -101,9 +101,9 @@ sync( function() {
 
 });
 
-``` 
+```
 
-## doc 
+## doc
 
 * [CoffeeScript](http://github.com/sebv/node-wd-sync/blob/master/doc/COFFEE-DOC.md)
 * [JavaScript](http://github.com/sebv/node-wd-sync/blob/master/doc/JS-DOC.md)
@@ -122,10 +122,10 @@ Note: Doc and README modifications must be done in the doc/template directory.
 [supported](http://github.com/sebv/node-wd-sync/blob/master/doc/jsonwire-mapping.md)
 
 [full JsonWireProtocol mapping](http://github.com/sebv/node-wd-sync/blob/master/doc/jsonwire-full-mapping.md)
-  
+
 ## available environments
 
-### WebDriver 
+### WebDriver
 
 local [WebDriver / Selenium2](http://seleniumhq.org/projects/webdriver/) server
 
@@ -135,7 +135,7 @@ Remote testing with [Sauce Labs](http://saucelabs.com).
 
 ## running tests
 
-### local / selenium server: 
+### local / selenium server:
 
 1/ Install and start Selenium server
 
@@ -147,10 +147,10 @@ Remote testing with [Sauce Labs](http://saucelabs.com).
 
 2/ run tests
 ```
-make test 
+make test
 ```
 
-### remote / Sauce Labs 
+### remote / Sauce Labs
 
 1/ configure sauce environment
 ```
